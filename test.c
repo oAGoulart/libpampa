@@ -19,27 +19,32 @@ const unsigned short apartment_number[] = {
 
 // all owners names
 const char* owner_name[][4][9][MAX_NAME_LENGTH] = {
-	{ { {"Paulo"}, {"Paula"}, {"Alexandra"}, {"Antonia"}, {"Bibiana"}, {"Claudia"}, {"Roberto"}, {"0"}, {"Luciana"} },
+	{ 
+		{ {"Paulo"}, {"Paula"}, {"Alexandra"}, {"Antonia"}, {"Bibiana"}, {"Claudia"}, {"Roberto"}, {"0"}, {"Luciana"} },
 		{ {"Thiago"}, {"Marcela"}, {"Claudio"}, {"Osvaldo"}, {"Fernanda"}, {"Maria"}, {"Roberta"}, {"Paulino"}, {"Luciano"} },
 		{ {"Joao"}, {"Marcelo"}, {"Claudia"}, {"Alyson"}, {"Fernando"}, {"Mariana"}, {"1"}, {"Michel"}, {"Fabio"} },
 		{ {"1"}, {"Bianca"}, {"1"}, {"Allyne"}, {"1"}, {"Mario"}, {"1"}, {"Mica"}, {"Felipao"} }
 	},
-	{ { {"Olavo"}, {"Eduarda"}, {"1"}, {"Rafael"}, {"Diogo"}, {"Mauricio"}, {"Cristina"}, {"Ruan"}, {"Oscar"} },
+	{ 
+		{ {"Olavo"}, {"Eduarda"}, {"1"}, {"Rafael"}, {"Diogo"}, {"Mauricio"}, {"Cristina"}, {"Ruan"}, {"Oscar"} },
 		{ {"Bilac"}, {"Eduardo"}, {"1"}, {"Rafaela"}, {"Ricardo"}, {"Diviane"}, {"Cristiane"}, {"Jean"}, {"Osmar"} },
 		{ {"Mathias"}, {"1"}, {"Sther"}, {"Cristina"}, {"Estefania"}, {"Fabio"}, {"Luis"}, {"Geanluca"}, {"Jeronimo"} },
 		{ {"Joana"}, {"1"}, {"Juliana"}, {"Aldo"}, {"Juliano"}, {"Fabiana"}, {"Luiza"}, {"Nilse"}, {"Geronimo"} }
 	},
-	{ { {"Arthur"}, {"Juh"}, {"Bolivar"}, {"Gustavo"}, {"Uillian"}, {"Fabinho"}, {"Luizao"}, {"Lucia"}, {"Gianluca"} },
+	{ 
+		{ {"Arthur"}, {"Juh"}, {"Bolivar"}, {"Gustavo"}, {"Uillian"}, {"Fabinho"}, {"Luizao"}, {"Lucia"}, {"Gianluca"} },
 		{ {"Julio"}, {"Aline"}, {"Renato"}, {"Thielo"}, {"Mateus"}, {"Zeca"}, {"1"}, {"Tereza"}, {"Jonatan"} },
 		{ {"Jessica"}, {"Alison"}, {"Renata"}, {"Amanda"}, {"Matheus"}, {"Ueslei"}, {"1"}, {"Jeferson"}, {"Jonathas"} },
 		{ {"Maria"}, {"Alex"}, {"Antonio"}, {"Thiarles"}, {"Daiana"}, {"Jael"}, {"2"}, {"Larissa"}, {"1"} }
 	},
-	{ { {"3"}, {"3"}, {"3"}, {"Anderson"}, {"Mario"}, {"Crislaine"}, {"Rafael"}, {"Pele"}, {"Caesar"} },
+	{ 
+		{ {"3"}, {"3"}, {"3"}, {"Anderson"}, {"Mario"}, {"Crislaine"}, {"Rafael"}, {"Pele"}, {"Caesar"} },
 		{ {"3"}, {"3"}, {"3"}, {"Jeckson"}, {"Marcio"}, {"Cristaldo"}, {"Renata"}, {"Casemiro"}, {"1"} },
 		{ {"3"}, {"3"}, {"3"}, {"Marcela"}, {"Marcelita"}, {"Cesar"}, {"1"}, {"Maicon"}, {"Juan"} },
 		{ {"3"}, {"3"}, {"3"}, {"Luigi"}, {"Arthur"}, {"1"}, {"Alister"}, {"Bibiana"}, {"Claudia"} }
 	},
-	{ { {"Joaozinho"}, {"Bibi"}, {"1"}, {"4"}, {"4"}, {"4"}, {"Gustavo"}, {"Alessandro"}, {"1"} },
+	{ 
+		{ {"Joaozinho"}, {"Bibi"}, {"1"}, {"4"}, {"4"}, {"4"}, {"Gustavo"}, {"Alessandro"}, {"1"} },
 		{ {"Paulo"}, {"Ronaldo"}, {"1"}, {"4"}, {"4"}, {"4"}, {"1"}, {"Alessandra"}, {"Thielo"} },
 		{ {"Carlise"}, {"Quelen"}, {"1"}, {"4"}, {"4"}, {"4"}, {"Mauricio"}, {"Cristina"}, {"5"} },
 		{ {"Claudio"}, {"Ketlen"}, {"1"}, {"4"}, {"4"}, {"4"}, {"Edson"}, {"1"}, {"5"} }
@@ -128,15 +133,15 @@ int main()
 	/* this tries all possible input combinations (for debugging)
 	for (char c = 'a'; c <= 'e'; c++) {
 		for (int i = 0; i <= 3; i++) {
-  		for (int j = 101; j <= 303; j++) {
-  			if (j % 100 == 4) {
-  				j -= 3;
-  				j += 100;
-  			}
+			for (int j = 101; j <= 303; j++) {
+				if (j % 100 == 4) {
+					j -= 3;
+					j += 100;
+				}
 
-  			find_owner_name(c, i, j);
+				find_owner_name(c, i, j);
 			}
-  	}
+		}
 	}*/
 
 	printf("Hello, where is the mailing address?\n");
