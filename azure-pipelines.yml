@@ -1,0 +1,9 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+- script: gcc -o test.a test.c
+  displayName: 'Build'
