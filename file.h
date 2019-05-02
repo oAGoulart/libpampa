@@ -1,25 +1,42 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 #include <sys/stat.h>
 
-#if defined WINDOWS_x86
-	#define STAT _stat32
-#elif defined WINDOWS_x64
-	#define STAT _stat64
+#if defined WINDOWS
+	#include <io.h>
+
+	#if defined 64_BIT
+		#define STAT _stat64
+	#else
+		#define STAT _stat32
+	#endif
+
+	#define MODE  _S_IREAD | _S_IWRITE
+	#define OPEN  _open
+	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
+	#define CLOSE _close
 #else
-	#define STAT stat
+	#include <fcntl.h>
+	#include <unistd.h>
+
+	#define STAT  stat
+	#define MODE  0777
+	#define OPEN  open
+	#define OFLAG O_RDWR | O_CREAT | O_EXCL
+	#define CLOSE close
 #endif
 
 typedef struct data
 {
 	uint64_t size;     /* buffer size without ending \0 */
-	char*    buffer;   /* data storage */
+	uint8_t* buffer;   /* data buffer */
 } data_t;
 
 typedef struct file
@@ -44,7 +61,7 @@ uint64_t find_file_size(const char* filename)
 	return file_size;
 }
 
-/* free up data space in memory */
+/* free up data space in buffer */
 void unload_file_data(file_t* file)
 {
 	if (file != NULL) {
@@ -57,31 +74,85 @@ void unload_file_data(file_t* file)
 	}
 }
 
-/* load a block of data from file into memory  */
+/* load a block of data from file into buffer */
 bool load_file_data(file_t* file, const uint64_t offset, const uint64_t count)
 {
 	bool result = false;
 
-	if (file->handle != NULL && offset <= file->size) {
-		if (!fseek(file->handle, offset, SEEK_SET)) {
-			/* where the data starts on the file */
-			file->offset = offset;
+	if (file != NULL) {
+		if (file->handle != NULL && offset <= file->size) {
+			/* store current position indicator for later */
+			uint64_t position = ftell(file->handle);
 
-			/* buffer size without end of line char */
-			file->data.size = (offset + count > file->size) ? file->size - offset : count;
+			if (!fseek(file->handle, offset, SEEK_SET)) {
+				/* where the data starts on the file */
+				file->offset = offset;
 
-			/* allocate memory */
-			file->data.buffer = (char*)realloc(file->data.buffer, (file->data.size + 1));
+				/* maximum/given buffer size without end of line char */
+				file->data.size = (offset + count > file->size) ? file->size - offset : count;
 
-			/* prevent string overflow when using string.h functions */
-			file->data.buffer[file->data.size] = '\0';
+				/* allocate memory */
+				file->data.buffer = (uint8_t*)realloc(file->data.buffer, (file->data.size + 1));
 
-			/* read data from file */
-			result = (fread(file->data.buffer, 1, file->data.size, file->handle) == file->data.size);
+				/* prevents string overflow when using string.h functions */
+				file->data.buffer[file->data.size] = '\0';
+
+				/* read data from file */
+				if (fread(file->data.buffer, 1, file->data.size, file->handle) == file->data.size)
+					result = true;
+				else
+					unload_file_data(file);
+			}
+
+			/* restore file position indicator */
+			fseek(file->handle, position, SEEK_SET);
 		}
 	}
 
 	return result;
+}
+
+/* write a block of data from buffer into file */
+bool replace_file_data(file_t* file, const uint64_t offset, const uint64_t count)
+{
+	bool result = false;
+
+	if (file != NULL) {
+		if (file->handle != NULL && file->data.buffer != NULL && offset <= file->size) {
+			/* store current position indicator for later */
+			uint64_t position = ftell(file->handle);
+
+			if (!fseek(file->handle, offset, SEEK_SET)) {
+				/* prevents buffer data overflow */
+				uint64_t size = (count > file->data.size) ? file->data.size : count;
+
+				/* write data to file */
+				result = (fwrite(file->data.buffer, 1, size, file->handle) == size);
+			}
+
+			/* restore file position indicator */
+			fseek(file->handle, position, SEEK_SET);
+		}
+	}
+
+	return result;
+}
+
+/* write a block of data to the file buffer */
+void replace_buffer_data(file_t* file, data_t* data)
+{
+	if (file != NULL && data != NULL) {
+		if (file->data.buffer != NULL && data->buffer != NULL) {
+			/* prevents file buffer data overflow */
+			uint64_t size = (data->size > file->data.size) ? file->data.size : data->size;
+
+			/* write data to file buffer */
+			memcpy(file->data.buffer, data->buffer, size);
+
+			/* updata file buffer size */
+			file->data.size = size;
+		}
+	}
 }
 
 /* close file and clean up memory */
@@ -98,7 +169,7 @@ void close_file(file_t* file)
 	}
 }
 
-/* open file without loading any data from disk */
+/* open file without loading any data from disk to memory */
 file_t* open_file(char* filename)
 {
 	file_t* file = NULL;
@@ -117,7 +188,7 @@ file_t* open_file(char* filename)
 
 			/* initialize the data buffer */
 			file->data.size = 0;
-			file->data.buffer = (char*)malloc(1);
+			file->data.buffer = (uint8_t*)malloc(1);
 
 			if (file->data.buffer != NULL)
 				*file->data.buffer = '\0';
@@ -129,6 +200,14 @@ file_t* open_file(char* filename)
 	}
 
 	return file;
+}
+
+bool create_file(char* filename)
+{
+	/* create file and store handle */
+	int  file = OPEN(filename, OFLAG, MODE);
+
+	return (file == -1) ? false : (!CLOSE(file));
 }
 
 #endif
