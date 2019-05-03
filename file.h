@@ -7,51 +7,58 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
-#if defined WINDOWS
+/* handle data types size */
+#define UBYTE uint8_t
+
+#ifdef __NR_stat64
+	#define ULONG ULONG
+#else
+	#define ULONG uint32_t
+#endif
+
+/* handle platforms calls */
+#ifdef WINDOWS
 	#include <io.h>
 
-	#if defined 64_BIT
-		#define STAT _stat64
-	#else
-		#define STAT _stat32
-	#endif
-
+	#define STAT  _stat64                        /* may be defined as _stat */
 	#define MODE  _S_IREAD | _S_IWRITE
 	#define OPEN  _open
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
 #else
 	#include <fcntl.h>
-	#include <unistd.h>
 
-	#define STAT  stat
+	#define STAT  stat                           /* always stat64 on Linux 2.4+ */
 	#define MODE  0777
 	#define OPEN  open
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
 	#define CLOSE close
 #endif
 
+/* structs */
 typedef struct data
 {
-	uint64_t size;     /* buffer size without ending \0 */
-	uint8_t* buffer;   /* data buffer */
+	ULONG  size;     /* buffer size without ending \0 */
+	UBYTE* buffer;   /* data buffer */
 } data_t;
 
 typedef struct file
 {
-	char*    path;     /* path to the file */
-	FILE*    handle;   /* stdio file handle */
-	uint64_t offset;   /* current location from the file origin */
-	uint64_t size;     /* size of the file (not the buffer) */
-	data_t   data;     /* buffer to store file data */
+	char*  path;     /* path to the file */
+	FILE*  handle;   /* stdio file handle */
+	ULONG  offset;   /* current location from the file origin */
+	ULONG  size;     /* size of the file (not the buffer) */
+	data_t data;     /* buffer to store file data */
 } file_t;
 
 /* find the size of a file */
-uint64_t find_file_size(const char* filename)
+ULONG find_file_size(const char* filename)
 {
-	uint64_t file_size = 0;
+	ULONG file_size = 0;
 	struct STAT file_status;
 
 	/* return 0 if successful */
@@ -75,14 +82,14 @@ void unload_file_data(file_t* file)
 }
 
 /* load a block of data from file into buffer */
-bool load_file_data(file_t* file, const uint64_t offset, const uint64_t count)
+bool load_file_data(file_t* file, const ULONG offset, const ULONG count)
 {
 	bool result = false;
 
 	if (file != NULL) {
 		if (file->handle != NULL && offset <= file->size) {
 			/* store current position indicator for later */
-			uint64_t position = ftell(file->handle);
+			ULONG position = ftell(file->handle);
 
 			if (!fseek(file->handle, offset, SEEK_SET)) {
 				/* where the data starts on the file */
@@ -92,7 +99,7 @@ bool load_file_data(file_t* file, const uint64_t offset, const uint64_t count)
 				file->data.size = (offset + count > file->size) ? file->size - offset : count;
 
 				/* allocate memory */
-				file->data.buffer = (uint8_t*)realloc(file->data.buffer, (file->data.size + 1));
+				file->data.buffer = (UBYTE*)realloc(file->data.buffer, (file->data.size + 1));
 
 				/* prevents string overflow when using string.h functions */
 				file->data.buffer[file->data.size] = '\0';
@@ -113,18 +120,18 @@ bool load_file_data(file_t* file, const uint64_t offset, const uint64_t count)
 }
 
 /* write a block of data from buffer into file */
-bool replace_file_data(file_t* file, const uint64_t offset, const uint64_t count)
+bool replace_file_data(file_t* file, const ULONG offset, const ULONG count)
 {
 	bool result = false;
 
 	if (file != NULL) {
 		if (file->handle != NULL && file->data.buffer != NULL && offset <= file->size) {
 			/* store current position indicator for later */
-			uint64_t position = ftell(file->handle);
+			ULONG position = ftell(file->handle);
 
 			if (!fseek(file->handle, offset, SEEK_SET)) {
 				/* prevents buffer data overflow */
-				uint64_t size = (count > file->data.size) ? file->data.size : count;
+				ULONG size = (count > file->data.size) ? file->data.size : count;
 
 				/* write data to file */
 				result = (fwrite(file->data.buffer, 1, size, file->handle) == size);
@@ -144,7 +151,7 @@ void replace_buffer_data(file_t* file, data_t* data)
 	if (file != NULL && data != NULL) {
 		if (file->data.buffer != NULL && data->buffer != NULL) {
 			/* prevents file buffer data overflow */
-			uint64_t size = (data->size > file->data.size) ? file->data.size : data->size;
+			ULONG size = (data->size > file->data.size) ? file->data.size : data->size;
 
 			/* write data to file buffer */
 			memcpy(file->data.buffer, data->buffer, size);
@@ -188,7 +195,7 @@ file_t* open_file(char* filename)
 
 			/* initialize the data buffer */
 			file->data.size = 0;
-			file->data.buffer = (uint8_t*)malloc(1);
+			file->data.buffer = (UBYTE*)malloc(1);
 
 			if (file->data.buffer != NULL)
 				*file->data.buffer = '\0';
