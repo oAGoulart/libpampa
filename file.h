@@ -15,7 +15,7 @@
 #define UBYTE uint8_t
 
 #ifdef __NR_stat64
-	#define ULONG ULONG
+	#define ULONG uint64_t
 #else
 	#define ULONG uint32_t
 #endif
@@ -32,7 +32,7 @@
 #else
 	#include <fcntl.h>
 
-	#define STAT  stat                           /* always stat64 on Linux 2.4+ */
+	#define STAT  stat                           /* always stat64 on kernel 2.4+ */
 	#define MODE  0777
 	#define OPEN  open
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
@@ -214,6 +214,7 @@ bool create_file(char* filename)
 	/* create file and store handle */
 	int  file = OPEN(filename, OFLAG, MODE);
 
+	/* return result and free handle */
 	return (file == -1) ? false : (!CLOSE(file));
 }
 
