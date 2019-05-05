@@ -1,9 +1,24 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
 
-steps:
-- script: cd examples && make
-  displayName: 'Build'
+  steps:
+  - script: cd examples && make
+
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.14'
+
+  steps:
+  - script: cd examples && gcc -o examples *.c -DUNIX -Wall -g
+
+- job: Windows
+  pool:
+    vmImage: 'windows-2019'
+
+  steps:
+  - script: cd examples && gcc -o examples *.c -DWINDOWS -Wall -g 
