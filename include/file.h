@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 Augusto Goulart
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #ifndef FILE_H
 #define FILE_H
 
@@ -42,7 +58,7 @@
 /* structs */
 typedef struct data
 {
-	ULONG  size;     /* buffer size without ending \0 */
+	size_t size;     /* buffer size without ending \0 */
 	UBYTE* buffer;   /* data buffer */
 } data_t;
 
@@ -51,9 +67,40 @@ typedef struct file
 	char*  path;     /* path to the file */
 	FILE*  handle;   /* stdio file handle */
 	ULONG  offset;   /* current location from the file origin */
-	ULONG  size;     /* size of the file (not the buffer) */
+	size_t size;     /* size of the file (not the buffer) */
 	data_t data;     /* buffer to store file data */
 } file_t;
+
+/* free buffer memory */
+void free_data_memory(data_t* data)
+{
+	if (data->buffer != NULL) {
+		free(data->buffer);
+		data->buffer = NULL;
+	}
+
+	data->size = 0;
+}
+
+/* allocate buffer memory */
+bool alloc_data_memory(data_t* data)
+{
+	bool result = false;
+
+	if (data != NULL) {
+		/* allocate memory */
+		data->buffer = (UBYTE*)realloc(data->buffer, (data->size + 1));
+
+		if (data->buffer != NULL) {
+			/* prevents string overflow when using string.h functions */
+			data->buffer[data->size] = '\0';
+
+			result = true;
+		}
+	}
+
+	return result;
+}
 
 /* find the size of a file */
 ULONG find_file_size(const char* filename)
@@ -66,19 +113,6 @@ ULONG find_file_size(const char* filename)
 		file_size = file_status.st_size;
 
 	return file_size;
-}
-
-/* free up data space in buffer */
-void unload_file_data(file_t* file)
-{
-	if (file != NULL) {
-		if (file->data.buffer != NULL) {
-			free(file->data.buffer);
-			file->data.buffer = NULL;
-		}
-
-		file->data.size = 0;
-	}
 }
 
 /* load a block of data from file into buffer */
@@ -99,16 +133,15 @@ bool load_file_data(file_t* file, const ULONG offset, const ULONG count)
 				file->data.size = (offset + count > file->size) ? file->size - offset : count;
 
 				/* allocate memory */
-				file->data.buffer = (UBYTE*)realloc(file->data.buffer, (file->data.size + 1));
-
-				/* prevents string overflow when using string.h functions */
-				file->data.buffer[file->data.size] = '\0';
-
-				/* read data from file */
-				if (fread(file->data.buffer, 1, file->data.size, file->handle) == file->data.size)
-					result = true;
+				if (alloc_data_memory(&file->data)) {
+					/* read data from file */
+					if (fread(file->data.buffer, 1, file->data.size, file->handle) == file->data.size)
+						result = true;
+					else
+						free_data_memory(&file->data);
+				}
 				else
-					unload_file_data(file);
+					free_data_memory(&file->data);
 			}
 
 			/* restore file position indicator */
@@ -170,7 +203,7 @@ void close_file(file_t* file)
 			fclose(file->handle);
 
 		/* free memory and clean pointers */
-		unload_file_data(file);
+		free_data_memory(&file->data);
 		free(file);
 		file = NULL;
 	}
@@ -209,6 +242,7 @@ file_t* open_file(char* filename)
 	return file;
 }
 
+/* create a new file if one doesn't exist */
 bool create_file(char* filename)
 {
 	/* create file and store handle */
