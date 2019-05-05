@@ -28,7 +28,7 @@ int main()
 		/* replace file data */
 		replace_file_data(file, 0, file->size);
 
-		printf("%u\n", file->data.size);
+		printf("%lu\n", (long unsigned)file->data.size);
 
 		/* close file */
 		close_file(file);
