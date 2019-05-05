@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 /* handle data types size */
 #define UBYTE uint8_t
@@ -46,8 +47,6 @@
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
 #else
-	#include <fcntl.h>
-
 	#define STAT  stat                           /* always stat64 on kernel 2.4+ */
 	#define MODE  0777
 	#define OPEN  open
