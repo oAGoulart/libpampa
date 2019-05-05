@@ -204,7 +204,7 @@ void close_file(file_t* file)
 		/* free memory and clean pointers */
 		free_data_memory(&file->data);
 		free(file);
-		file = NULL;
+		file = (file_t*)NULL;
 	}
 }
 
