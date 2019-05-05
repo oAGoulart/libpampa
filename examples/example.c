@@ -11,7 +11,7 @@ int main()
 	file_t* file = open_file("/home/agoulart/MEGAsync/Repositories/loader/samples/test.test");
 
 	if (file != NULL) {
-		printf("%u\n", file->size);
+		printf("%lu\n", (long unsigned)file->size);
 
 		/* load file's data into memory */
 		if (load_file_data(file, 0, file->size))
