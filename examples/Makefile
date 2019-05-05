@@ -1,6 +1,6 @@
 CC=gcc
 OS=UNIX
-BIN=sample
+BIN=example
 
 loader: *.c
 	$(CC) -o $(BIN) *.c -D$(OS) -Wall -g
