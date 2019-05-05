@@ -21,4 +21,4 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
-  - script: cd examples && gcc -o examples *.c -DWINDOWS -Wall -g 
+  - script: cd examples && gcc -o examples.exe *.c -DWINDOWS -Wall -g 
