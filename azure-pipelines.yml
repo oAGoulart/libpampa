@@ -7,41 +7,34 @@ jobs:
     vmImage: 'ubuntu-16.04'
 
   steps:
-  - script: cd examples
-
   - task: CMake@1
     inputs:
-      cmakeArgs: '$(Build.SourcesDirectory)'
+      cmakeArgs: '$(Build.SourcesDirectory)/examples'
 
-  - script: cd build && make
+  - script: cd examples && make
 
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
 
   steps:
-  - script: cd examples
-
   - task: CMake@1
     inputs:
-      cmakeArgs: '$(Build.SourcesDirectory)'
+      cmakeArgs: '$(Build.SourcesDirectory)/examples'
 
-  - script: cd build && make
+  - script: cd examples && make
 
 - job: Windows
   pool:
     vmImage: 'windows-2019'
 
   steps:
-  - script: cd examples
-
   - task: CMake@1
     inputs:
-      workingDirectory: 'build'
       cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)'
 
   - task: MSBuild@1
     inputs:
-      solution: 'build/*.sln'
+      solution: '$(Build.SourcesDirectory)/examples/*.sln'
       maximumCpuCount: true
       platform: 'x64'
