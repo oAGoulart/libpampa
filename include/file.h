@@ -25,13 +25,12 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <fcntl.h>
 
 /* handle data types size */
 #define UBYTE uint8_t
 
-#ifdef __NR_stat64
+#ifdef X64
 	#define ULONG uint64_t
 #else
 	#define ULONG uint32_t
