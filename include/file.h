@@ -46,6 +46,8 @@
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
 #else
+	#include <unistd.h>
+
 	#define STAT  stat                           /* always stat64 on kernel 2.4+ */
 	#define MODE  0777
 	#define OPEN  open
