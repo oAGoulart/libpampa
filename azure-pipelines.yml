@@ -11,7 +11,7 @@ jobs:
     inputs:
       cmakeArgs: '$(Build.SourcesDirectory)/examples'
 
-  - script: cd examples && make
+  - script: cd build && make
 
 - job: macOS
   pool:
@@ -22,7 +22,7 @@ jobs:
     inputs:
       cmakeArgs: '$(Build.SourcesDirectory)/examples'
 
-  - script: cd examples && make
+  - script: cd build && make
 
 - job: Windows
   pool:
@@ -31,10 +31,10 @@ jobs:
   steps:
   - task: CMake@1
     inputs:
-      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)'
+      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)/examples'
 
   - task: MSBuild@1
     inputs:
-      solution: '$(Build.SourcesDirectory)/examples/*.sln'
+      solution: '$(Build.SourcesDirectory)/build/*.sln'
       maximumCpuCount: true
       platform: 'x64'
