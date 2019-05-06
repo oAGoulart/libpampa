@@ -50,10 +50,10 @@ jobs:
   steps:
   - task: CMake@1
     inputs:
-      cmakeArgs: '-A x86 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-A Win32 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)/examples'
 
   - task: MSBuild@1
     inputs:
       solution: '$(Build.SourcesDirectory)/build/*.sln'
       maximumCpuCount: true
-      platform: 'x86'
+      platform: 'Win32'
