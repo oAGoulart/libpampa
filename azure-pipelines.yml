@@ -11,7 +11,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      workingDirectory: 'build'
+      cmakeArgs: '$(Build.SourcesDirectory)'
 
   - script: cd build && make
 
@@ -24,7 +24,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      workingDirectory: 'build'
+      cmakeArgs: '$(Build.SourcesDirectory)'
 
   - script: cd build && make
 
@@ -38,7 +38,7 @@ jobs:
   - task: CMake@1
     inputs:
       workingDirectory: 'build'
-      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows'
+      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)'
 
   - task: MSBuild@1
     inputs:
