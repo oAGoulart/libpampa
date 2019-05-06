@@ -7,24 +7,28 @@ jobs:
     vmImage: 'ubuntu-16.04'
 
   steps:
+  - script: sudo apt-get install ninja-build
+
   - task: CMake@1
     inputs:
-      cmakeArgs: '$(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja $(Build.SourcesDirectory)/examples'
 
-  - script: cd build && make
+  - script: cd build && ninja
 
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
 
   steps:
+  - script: brew install ninja
+
   - task: CMake@1
     inputs:
-      cmakeArgs: '$(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja $(Build.SourcesDirectory)/examples'
 
-  - script: cd build && make
+  - script: cd build && ninja
 
-- job: Windows
+- job: Windows_x64
   pool:
     vmImage: 'windows-2019'
 
@@ -38,3 +42,18 @@ jobs:
       solution: '$(Build.SourcesDirectory)/build/*.sln'
       maximumCpuCount: true
       platform: 'x64'
+
+- job: Windows_x86
+  pool:
+    vmImage: 'windows-2019'
+
+  steps:
+  - task: CMake@1
+    inputs:
+      cmakeArgs: '-A x86 -DCMAKE_HOST_SYSTEM_NAME=Windows $(Build.SourcesDirectory)/examples'
+
+  - task: MSBuild@1
+    inputs:
+      solution: '$(Build.SourcesDirectory)/build/*.sln'
+      maximumCpuCount: true
+      platform: 'x86'
