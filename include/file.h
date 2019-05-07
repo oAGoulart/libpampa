@@ -222,16 +222,16 @@ void replace_buffer_data(file_t* file, data_t* data)
 }
 
 /* close file and clean up memory */
-void close_file(file_t* file)
+void close_file(file_t** file)
 {
-	if (file != NULL) {
-		if (file->handle != NULL)
-			fclose(file->handle);
+	if (*file != NULL) {
+		if ((*file)->handle != NULL)
+			fclose((*file)->handle);
 
 		/* free memory and clean pointers */
-		free_data_memory(&file->data);
-		free(file);
-		file = (file_t*)NULL;
+		free_data_memory(&(*file)->data);
+		free(*file);
+		*file = NULL;
 	}
 }
 
@@ -259,10 +259,10 @@ file_t* open_file(char* filename)
 			if (file->data.buffer != NULL)
 				*file->data.buffer = '\0';
 			else
-				close_file(file);
+				close_file(&file);
 		}
 		else
-			close_file(file);
+			close_file(&file);
 	}
 
 	return file;
