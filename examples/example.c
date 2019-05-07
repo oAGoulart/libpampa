@@ -31,6 +31,6 @@ int main()
 		printf("%lu\n", (unsigned long)file->data.size);
 
 		/* close file */
-		close_file(file);
+		close_file(&file);
 	}
 }
