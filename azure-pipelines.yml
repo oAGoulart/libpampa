@@ -11,7 +11,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      cmakeArgs: '-G Ninja $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja -DCMAKE_GENERATOR_PLATFORM=x64 $(Build.SourcesDirectory)/examples'
 
   - script: cd build && ninja
 
@@ -24,7 +24,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      cmakeArgs: '-G Ninja $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja -DCMAKE_GENERATOR_PLATFORM=x64 $(Build.SourcesDirectory)/examples'
 
   - script: cd build && ninja
 
