@@ -23,24 +23,36 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef X64
+	#define _FILE_OFFSET_BITS 64
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/* handle data types size */
+/* define data types size and platform calls */
 #define UBYTE uint8_t
 
-#ifdef X64
-	#define ULONG uint64_t
-#else
-	#define ULONG uint32_t
-#endif
-
-/* handle platforms calls */
 #ifdef WINDOWS
 	#include <io.h>
 
-	#define STAT  _stat64                        /* may be defined as _stat */
+	#ifdef X64
+		#define NLONG int64_t
+
+		#define STAT  _stat64     /* may be defined as _stat on Win32 */
+		#define FTELL _ftelli64
+		#define FSEEK _fseeki64
+	#else
+		#define NLONG int32_t
+
+		#define STAT  _stat32
+		#define FTELL ftell
+		#define FSEEK fseek
+	#endif
+
+	#define OFF_T NLONG
+
 	#define MODE  _S_IREAD | _S_IWRITE
 	#define OPEN  _open
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
@@ -48,7 +60,21 @@
 #else
 	#include <unistd.h>
 
-	#define STAT  stat                           /* always stat64 on kernel 2.4+ */
+	#ifdef X64
+		#define NLONG uint64_t
+		#define OFF_T NLONG
+
+		#define FTELL ftello
+		#define FSEEK fseeko
+	#else
+		#define NLONG uint32_t
+		#define OFF_T int32_t
+
+		#define FTELL ftell
+		#define FSEEK fseek
+	#endif
+
+	#define STAT  stat                           /* always stat64 on Linux kernel 2.4+ */
 	#define MODE  0777
 	#define OPEN  open
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
@@ -66,7 +92,7 @@ typedef struct file
 {
 	char*  path;     /* path to the file */
 	FILE*  handle;   /* stdio file handle */
-	ULONG  offset;   /* current location from the file origin */
+	OFF_T  offset;   /* current location from the file origin */
 	size_t size;     /* size of the file (not the buffer) */
 	data_t data;     /* buffer to store file data */
 } file_t;
@@ -103,9 +129,9 @@ bool alloc_data_memory(data_t* data)
 }
 
 /* find the size of a file */
-ULONG find_file_size(const char* filename)
+NLONG find_file_size(const char* filename)
 {
-	ULONG file_size = 0;
+	NLONG file_size = 0;
 	struct STAT file_status;
 
 	/* return 0 if successful */
@@ -116,21 +142,21 @@ ULONG find_file_size(const char* filename)
 }
 
 /* load a block of data from file into buffer */
-bool load_file_data(file_t* file, const ULONG offset, const ULONG count)
+bool load_file_data(file_t* file, const OFF_T offset, const OFF_T count)
 {
 	bool result = false;
 
 	if (file != NULL) {
-		if (file->handle != NULL && offset <= file->size) {
+		if (file->handle != NULL && (size_t)offset <= file->size) {
 			/* store current position indicator for later */
-			ULONG position = ftell(file->handle);
+			OFF_T position = FTELL(file->handle);
 
-			if (!fseek(file->handle, offset, SEEK_SET)) {
+			if (!FSEEK(file->handle, offset, SEEK_SET)) {
 				/* where the data starts on the file */
 				file->offset = offset;
 
 				/* maximum/given buffer size without end of line char */
-				file->data.size = (offset + count > file->size) ? file->size - offset : count;
+				file->data.size = ((size_t)(offset + count) > file->size) ? file->size - offset : count;
 
 				/* allocate memory */
 				if (alloc_data_memory(&file->data)) {
@@ -145,7 +171,7 @@ bool load_file_data(file_t* file, const ULONG offset, const ULONG count)
 			}
 
 			/* restore file position indicator */
-			fseek(file->handle, position, SEEK_SET);
+			FSEEK(file->handle, position, SEEK_SET);
 		}
 	}
 
@@ -153,25 +179,25 @@ bool load_file_data(file_t* file, const ULONG offset, const ULONG count)
 }
 
 /* write a block of data from buffer into file */
-bool replace_file_data(file_t* file, const ULONG offset, const ULONG count)
+bool replace_file_data(file_t* file, const OFF_T offset, const OFF_T count)
 {
 	bool result = false;
 
 	if (file != NULL) {
-		if (file->handle != NULL && file->data.buffer != NULL && offset <= file->size) {
+		if (file->handle != NULL && file->data.buffer != NULL && (size_t)offset <= file->size) {
 			/* store current position indicator for later */
-			ULONG position = ftell(file->handle);
+			OFF_T position = FTELL(file->handle);
 
-			if (!fseek(file->handle, offset, SEEK_SET)) {
+			if (!FSEEK(file->handle, offset, SEEK_SET)) {
 				/* prevents buffer data overflow */
-				ULONG size = (count > file->data.size) ? file->data.size : count;
+				size_t size = ((size_t)count > file->data.size) ? file->data.size : count;
 
 				/* write data to file */
 				result = (fwrite(file->data.buffer, 1, size, file->handle) == size);
 			}
 
 			/* restore file position indicator */
-			fseek(file->handle, position, SEEK_SET);
+			FSEEK(file->handle, position, SEEK_SET);
 		}
 	}
 
@@ -184,7 +210,7 @@ void replace_buffer_data(file_t* file, data_t* data)
 	if (file != NULL && data != NULL) {
 		if (file->data.buffer != NULL && data->buffer != NULL) {
 			/* prevents file buffer data overflow */
-			ULONG size = (data->size > file->data.size) ? file->data.size : data->size;
+			size_t size = (data->size > file->data.size) ? file->data.size : data->size;
 
 			/* write data to file buffer */
 			memcpy(file->data.buffer, data->buffer, size);
@@ -246,7 +272,7 @@ file_t* open_file(char* filename)
 bool create_file(char* filename)
 {
 	/* create file and store handle */
-	int  file = OPEN(filename, OFLAG, MODE);
+	int file = OPEN(filename, OFLAG, MODE);
 
 	/* return result and free handle */
 	return (file == -1) ? false : (!CLOSE(file));

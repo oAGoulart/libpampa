@@ -20,7 +20,7 @@ int main()
 		/* allocate memory */
 		data_t data;
 		data.size = 10;
-		data.buffer = (uint8_t*)"0123456789";
+		data.buffer = (UBYTE*)"0123456789";
 
 		/* replace file buffer data */
 		replace_buffer_data(file, &data);
