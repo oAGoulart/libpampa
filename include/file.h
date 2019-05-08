@@ -37,6 +37,7 @@
 
 #ifdef WINDOWS
 	#include <io.h>
+	#include <share.h>
 
 	#ifdef X64
 		#define NLONG int64_t
@@ -55,7 +56,7 @@
 	#define OFF_T NLONG
 
 	#define MODE  _S_IREAD | _S_IWRITE
-	#define OPEN  _open
+	#define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
 	#define FOPEN fopen_s
@@ -78,7 +79,7 @@
 
 	#define STAT  stat                           /* always stat64 on Linux kernel 2.4+ */
 	#define MODE  0777
-	#define OPEN  open
+	#define OPEN(handle, filename, flag, mode) (((*handle = open(filename, flag, mode)) == -1) ? errno : false)   /* quick and dirty */
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
 	#define CLOSE close
 	#define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)   /* quick and dirty */
@@ -244,7 +245,7 @@ bool open_file(file_t** file, char* filename)
 	bool result = false;
 
 	/* initialize file struct */
-	*file = (file_t*)calloc(sizeof(*file), 1);
+	*file = (file_t*)calloc(sizeof(**file), 1);
 
 	/* asign values to struct */
 	if (*file != NULL) {
@@ -275,11 +276,10 @@ bool open_file(file_t** file, char* filename)
 /* create a new file if one doesn't exist */
 bool create_file(char* filename)
 {
-	/* create file and store handle */
-	int file = OPEN(filename, OFLAG, MODE);
+	int file;
 
 	/* return result and free handle */
-	return (file == -1) ? false : (!CLOSE(file));
+	return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!CLOSE(file));
 }
 
 #endif
