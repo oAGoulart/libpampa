@@ -22,6 +22,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 #ifdef X64
 	#define _FILE_OFFSET_BITS 64
@@ -57,6 +58,7 @@
 	#define OPEN  _open
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
+	#define FOPEN fopen_s
 #else
 	#include <unistd.h>
 
@@ -79,6 +81,7 @@
 	#define OPEN  open
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
 	#define CLOSE close
+	#define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)   /* quick and dirty */
 #endif
 
 /* structs */
@@ -236,36 +239,37 @@ void close_file(file_t** file)
 }
 
 /* open file without loading any data from disk to memory */
-file_t* open_file(char* filename)
+bool open_file(file_t** file, char* filename)
 {
-	file_t* file = NULL;
+	bool result = false;
 
 	/* initialize file struct */
-	file = (file_t*)calloc(sizeof(*file), 1);
+	*file = (file_t*)calloc(sizeof(*file), 1);
 
 	/* asign values to struct */
-	if (file != NULL) {
-		file->path = filename;
-		file->handle = fopen(file->path, "rb+");
+	if (*file != NULL) {
+		(*file)->path = filename;
 
-		if (file->handle != NULL) {
-			file->offset = 0;
-			file->size = find_file_size(file->path);
+		if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
+			(*file)->offset = 0;
+			(*file)->size = find_file_size((*file)->path);
 
 			/* initialize the data buffer */
-			file->data.size = 0;
-			file->data.buffer = (UBYTE*)malloc(1);
+			(*file)->data.size = 0;
+			(*file)->data.buffer = (UBYTE*)malloc(1);
 
-			if (file->data.buffer != NULL)
-				*file->data.buffer = '\0';
+			if ((*file)->data.buffer != NULL) {
+				*(*file)->data.buffer = '\0';
+				result = true;
+			}
 			else
-				close_file(&file);
+				close_file(file);
 		}
 		else
-			close_file(&file);
+			close_file(file);
 	}
 
-	return file;
+	return result;
 }
 
 /* create a new file if one doesn't exist */

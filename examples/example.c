@@ -8,9 +8,9 @@ int main()
 	create_file("/home/agoulart/MEGAsync/Repositories/loader/samples/test.test");
 
 	/* open file */
-	file_t* file = open_file("/home/agoulart/MEGAsync/Repositories/loader/samples/test.test");
+	file_t* file;
 
-	if (file != NULL) {
+	if (open_file(&file, "/home/agoulart/MEGAsync/Repositories/loader/samples/test.test")) {
 		printf("%lu\n", (unsigned long)file->size);
 
 		/* load file's data into memory */
