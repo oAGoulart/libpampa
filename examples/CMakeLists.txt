@@ -8,7 +8,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 if(X64_FILES)
- add_definitions(-DX64)
+ add_definitions(-DX64_FILES)
 endif()
 
-add_executable(example example.c)
+add_executable(files files.c)
