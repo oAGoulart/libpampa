@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "types.h"
+#include "memory.h"
 
 /* add 64 bits file support */
 #ifdef X64_FILES
@@ -33,28 +35,24 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/* define data types and platform calls */
-#define UBYTE uint8_t
-
+/* define platform specific stuff */
 #ifdef WINDOWS
 	#include <io.h>
 	#include <share.h>
 
 	#ifdef X64_FILES
-		#define NLONG int64_t
+		#define OFF_T int64_t
 
-		#define STAT  _stat64     /* NOTE: may be defined as _stat on Win32 */
+		#define STAT  _stat64   /* NOTE: this may be defined as _stat on Win32 */
 		#define FTELL _ftelli64
 		#define FSEEK _fseeki64
 	#else
-		#define NLONG int32_t
+		#define OFF_T int32_t
 
 		#define STAT  _stat32
 		#define FTELL ftell
 		#define FSEEK fseek
 	#endif
-
-	#define OFF_T NLONG
 
 	#define MODE  _S_IREAD | _S_IWRITE
 	#define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
@@ -65,14 +63,12 @@
 	#include <unistd.h>
 
 	#ifdef X64_FILES
-		#define NLONG uint64_t
-		#define OFF_T NLONG
+		#define OFF_T uint64_t
 
 		#define FTELL ftello
 		#define FSEEK fseeko
 	#else
-		#define NLONG uint32_t
-		#define OFF_T int32_t
+		#define OFF_T uint32_t
 
 		#define FTELL ftell
 		#define FSEEK fseek
@@ -87,12 +83,6 @@
 #endif
 
 /* define structs */
-typedef struct data
-{
-	size_t size;    /* buffer size without ending nul char */
-	UBYTE* address; /* data location */
-} data_t;
-
 typedef struct file
 {
 	char*  path;   /* file path */
@@ -102,41 +92,10 @@ typedef struct file
 	data_t buffer; /* buffer to load file data */
 } file_t;
 
-/* free data buffer memory */
-void data_free_buffer(data_t* data)
-{
-	if (data->address != NULL) {
-		free(data->address);
-		data->address = NULL;
-	}
-
-	data->size = 0;
-}
-
-/* allocate data buffer memory */
-bool data_alloc_buffer(data_t* data)
-{
-	bool result = false;
-
-	if (data != NULL) {
-		/* allocate memory */
-		data->address = (UBYTE*)realloc(data->address, (data->size + 1));
-
-		if (data->address != NULL) {
-			/* prevents memory overflow when using string.h functions */
-			data->address[data->size] = '\0';
-
-			result = true;
-		}
-	}
-
-	return result;
-}
-
 /* find the size of a file */
-NLONG file_find_size(const char* filename)
+size_t file_find_size(const char* filename)
 {
-	NLONG file_size = 0;
+	size_t file_size = 0;
 	struct STAT file_status;
 
 	/* return 0 if successful */
