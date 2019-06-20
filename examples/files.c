@@ -20,7 +20,7 @@ int main()
 		/* allocate memory */
 		data_t data;
 		data.size = 10;
-		data.address = (UBYTE*)"0123456789";
+		data.address = (ubyte_t*)"0123456789";
 
 		/* replace file buffer data */
 		file_replace_buffer(file, &data);
