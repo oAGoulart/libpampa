@@ -86,7 +86,7 @@ bool data_alloc_buffer(data_t* data)
 /* set memory protection */
 void memory_set_protection(const void* address, const size_t size, const int mode) {
 	if (address != NULL && size > 0) {
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 		int old_mode;
 		VirtualProtect((LPVOID)address, size, mode, &old_mode);
 #else
@@ -107,18 +107,18 @@ int memory_get_protection(void* address) {
 	int result = 0;
 
 	if (address != NULL) {
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 		MEMORY_BASIC_INFORMATION page_info;
 		if (VirtualQuery(address, &page_info, sizeof(MEMORY_BASIC_INFORMATION)) == sizeof(MEMORY_BASIC_INFORMATION))
 			result = page_info.Protect;
 #else
 		FILE* maps = fopen("/proc/self/maps", "r"); /* currently mapped memory regions */
-		uintptr_t block[2] = { 0, 0 };              /* block of memory addresses */
+		ulong_t block[2] = { 0, 0 };                /* block of memory addresses */
 		char perms[5];                              /* set of permissions */
 
 		/* parse file lines */
-		while (fscanf(maps, "%x-%x %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
-			if (block[0] <= (uintptr_t)address && block[1] >= (uintptr_t)address) {
+		while (fscanf(maps, "%lx-%lx %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+			if (block[0] <= (ulong_t)address && block[1] >= (ulong_t)address) {
 				result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
 				result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
 				result |= (perms[2] == 'x') ? PROT_EXEC : PROT_NONE;  /* can be executed */

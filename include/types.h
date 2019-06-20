@@ -33,11 +33,12 @@
 
 /* define basic types */
 typedef unsigned char ubyte_t;
+typedef unsigned long ulong_t;
 
-#ifdef __X86_ARCH__
+/*#ifdef __X86_ARCH__
 	typedef uint32_t ulong_t;
-#else /* assume 64-bit architecture */
+#else
 	typedef uint64_t ulong_t;
-#endif
+#endif*/
 
 #endif /* _types_h_ */
