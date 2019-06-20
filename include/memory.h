@@ -14,21 +14,43 @@
  * limitations under the License.
  */
 
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef _memory_h_
+#define _memory_h_
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 #include "types.h"
 
+/* define platform specific stuff */
+#ifdef WINDOWS
+	/* NOTE: link Kernel32.lib on windows */
+	#ifndef WIN32_LEAN_AND_MEAN
+ 	#define WIN32_LEAN_AND_MEAN
+ 	#endif
+	#include <Windows.h>
+	#include <Memoryapi.h>
+
+	#define MEM_UNPROT PAGE_EXECUTE_READWRITE
+#else /* assume POSIX */
+	#include <unistd.h>
+	#include <sys/mman.h>
+
+	#define MEM_UNPROT PROT_READ | PROT_WRITE | PROT_EXEC
+#endif
+
 /* define structs */
-typedef struct data
+typedef struct data_s
 {
-	size_t size;    /* buffer size without ending nul char */
-	UBYTE* address; /* data location */
+	size_t size;      /* buffer size without ending nul char */
+	ubyte_t* address; /* data location */
 } data_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* free data buffer memory */
 void data_free_buffer(data_t* data)
@@ -48,7 +70,7 @@ bool data_alloc_buffer(data_t* data)
 
 	if (data != NULL) {
 		/* allocate memory */
-		data->address = (UBYTE*)realloc(data->address, (data->size + 1));
+		data->address = realloc(data->address, (data->size + 1));
 
 		if (data->address != NULL) {
 			/* prevents memory overflow when using string.h functions */
@@ -61,4 +83,78 @@ bool data_alloc_buffer(data_t* data)
 	return result;
 }
 
+/* set memory protection */
+void memory_set_protection(const void* address, const size_t size, const int mode) {
+	if (address != NULL && size > 0) {
+#ifdef WINDOWS
+		int old_mode;
+		VirtualProtect((LPVOID)address, size, mode, &old_mode);
+#else
+		/* get size of pages */
+		long page_sz = sysconf(_SC_PAGESIZE);
+
+		/* find page pointer */
+		void* page_ptr = (long*)((long)address & ~(page_sz - 1));
+
+		/* no previous mode to be returned */
+		mprotect(page_ptr, size, mode);
 #endif
+	}
+}
+
+/* get memory protection */
+int memory_get_protection(void* address) {
+	int result = 0;
+
+	if (address != NULL) {
+#ifdef WINDOWS
+		MEMORY_BASIC_INFORMATION page_info;
+		if (VirtualQuery(address, &page_info, sizeof(MEMORY_BASIC_INFORMATION)) == sizeof(MEMORY_BASIC_INFORMATION))
+			result = page_info.Protect;
+#else
+		FILE* maps = fopen("/proc/self/maps", "r"); /* currently mapped memory regions */
+		uintptr_t block[2] = { 0, 0 };              /* block of memory addresses */
+		char perms[5];                              /* set of permissions */
+
+		/* parse file lines */
+		while (fscanf(maps, "%x-%x %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+			if (block[0] <= (uintptr_t)address && block[1] >= (uintptr_t)address) {
+				result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
+				result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
+				result |= (perms[2] == 'x') ? PROT_EXEC : PROT_NONE;  /* can be executed */
+				break;
+			}
+		}
+#endif
+	}
+
+	return result;
+}
+
+/* write data into memory */
+void memory_set_raw(void* address, const void* data, const size_t size, const bool vp)
+{
+	if (address != NULL && data != NULL && size > 0) {
+		if (vp) {
+			/* store memory protection for later */
+			int old_mode = memory_get_protection(address);
+
+			/* remove virtual protection */
+			memory_set_protection(address, size, MEM_UNPROT);
+
+			/* write data into memory */
+			memcpy(address, data, size);
+
+			/* reset virtual protection */
+			memory_set_protection(address, size, old_mode);
+		}
+		else
+			memcpy(address, data, size);
+	}
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _memory_h_ */
