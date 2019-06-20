@@ -20,13 +20,13 @@ static void set_jump(void* address, const void* dest, const bool vp)
 		int opcode = 0xE9;
 
 		/* find destination offset */
-		ulong_t offset = (ulong_t)dest - ((ulong_t)address + 1 + sizeof(ulong_t));
+		ulong_t offset = (ulong_t*)dest - ((ulong_t*)address + 1 + sizeof(ulong_t*));
 
 		/* write opcode */
 		memory_set_raw(address, &opcode, 1, true);
 
 		/* write destination offset */
-		memory_set_raw((void*)((ulong_t)address + 1), &offset, sizeof(ulong_t), true);
+		memory_set_raw((ulong_t*)address + 1, &offset, sizeof(ulong_t*), true);
 	}
 }
 
