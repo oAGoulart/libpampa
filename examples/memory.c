@@ -5,7 +5,7 @@
 #include "../include/memory.h"
 
 /* platform specific stuff */
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 	/* NOTE: link Ws2_32.lib on windows */
 	#include <winsock2.h>
 #else /* assume POSIX */
