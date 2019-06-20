@@ -36,7 +36,7 @@
 #include <fcntl.h>
 
 /* define platform specific stuff */
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 	#include <io.h>
 	#include <share.h>
 

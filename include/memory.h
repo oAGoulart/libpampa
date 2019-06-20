@@ -25,7 +25,7 @@
 #include "types.h"
 
 /* define platform specific stuff */
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 	/* NOTE: link Kernel32.lib on windows */
 	#ifndef WIN32_LEAN_AND_MEAN
  	#define WIN32_LEAN_AND_MEAN
