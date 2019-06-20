@@ -116,9 +116,12 @@ int memory_get_protection(void* address) {
 		ulong_t block[2] = { 0, 0 };                /* block of memory addresses */
 		char perms[5];                              /* set of permissions */
 
-		/* TODO: change fscanf by a proper function (this one sucks) */
 		/* parse file lines */
+	#ifdef __X86_ARCH__
 		while (fscanf(maps, "%x-%x %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+	#else
+		while (fscanf(maps, "%lx-%lx %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+	#endif
 			if (block[0] <= (ulong_t)address && block[1] >= (ulong_t)address) {
 				result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
 				result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
