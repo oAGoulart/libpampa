@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef FILE_H
-#define FILE_H
+#ifndef _file_h_
+#define _file_h_
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -36,7 +36,7 @@
 #include <fcntl.h>
 
 /* define platform specific stuff */
-#ifdef WINDOWS
+#ifdef __WINDOWS__
 	#include <io.h>
 	#include <share.h>
 
@@ -63,12 +63,12 @@
 	#include <unistd.h>
 
 	#ifdef X64_FILES
-		#define OFF_T uint64_t
+		#define OFF_T int64_t
 
 		#define FTELL ftello
 		#define FSEEK fseeko
 	#else
-		#define OFF_T uint32_t
+		#define OFF_T int32_t
 
 		#define FTELL ftell
 		#define FSEEK fseek
@@ -83,7 +83,7 @@
 #endif
 
 /* define structs */
-typedef struct file
+typedef struct file_s
 {
 	char*  path;   /* file path */
 	FILE*  handle; /* stdio file handle */
@@ -92,17 +92,20 @@ typedef struct file
 	data_t buffer; /* buffer to load file data */
 } file_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* find the size of a file */
 size_t file_find_size(const char* filename)
 {
-	size_t file_size = 0;
 	struct STAT file_status;
 
-	/* return 0 if successful */
+	/* get file size */
 	if (!STAT(filename, &file_status))
-		file_size = file_status.st_size;
-
-	return file_size;
+		return file_status.st_size;
+	else
+		return 0;
 }
 
 /* load a block of data from file into buffer */
@@ -173,13 +176,13 @@ void file_replace_buffer(file_t* file, data_t* data)
 {
 	if (file != NULL && data != NULL) {
 		if (file->buffer.address != NULL && data->address != NULL) {
-			/* prevents file buffer data overflow */
+			/* prevents file buffer overflow */
 			size_t size = (data->size > file->buffer.size) ? file->buffer.size : data->size;
 
 			/* write data to file buffer */
 			memcpy(file->buffer.address, data->address, size);
 
-			/* updata file buffer size */
+			/* update file buffer size */
 			file->buffer.size = size;
 		}
 	}
@@ -205,7 +208,7 @@ bool file_open(file_t** file, char* filename)
 	bool result = false;
 
 	/* initialize file struct */
-	*file = (file_t*)calloc(sizeof(**file), 1);
+	*file = calloc(sizeof(**file), 1);
 
 	/* asign values to struct */
 	if (*file != NULL) {
@@ -217,7 +220,7 @@ bool file_open(file_t** file, char* filename)
 
 			/* initialize the data buffer */
 			(*file)->buffer.size = 0;
-			(*file)->buffer.address = (UBYTE*)malloc(1);
+			(*file)->buffer.address = malloc(1);
 
 			if ((*file)->buffer.address != NULL) {
 				*(*file)->buffer.address = '\0';
@@ -238,8 +241,12 @@ bool file_create(char* filename)
 {
 	int file;
 
-	/* return result and free handle */
+	/* free handle before return */
 	return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!CLOSE(file));
 }
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* _file_h_ */

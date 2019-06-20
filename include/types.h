@@ -14,9 +14,30 @@
  * limitations under the License.
  */
 
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef _types_h_
+#define _types_h_
 
-#define UBYTE uint8_t
+#include <stdint.h>
 
+/* find platform */
+#if defined(_WIN32) || defined(_WIN64) || defined(__MINGW32__) || defined (__MINGW64__) || defined(__CYGWIN__)
+	#undef __WINDOWS__
+	#define __WINDOWS__ 1
 #endif
+
+/* find architecture */
+#if defined(__ILP32__) || defined(_ILP32) || defined(__i386__) || defined(_M_IX86) || defined(_X86_)
+	#undef __X86_ARCH__
+	#define __X86_ARCH__ 1
+#endif
+
+/* define basic types */
+typedef unsigned char ubyte_t;
+
+#if !defined(__X86_ARCH__)
+	typedef uint64_t ulong_t;
+#else
+	typedef uint32_t ulong_t;
+#endif
+
+#endif /* _types_h_ */
