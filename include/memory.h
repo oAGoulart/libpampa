@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Augusto Goulart
+ * Copyright 2019 José Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,8 @@ bool data_alloc_buffer(data_t* data)
 }
 
 /* set memory protection */
-void memory_set_protection(const void* address, const size_t size, const int mode) {
+void memory_set_protection(const void* address, const size_t size, const int mode)
+{
 	if (address != NULL && size > 0) {
 #ifdef __WINDOWS__
 		int old_mode;
@@ -103,7 +104,8 @@ void memory_set_protection(const void* address, const size_t size, const int mod
 }
 
 /* get memory protection */
-int memory_get_protection(void* address) {
+int memory_get_protection(const void* address)
+{
 	int result = 0;
 
 	if (address != NULL) {
@@ -113,25 +115,28 @@ int memory_get_protection(void* address) {
 			result = page_info.Protect;
 #else
 		FILE* maps = fopen("/proc/self/maps", "r"); /* currently mapped memory regions */
-		ulong_t block[2] = { 0, 0 };                /* block of memory addresses */
-		char perms[5];                              /* set of permissions */
 
-		/* parse file lines */
+		if (maps != NULL) {
+			ulong_t block[2] = { 0, 0 };                /* block of memory addresses */
+			char perms[5];                              /* set of permissions */
+
+			/* parse file lines */
 	#ifdef __X86_ARCH__
-		while (fscanf(maps, "%x-%x %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+			while (fscanf(maps, "%x-%x %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
 	#else
-		while (fscanf(maps, "%lx-%lx %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
+			while (fscanf(maps, "%lx-%lx %4s %*x %*d:%*d %*d %*s\n", &block[0], &block[1], perms) == 3) {
 	#endif
-			if (block[0] <= (ulong_t)address && block[1] >= (ulong_t)address) {
-				result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
-				result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
-				result |= (perms[2] == 'x') ? PROT_EXEC : PROT_NONE;  /* can be executed */
-				break;
+				if (block[0] <= (ulong_t)address && block[1] >= (ulong_t)address) {
+					result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
+					result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
+					result |= (perms[2] == 'x') ? PROT_EXEC : PROT_NONE;  /* can be executed */
+					break;
+				}
 			}
-		}
 
-		/* close file */
-		fclose(maps);
+			/* close file */
+			fclose(maps);
+		}
 #endif
 	}
 
