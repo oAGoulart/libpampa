@@ -166,7 +166,7 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
 	}
 }
 
-#ifndef WINDOWS
+#ifndef __WINDOWS__
 /* get process base address */
 ulong_t process_get_base_address(const pid_t pid)
 {
