@@ -37,6 +37,7 @@
 #else /* assume POSIX */
 	#include <unistd.h>
 	#include <sys/mman.h>
+	#include <sys/types.h>
 
 	#define MEM_UNPROT PROT_READ | PROT_WRITE | PROT_EXEC
 #endif
@@ -164,6 +165,30 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
 			memcpy(address, data, size);
 	}
 }
+
+#ifndef __WINDOWS__
+/* get process base address */
+ulong_t process_get_base_address(const pid_t pid)
+{
+	ulong_t base_addr = 0x0; /* base address */
+	char path[FILENAME_MAX]; /* path to file */
+
+	if (sprintf(path, "/proc/%d/maps", pid) >= 0) {
+		FILE* maps = fopen(path, "r"); /* process mapped memory regions */
+
+		if (maps != NULL) {
+	#ifdef __X86_ARCH__
+			fscanf(maps, "%x-%*x %*s %*x %*d:%*d %*d %*s\n", &base_addr);
+	#else
+			fscanf(maps, "%lx-%*lx %*s %*lx %*d:%*d %*d %*s\n", &base_addr);
+	#endif
+			fclose(maps);
+		}
+	}
+
+	return base_addr;
+}
+#endif
 
 #ifdef __cplusplus
 }
