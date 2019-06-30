@@ -165,6 +165,26 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
 	}
 }
 
+#ifndef WINDOWS
+/* get process base address */
+ulong_t process_get_base_address(const pid_t pid)
+{
+	ulong_t base_addr = 0x0; /* base address */
+	char path[FILENAME_MAX]; /* path to file */
+
+	if (sprintf(path, "/proc/%d/maps", pid) >= 0) {
+		FILE* maps = fopen(path, "r"); /* process mapped memory regions */
+
+		if (maps != NULL) {
+			fscanf(maps, "%x-%*x %*s %*x %*d:%*d %*d %*s\n", &base_addr);
+			fclose(maps);
+		}
+	}
+
+	return base_addr;
+}
+#endif
+
 #ifdef __cplusplus
 }
 #endif
