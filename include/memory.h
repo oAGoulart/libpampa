@@ -37,6 +37,7 @@
 #else /* assume POSIX */
 	#include <unistd.h>
 	#include <sys/mman.h>
+	#include <sys/types.h>
 
 	#define MEM_UNPROT PROT_READ | PROT_WRITE | PROT_EXEC
 #endif
