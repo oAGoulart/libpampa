@@ -177,7 +177,11 @@ ulong_t process_get_base_address(const pid_t pid)
 		FILE* maps = fopen(path, "r"); /* process mapped memory regions */
 
 		if (maps != NULL) {
+	#ifdef __X86_ARCH__
 			fscanf(maps, "%x-%*x %*s %*x %*d:%*d %*d %*s\n", &base_addr);
+	#else
+			fscanf(maps, "%lx-%*lx %*s %*lx %*d:%*d %*d %*s\n", &base_addr);
+	#endif
 			fclose(maps);
 		}
 	}
