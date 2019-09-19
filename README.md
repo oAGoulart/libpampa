@@ -13,3 +13,7 @@ To build, just use CMake!
 ``
 mkdir build && cmake ../
 ``
+
+### Contributions
+
+Everything is *welcome!*
