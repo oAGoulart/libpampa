@@ -5,3 +5,11 @@
 [![Build Status](https://dev.azure.com/agoulart/libpampa/_apis/build/status/oAGoulart.libpampa?branchName=master)](https://dev.azure.com/agoulart/libpampa/_build/latest?definitionId=1&branchName=master)
 
 A library with some algorithms I implemented during my CS course
+
+### Building
+
+To build, just use CMake!
+
+``
+mkdir build && cmake ../
+``
