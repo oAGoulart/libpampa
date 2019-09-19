@@ -11,7 +11,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      cmakeArgs: '-G Ninja -DX64_FILES=ON $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja -DX64_FILES=ON $(Build.SourcesDirectory)'
 
   - script: cd build && ninja
 
@@ -24,7 +24,7 @@ jobs:
 
   - task: CMake@1
     inputs:
-      cmakeArgs: '-G Ninja -DX64_FILES=ON $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-G Ninja -DX64_FILES=ON $(Build.SourcesDirectory)'
 
   - script: cd build && ninja
 
@@ -35,7 +35,7 @@ jobs:
   steps:
   - task: CMake@1
     inputs:
-      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows -DX64_FILES=ON $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-A x64 -DCMAKE_HOST_SYSTEM_NAME=Windows -DX64_FILES=ON $(Build.SourcesDirectory)'
 
   - task: MSBuild@1
     inputs:
@@ -50,7 +50,7 @@ jobs:
   steps:
   - task: CMake@1
     inputs:
-      cmakeArgs: '-A Win32 -DCMAKE_HOST_SYSTEM_NAME=Windows -DX64_FILES=OFF $(Build.SourcesDirectory)/examples'
+      cmakeArgs: '-A Win32 -DCMAKE_HOST_SYSTEM_NAME=Windows -DX64_FILES=OFF $(Build.SourcesDirectory)'
 
   - task: MSBuild@1
     inputs:

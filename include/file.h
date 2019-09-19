@@ -26,9 +26,15 @@
 #include "types.h"
 #include "memory.h"
 
-/* add 64 bits file support */
+/* add 64 bit file support */
 #ifdef X64_FILES
 	#define _FILE_OFFSET_BITS 64
+
+	#define OFF_T int64_t
+#else
+	#define OFF_T int32_t
+	#define FTELL ftell
+	#define FSEEK fseek
 #endif
 
 #include <sys/types.h>
@@ -41,17 +47,11 @@
 	#include <share.h>
 
 	#ifdef X64_FILES
-		#define OFF_T int64_t
-
 		#define STAT  _stat64   /* NOTE: this may be defined as _stat on Win32 */
 		#define FTELL _ftelli64
 		#define FSEEK _fseeki64
 	#else
-		#define OFF_T int32_t
-
 		#define STAT  _stat32
-		#define FTELL ftell
-		#define FSEEK fseek
 	#endif
 
 	#define MODE  _S_IREAD | _S_IWRITE
@@ -59,19 +59,13 @@
 	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
 	#define CLOSE _close
 	#define FOPEN fopen_s
-#else /* asume POSIX */
+	#define FSCANF fscanf_s
+#else /* assume POSIX */
 	#include <unistd.h>
 
 	#ifdef X64_FILES
-		#define OFF_T int64_t
-
 		#define FTELL ftello
 		#define FSEEK fseeko
-	#else
-		#define OFF_T int32_t
-
-		#define FTELL ftell
-		#define FSEEK fseek
 	#endif
 
 	#define STAT  stat /* always stat64 on Linux kernel 2.4+ */
@@ -80,14 +74,14 @@
 	#define OFLAG O_RDWR | O_CREAT | O_EXCL
 	#define CLOSE close
 	#define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
+	#define FSCANF fscanf
 #endif
 
-/* define structs */
 typedef struct file_s
 {
 	char*  path;   /* file path */
 	FILE*  handle; /* stdio file handle */
-	OFF_T  offset; /* current location from the file origin */
+	OFF_T  offset; /* where buffer data starts */
 	size_t size;   /* size of the file in disk */
 	data_t buffer; /* buffer to load file data */
 } file_t;
@@ -97,147 +91,183 @@ extern "C" {
 #endif
 
 /* find the size of a file */
-size_t file_find_size(const char* filename)
+OFF_T file_find_size(const file_t* file)
 {
-	struct STAT file_status;
+	if (file != NULL) {
+		struct STAT file_status;
 
-	/* get file size */
-	if (!STAT(filename, &file_status))
-		return file_status.st_size;
-	else
-		return 0;
+		/* return file size */
+		if (!STAT(file->path, &file_status))
+			return file_status.st_size;
+	}
+
+	return 0;
 }
 
-/* load a block of data from file into buffer */
-bool file_load(file_t* file, const OFF_T offset, const OFF_T count)
+/* read a block of data from file into buffer */
+bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
-	bool result = false;
-
 	if (file != NULL) {
-		if (file->handle != NULL && (size_t)offset <= file->size) {
-			/* store current position indicator for later */
-			OFF_T position = FTELL(file->handle);
+		if (file->handle != NULL && (size_t)offset < file->size) {
+			/* store current position indicator */
+			OFF_T position = (!change_indicator) ? FTELL(file->handle) : 0;
 
 			if (!FSEEK(file->handle, offset, SEEK_SET)) {
 				/* where the data starts on the file */
 				file->offset = offset;
 
 				/* maximum/given buffer size without end of line char */
-				file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - offset : count;
+				file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
 
 				/* allocate memory */
-				if (data_alloc_buffer(&file->buffer)) {
+				if (data_alloc(&file->buffer)) {
 					/* read data from file */
 					if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
-						result = true;
+						return true;
 					else
-						data_free_buffer(&file->buffer);
+						data_free(&file->buffer);
 				}
 				else
-					data_free_buffer(&file->buffer);
+					data_free(&file->buffer);
 			}
 
-			/* restore file position indicator */
-			FSEEK(file->handle, position, SEEK_SET);
+			/* reset file position indicator */
+			if (!change_indicator)
+					FSEEK(file->handle, position, SEEK_SET);
 		}
 	}
 
-	return result;
+	return false;
+}
+
+/* read a line from file */
+bool file_read_line(file_t* file, const bool change_indicator)
+{
+	if (file != NULL) {
+		/* get current position */
+		OFF_T position = FTELL(file->handle);
+
+		/* go to end of line */
+		FSCANF(file->handle, "%*s\n");
+
+		/* count number of bytes */
+		OFF_T count = FTELL(file->handle) - position;
+
+		/* read data */
+		file_read(file, position, count, change_indicator);
+
+		/* reset file position indicator */
+		if (!change_indicator)
+			FSEEK(file->handle, position, SEEK_SET);
+
+		return true;
+	}
+
+	return false;
 }
 
 /* write a block of data from buffer into file */
-bool file_write(file_t* file, const OFF_T offset, const OFF_T count)
+bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
-	bool result = false;
-
 	if (file != NULL) {
-		if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset <= file->size) {
+		if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
 			/* store current position indicator for later */
-			OFF_T position = FTELL(file->handle);
+			OFF_T position = (!change_indicator) ? FTELL(file->handle) : 0;
 
 			if (!FSEEK(file->handle, offset, SEEK_SET)) {
-				/* prevents buffer data overflow */
-				size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : count;
+				/* prevents reading data outside buffer */
+				size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
 
-				/* write data to file */
-				result = (fwrite(file->buffer.address, 1, size, file->handle) == size);
+				/* write data to file and return */
+				if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
+					/* update file size */
+					file->size = (size_t)file_find_size(file);
+
+					return true;
+				}
 			}
 
-			/* restore file position indicator */
-			FSEEK(file->handle, position, SEEK_SET);
+			/* reset file position indicator */
+			if (!change_indicator)
+				FSEEK(file->handle, position, SEEK_SET);
 		}
 	}
 
-	return result;
+	return false;
 }
 
 /* write a block of data to the file buffer */
 void file_replace_buffer(file_t* file, data_t* data)
 {
 	if (file != NULL && data != NULL) {
-		if (file->buffer.address != NULL && data->address != NULL) {
-			/* prevents file buffer overflow */
-			size_t size = (data->size > file->buffer.size) ? file->buffer.size : data->size;
+		if (data->address != NULL) {
+			/* resize buffer */
+			void* temp_ptr = NULL;
 
-			/* write data to file buffer */
-			memcpy(file->buffer.address, data->address, size);
+			if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
+				/* store new address */
+				file->buffer.address = temp_ptr;
 
-			/* update file buffer size */
-			file->buffer.size = size;
+				/* write data to file buffer */
+				memcpy(file->buffer.address, data->address, data->size);
+
+				/* update file buffer size */
+				file->buffer.size = data->size;
+			}
 		}
 	}
 }
 
 /* close file and clean up memory */
-void file_close(file_t** file)
+void file_close(file_t* file)
 {
-	if (*file != NULL) {
-		if ((*file)->handle != NULL)
-			fclose((*file)->handle);
+	if (file != NULL) {
+		/* close stdio file */
+		if (file->handle != NULL)
+			fclose(file->handle);
 
-		/* free memory and clean pointers */
-		data_free_buffer(&(*file)->buffer);
-		free(*file);
-		*file = NULL;
+		/* free memory */
+		data_free(&file->buffer);
+		free(file);
 	}
 }
 
-/* open file without loading any data from disk to memory */
-bool file_open(file_t** file, char* filename)
+/* open file without loading any data */
+bool file_open(file_t** file, char* path)
 {
-	bool result = false;
+	if (file != NULL) {
+		/* initialize file struct */
+		*file = calloc(sizeof(file_t), 1);
 
-	/* initialize file struct */
-	*file = calloc(sizeof(**file), 1);
+		/* asign values to struct */
+		if (*file != NULL) {
+			(*file)->path = path;
 
-	/* asign values to struct */
-	if (*file != NULL) {
-		(*file)->path = filename;
+			if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
+				(*file)->offset = 0;
+				(*file)->size = (size_t)file_find_size(*file);
 
-		if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
-			(*file)->offset = 0;
-			(*file)->size = file_find_size((*file)->path);
+				/* initialize the data buffer */
+				(*file)->buffer.size = 1;
+				(*file)->buffer.address = malloc(1);
 
-			/* initialize the data buffer */
-			(*file)->buffer.size = 0;
-			(*file)->buffer.address = malloc(1);
-
-			if ((*file)->buffer.address != NULL) {
-				*(*file)->buffer.address = '\0';
-				result = true;
+				if ((*file)->buffer.address != NULL) {
+					*(*file)->buffer.address = '\0';
+					return true;
+				}
+				else
+					file_close(*file);
 			}
 			else
-				file_close(file);
+				file_close(*file);
 		}
-		else
-			file_close(file);
 	}
 
-	return result;
+	return false;
 }
 
 /* create a new file if one doesn't exist */
-bool file_create(char* filename)
+bool file_create(const char* filename)
 {
 	int file;
 

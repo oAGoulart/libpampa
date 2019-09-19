@@ -42,10 +42,9 @@
 	#define MEM_UNPROT PROT_READ | PROT_WRITE | PROT_EXEC
 #endif
 
-/* define structs */
 typedef struct data_s
 {
-	size_t size;      /* buffer size without ending nul char */
+	size_t size;      /* buffer size */
 	ubyte_t* address; /* data location */
 } data_t;
 
@@ -53,35 +52,32 @@ typedef struct data_s
 extern "C" {
 #endif
 
-/* free data buffer memory */
-void data_free_buffer(data_t* data)
+/* free data memory */
+void data_free(data_t* data)
 {
-	if (data->address != NULL) {
-		free(data->address);
-		data->address = NULL;
-	}
+	if (data != NULL) {
+		if (data->address != NULL) {
+			free(data->address);
+			data->address = NULL;
+		}
 
-	data->size = 0;
+		data->size = 0;
+	}
 }
 
-/* allocate data buffer memory */
-bool data_alloc_buffer(data_t* data)
+/* allocate data memory */
+bool data_alloc(data_t* data)
 {
-	bool result = false;
+	/* allocate memory */
+	ubyte_t* temp_ptr = NULL;
 
-	if (data != NULL) {
-		/* allocate memory */
-		data->address = realloc(data->address, (data->size + 1));
+	if ((temp_ptr = realloc(data->address, data->size)) != NULL) {
+		data->address = temp_ptr;
 
-		if (data->address != NULL) {
-			/* prevents memory overflow when using string.h functions */
-			data->address[data->size] = '\0';
-
-			result = true;
-		}
+		return true;
 	}
 
-	return result;
+	return false;
 }
 
 /* set memory protection */
@@ -90,6 +86,7 @@ void memory_set_protection(const void* address, const size_t size, const int mod
 	if (address != NULL && size > 0) {
 #ifdef __WINDOWS__
 		int old_mode;
+
 		VirtualProtect((LPVOID)address, size, mode, &old_mode);
 #else
 		/* get size of pages */
@@ -98,7 +95,7 @@ void memory_set_protection(const void* address, const size_t size, const int mod
 		/* find page pointer */
 		void* page_ptr = (long*)((long)address & ~(page_sz - 1));
 
-		/* no previous mode to be returned */
+		/* change protection */
 		mprotect(page_ptr, size, mode);
 #endif
 	}
@@ -112,14 +109,15 @@ int memory_get_protection(const void* address)
 	if (address != NULL) {
 #ifdef __WINDOWS__
 		MEMORY_BASIC_INFORMATION page_info;
+
 		if (VirtualQuery(address, &page_info, sizeof(MEMORY_BASIC_INFORMATION)) == sizeof(MEMORY_BASIC_INFORMATION))
 			result = page_info.Protect;
 #else
 		FILE* maps = fopen("/proc/self/maps", "r"); /* currently mapped memory regions */
 
 		if (maps != NULL) {
-			ulong_t block[2] = { 0, 0 };                /* block of memory addresses */
-			char perms[5];                              /* set of permissions */
+			ulong_t block[2] = { 0, 0 }; /* block of memory addresses */
+			char perms[5];               /* set of permissions */
 
 			/* parse file lines */
 	#ifdef __X86_ARCH__
@@ -131,6 +129,7 @@ int memory_get_protection(const void* address)
 					result |= (perms[0] == 'r') ? PROT_READ : PROT_NONE;  /* can be readed */
 					result |= (perms[1] == 'w') ? PROT_WRITE : PROT_NONE; /* can be written */
 					result |= (perms[2] == 'x') ? PROT_EXEC : PROT_NONE;  /* can be executed */
+
 					break;
 				}
 			}
@@ -149,7 +148,7 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
 {
 	if (address != NULL && data != NULL && size > 0) {
 		if (vp) {
-			/* store memory protection for later */
+			/* store current memory protection */
 			int old_mode = memory_get_protection(address);
 
 			/* remove virtual protection */
