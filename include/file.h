@@ -90,13 +90,20 @@ typedef struct file_s
 extern "C" {
 #endif
 
-/* find the size of a file */
+/**********************************************************
+ * Find the system storage size of a file
+ *
+ * Args:
+ *   file => reference to file struct
+ *
+ * Return:
+ *   OFF_T => file size
+ **********************************************************/
 OFF_T file_find_size(const file_t* file)
 {
 	if (file != NULL) {
 		struct STAT file_status;
 
-		/* return file size */
 		if (!STAT(file->path, &file_status))
 			return file_status.st_size;
 	}
@@ -104,24 +111,33 @@ OFF_T file_find_size(const file_t* file)
 	return 0;
 }
 
-/* read a block of data from file into buffer */
+/**********************************************************
+ * Read a block of data from system storage and store it into
+ * the file buffer.
+ *
+ * Args:
+ *   file => reference to file struct
+ *   offset => position from start of file
+ *   count => amount of bytes to be read
+ *   change_indicator => should file cursor stay changed
+ *                       after reading from file?
+ *
+ * Return:
+ *   bool => true if successful, false if failed
+ **********************************************************/
 bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
 	if (file != NULL) {
 		if (file->handle != NULL && (size_t)offset < file->size) {
-			/* store current position indicator */
-			OFF_T position = (!change_indicator) ? FTELL(file->handle) : 0;
+			OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
 			if (!FSEEK(file->handle, offset, SEEK_SET)) {
-				/* where the data starts on the file */
 				file->offset = offset;
 
-				/* maximum/given buffer size without end of line char */
+				/* maximum or given buffer size without end of line char */
 				file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
 
-				/* allocate memory */
 				if (data_alloc(&file->buffer)) {
-					/* read data from file */
 					if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
 						return true;
 					else
@@ -133,18 +149,27 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
 
 			/* reset file position indicator */
 			if (!change_indicator)
-					FSEEK(file->handle, position, SEEK_SET);
+				FSEEK(file->handle, old_pos, SEEK_SET);
 		}
 	}
 
 	return false;
 }
 
-/* read a line from file */
+/**********************************************************
+ * Read a line from file.
+ *
+ * Args:
+ *   file => reference to file struct
+ *   change_indicator => should file cursor stay changed
+ *                       after reading from file?
+ *
+ * Return:
+ *   bool => true if successful, false if failed
+ **********************************************************/
 bool file_read_line(file_t* file, const bool change_indicator)
 {
 	if (file != NULL) {
-		/* get current position */
 		OFF_T position = FTELL(file->handle);
 
 		/* go to end of line */
@@ -153,10 +178,8 @@ bool file_read_line(file_t* file, const bool change_indicator)
 		/* count number of bytes */
 		OFF_T count = FTELL(file->handle) - position;
 
-		/* read data */
 		file_read(file, position, count, change_indicator);
 
-		/* reset file position indicator */
 		if (!change_indicator)
 			FSEEK(file->handle, position, SEEK_SET);
 
@@ -166,21 +189,30 @@ bool file_read_line(file_t* file, const bool change_indicator)
 	return false;
 }
 
-/* write a block of data from buffer into file */
+/**********************************************************
+ * Flush block of data from file buffer into system storage.
+ *
+ * Args:
+ *   file => reference to file struct
+ *   offset => position from start of file
+ *   count => amount of bytes to be write
+ *   change_indicator => should file cursor stay changed
+ *                       after writing to file?
+ *
+ * Return:
+ *   bool => true if successful, false if failed
+ **********************************************************/
 bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
 	if (file != NULL) {
 		if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
-			/* store current position indicator for later */
-			OFF_T position = (!change_indicator) ? FTELL(file->handle) : 0;
+			OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
 			if (!FSEEK(file->handle, offset, SEEK_SET)) {
 				/* prevents reading data outside buffer */
 				size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
 
-				/* write data to file and return */
 				if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
-					/* update file size */
 					file->size = (size_t)file_find_size(file);
 
 					return true;
@@ -189,54 +221,69 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
 
 			/* reset file position indicator */
 			if (!change_indicator)
-				FSEEK(file->handle, position, SEEK_SET);
+				FSEEK(file->handle, old_pos, SEEK_SET);
 		}
 	}
 
 	return false;
 }
 
-/* write a block of data to the file buffer */
+/**********************************************************
+ * Write block of data into file buffer. The file buffer will
+ * be replaced.
+ *
+ * Args:
+ *   file => reference to file struct
+ *   data => block of data to replace file buffer
+ **********************************************************/
 void file_replace_buffer(file_t* file, data_t* data)
 {
 	if (file != NULL && data != NULL) {
 		if (data->address != NULL) {
-			/* resize buffer */
 			void* temp_ptr = NULL;
 
 			if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
-				/* store new address */
 				file->buffer.address = temp_ptr;
 
-				/* write data to file buffer */
 				memcpy(file->buffer.address, data->address, data->size);
 
-				/* update file buffer size */
 				file->buffer.size = data->size;
 			}
 		}
 	}
 }
 
-/* close file and clean up memory */
+/**********************************************************
+ * Close open file and clean up memory.
+ *
+ * Args:
+ *   file => reference to file struct
+ **********************************************************/
 void file_close(file_t* file)
 {
 	if (file != NULL) {
-		/* close stdio file */
 		if (file->handle != NULL)
 			fclose(file->handle);
 
-		/* free memory */
 		data_free(&file->buffer);
 		free(file);
 	}
 }
 
-/* open file without loading any data */
+/**********************************************************
+ * Open a file and initialize struct values. The file should
+ * exist.
+ *
+ * Args:
+ *   file => reference to pointer where file struct is located
+ *   path => string to file path
+ *
+ * Return:
+ *   bool => true if successful, false if failed
+ **********************************************************/
 bool file_open(file_t** file, char* path)
 {
 	if (file != NULL) {
-		/* initialize file struct */
 		*file = calloc(sizeof(file_t), 1);
 
 		/* asign values to struct */
@@ -266,13 +313,22 @@ bool file_open(file_t** file, char* path)
 	return false;
 }
 
-/* create a new file if one doesn't exist */
+/**********************************************************
+ * Create a new file. The new file should not exist. 
+ * Also, the file should be at an existing directory.
+ *
+ * Args:
+ *   filename => relative or absolute path to the new file
+ *
+ * Return:
+ *   bool => true if successful, false if failed
+ **********************************************************/
 bool file_create(const char* filename)
 {
 	int file;
 
 	/* free handle before return */
-	return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!CLOSE(file));
+	return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!(CLOSE(file)));
 }
 
 #ifdef __cplusplus
