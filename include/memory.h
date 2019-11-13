@@ -240,7 +240,7 @@ ulong_t process_get_base_address(const pid_t pid)
   #ifdef __X86_ARCH__
       fscanf(maps, "%x-%*x %*s %*x %*d:%*d %*d %*s\n", &base_addr);
   #else
-      fscanf(maps, "%lx-%*lx %*s %*lx %*d:%*d %*d %*s\n", &base_addr);
+      fscanf(maps, "%lx-%*x %*s %*x %*d:%*d %*d %*s\n", &base_addr);
   #endif
       fclose(maps);
     }
