@@ -39,8 +39,7 @@ extern "C" {
 void node_free(node_t* node)
 {
   if (node != NULL) {
-    if (node->data.address != NULL)
-      data_free(&node->data);
+    data_free(&node->data);
 
     free(node);
   }
@@ -333,12 +332,16 @@ void list_free(node_t* head)
       node_free(head);
     else {
       node_t* current = head->next;
+      node_t* prev = head;
 
       while (current != NULL) {
         node_free(current->prev);
 
+        prev = current;
         current = current->next;
       }
+
+      node_free(prev);
     }
   }
 }
