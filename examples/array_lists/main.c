@@ -185,5 +185,7 @@ int main()
       print_list(head);
   }
 
+  list_free(head);
+
   exit(EXIT_SUCCESS);
 }
