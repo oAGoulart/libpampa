@@ -28,13 +28,13 @@
 
 /* add 64 bit file support */
 #ifdef X64_FILES
-	#define _FILE_OFFSET_BITS 64
+  #define _FILE_OFFSET_BITS 64
 
-	#define OFF_T int64_t
+  #define OFF_T int64_t
 #else
-	#define OFF_T int32_t
-	#define FTELL ftell
-	#define FSEEK fseek
+  #define OFF_T int32_t
+  #define FTELL ftell
+  #define FSEEK fseek
 #endif
 
 #include <sys/types.h>
@@ -43,47 +43,47 @@
 
 /* define platform specific stuff */
 #ifdef __WINDOWS__
-	#include <io.h>
-	#include <share.h>
+  #include <io.h>
+  #include <share.h>
 
-	#ifdef X64_FILES
-		#define STAT  _stat64   /* NOTE: this may be defined as _stat on Win32 */
-		#define FTELL _ftelli64
-		#define FSEEK _fseeki64
-	#else
-		#define STAT  _stat32
-	#endif
+  #ifdef X64_FILES
+    #define STAT  _stat64   /* NOTE: this may be defined as _stat on Win32 */
+    #define FTELL _ftelli64
+    #define FSEEK _fseeki64
+  #else
+    #define STAT  _stat32
+  #endif
 
-	#define MODE  _S_IREAD | _S_IWRITE
-	#define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
-	#define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
-	#define CLOSE _close
-	#define FOPEN fopen_s
-	#define FSCANF fscanf_s
+  #define MODE  _S_IREAD | _S_IWRITE
+  #define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
+  #define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
+  #define CLOSE _close
+  #define FOPEN fopen_s
+  #define FSCANF fscanf_s
 #else /* assume POSIX */
-	#include <unistd.h>
+  #include <unistd.h>
 
-	#ifdef X64_FILES
-		#define FTELL ftello
-		#define FSEEK fseeko
-	#endif
+  #ifdef X64_FILES
+    #define FTELL ftello
+    #define FSEEK fseeko
+  #endif
 
-	#define STAT  stat /* always stat64 on Linux kernel 2.4+ */
-	#define MODE  0777
-	#define OPEN(handle, filename, flag, mode) (((*handle = open(filename, flag, mode)) == -1) ? errno : false)
-	#define OFLAG O_RDWR | O_CREAT | O_EXCL
-	#define CLOSE close
-	#define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
-	#define FSCANF fscanf
+  #define STAT  stat /* always stat64 on Linux kernel 2.4+ */
+  #define MODE  0777
+  #define OPEN(handle, filename, flag, mode) (((*handle = open(filename, flag, mode)) == -1) ? errno : false)
+  #define OFLAG O_RDWR | O_CREAT | O_EXCL
+  #define CLOSE close
+  #define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
+  #define FSCANF fscanf
 #endif
 
 typedef struct file_s
 {
-	char*  path;   /* file path */
-	FILE*  handle; /* stdio file handle */
-	OFF_T  offset; /* where buffer data starts */
-	size_t size;   /* size of the file in disk */
-	data_t buffer; /* buffer to load file data */
+  char*  path;   /* file path */
+  FILE*  handle; /* stdio file handle */
+  OFF_T  offset; /* where buffer data starts */
+  size_t size;   /* size of the file in disk */
+  data_t buffer; /* buffer to load file data */
 } file_t;
 
 #ifdef __cplusplus
@@ -101,14 +101,14 @@ extern "C" {
  **********************************************************/
 OFF_T file_find_size(const file_t* file)
 {
-	if (file != NULL) {
-		struct STAT file_status;
+  if (file != NULL) {
+    struct STAT file_status;
 
-		if (!STAT(file->path, &file_status))
-			return file_status.st_size;
-	}
+    if (!STAT(file->path, &file_status))
+      return file_status.st_size;
+  }
 
-	return 0;
+  return 0;
 }
 
 /**********************************************************
@@ -127,33 +127,33 @@ OFF_T file_find_size(const file_t* file)
  **********************************************************/
 bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
-	if (file != NULL) {
-		if (file->handle != NULL && (size_t)offset < file->size) {
-			OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
+  if (file != NULL) {
+    if (file->handle != NULL && (size_t)offset < file->size) {
+      OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
-			if (!FSEEK(file->handle, offset, SEEK_SET)) {
-				file->offset = offset;
+      if (!FSEEK(file->handle, offset, SEEK_SET)) {
+        file->offset = offset;
 
-				/* maximum or given buffer size without end of line char */
-				file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
+        /* maximum or given buffer size without end of line char */
+        file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
 
-				if (data_alloc(&file->buffer)) {
-					if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
-						return true;
-					else
-						data_free(&file->buffer);
-				}
-				else
-					data_free(&file->buffer);
-			}
+        if (data_alloc(&file->buffer)) {
+          if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
+            return true;
+          else
+            data_free(&file->buffer);
+        }
+        else
+          data_free(&file->buffer);
+      }
 
-			/* reset file position indicator */
-			if (!change_indicator)
-				FSEEK(file->handle, old_pos, SEEK_SET);
-		}
-	}
+      /* reset file position indicator */
+      if (!change_indicator)
+        FSEEK(file->handle, old_pos, SEEK_SET);
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**********************************************************
@@ -169,24 +169,24 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
  **********************************************************/
 bool file_read_line(file_t* file, const bool change_indicator)
 {
-	if (file != NULL) {
-		OFF_T position = FTELL(file->handle);
+  if (file != NULL) {
+    OFF_T position = FTELL(file->handle);
 
-		/* go to end of line */
-		FSCANF(file->handle, "%*s\n");
+    /* go to end of line */
+    FSCANF(file->handle, "%*s\n");
 
-		/* count number of bytes */
-		OFF_T count = FTELL(file->handle) - position;
+    /* count number of bytes */
+    OFF_T count = FTELL(file->handle) - position;
 
-		file_read(file, position, count, change_indicator);
+    file_read(file, position, count, change_indicator);
 
-		if (!change_indicator)
-			FSEEK(file->handle, position, SEEK_SET);
+    if (!change_indicator)
+      FSEEK(file->handle, position, SEEK_SET);
 
-		return true;
-	}
+    return true;
+  }
 
-	return false;
+  return false;
 }
 
 /**********************************************************
@@ -204,28 +204,28 @@ bool file_read_line(file_t* file, const bool change_indicator)
  **********************************************************/
 bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
-	if (file != NULL) {
-		if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
-			OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
+  if (file != NULL) {
+    if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
+      OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
-			if (!FSEEK(file->handle, offset, SEEK_SET)) {
-				/* prevents reading data outside buffer */
-				size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
+      if (!FSEEK(file->handle, offset, SEEK_SET)) {
+        /* prevents reading data outside buffer */
+        size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
 
-				if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
-					file->size = (size_t)file_find_size(file);
+        if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
+          file->size = (size_t)file_find_size(file);
 
-					return true;
-				}
-			}
+          return true;
+        }
+      }
 
-			/* reset file position indicator */
-			if (!change_indicator)
-				FSEEK(file->handle, old_pos, SEEK_SET);
-		}
-	}
+      /* reset file position indicator */
+      if (!change_indicator)
+        FSEEK(file->handle, old_pos, SEEK_SET);
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**********************************************************
@@ -238,19 +238,19 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
  **********************************************************/
 void file_replace_buffer(file_t* file, data_t* data)
 {
-	if (file != NULL && data != NULL) {
-		if (data->address != NULL) {
-			void* temp_ptr = NULL;
+  if (file != NULL && data != NULL) {
+    if (data->address != NULL) {
+      void* temp_ptr = NULL;
 
-			if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
-				file->buffer.address = temp_ptr;
+      if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
+        file->buffer.address = temp_ptr;
 
-				memcpy(file->buffer.address, data->address, data->size);
+        memcpy(file->buffer.address, data->address, data->size);
 
-				file->buffer.size = data->size;
-			}
-		}
-	}
+        file->buffer.size = data->size;
+      }
+    }
+  }
 }
 
 /**********************************************************
@@ -261,13 +261,13 @@ void file_replace_buffer(file_t* file, data_t* data)
  **********************************************************/
 void file_close(file_t* file)
 {
-	if (file != NULL) {
-		if (file->handle != NULL)
-			fclose(file->handle);
+  if (file != NULL) {
+    if (file->handle != NULL)
+      fclose(file->handle);
 
-		data_free(&file->buffer);
-		free(file);
-	}
+    data_free(&file->buffer);
+    free(file);
+  }
 }
 
 /**********************************************************
@@ -283,34 +283,34 @@ void file_close(file_t* file)
  **********************************************************/
 bool file_open(file_t** file, char* path)
 {
-	if (file != NULL) {
-		*file = calloc(sizeof(file_t), 1);
+  if (file != NULL) {
+    *file = calloc(sizeof(file_t), 1);
 
-		/* asign values to struct */
-		if (*file != NULL) {
-			(*file)->path = path;
+    /* asign values to struct */
+    if (*file != NULL) {
+      (*file)->path = path;
 
-			if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
-				(*file)->offset = 0;
-				(*file)->size = (size_t)file_find_size(*file);
+      if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
+        (*file)->offset = 0;
+        (*file)->size = (size_t)file_find_size(*file);
 
-				/* initialize the data buffer */
-				(*file)->buffer.size = 1;
-				(*file)->buffer.address = malloc(1);
+        /* initialize the data buffer */
+        (*file)->buffer.size = 1;
+        (*file)->buffer.address = malloc(1);
 
-				if ((*file)->buffer.address != NULL) {
-					*(*file)->buffer.address = '\0';
-					return true;
-				}
-				else
-					file_close(*file);
-			}
-			else
-				file_close(*file);
-		}
-	}
+        if ((*file)->buffer.address != NULL) {
+          *(*file)->buffer.address = '\0';
+          return true;
+        }
+        else
+          file_close(*file);
+      }
+      else
+        file_close(*file);
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**********************************************************
@@ -325,10 +325,10 @@ bool file_open(file_t** file, char* path)
  **********************************************************/
 bool file_create(const char* filename)
 {
-	int file;
+  int file;
 
-	/* free handle before return */
-	return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!(CLOSE(file)));
+  /* free handle before return */
+  return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!(CLOSE(file)));
 }
 
 #ifdef __cplusplus

@@ -24,65 +24,65 @@
 #define NUM_PEOPLE       10         /* how many people to generate */
 
 typedef struct person_s {
-	char name[PERSON_NAME_SIZE];
-	int  age;
-	int  num_cars;
+  char name[PERSON_NAME_SIZE];
+  int  age;
+  int  num_cars;
 } person_t;
 
 void generate_random_bytes(char buffer[], size_t size)
 {
-	if (buffer != NULL) {
-		srand(clock());
+  if (buffer != NULL) {
+    srand(clock());
 
-		for (size_t i = 0; i < size - 1; i++)
-			buffer[i] = (char)(rand() % 90 + 65);
+    for (size_t i = 0; i < size - 1; i++)
+      buffer[i] = (char)(rand() % 90 + 65);
 
-		buffer[size - 1] = '\0';
-	}
+    buffer[size - 1] = '\0';
+  }
 }
 
 int main()
 {
-	/* create and load file */
-	file_create(FILE_NAME);
+  /* create and load file */
+  file_create(FILE_NAME);
 
-	file_t* file = NULL;
+  file_t* file = NULL;
 
-	if (file_open(&file, FILE_NAME)) {
-		person_t* someone = malloc(sizeof(person_t));
+  if (file_open(&file, FILE_NAME)) {
+    person_t* someone = malloc(sizeof(person_t));
 
-		if (someone != NULL) {
-			/* update file buffer */
-			file->buffer.address = (ubyte_t*)someone;
-			file->buffer.size = sizeof(person_t);
+    if (someone != NULL) {
+      /* update file buffer */
+      file->buffer.address = (ubyte_t*)someone;
+      file->buffer.size = sizeof(person_t);
 
-			for (int i = 0; i < NUM_PEOPLE; i++) {
-				/* generate data */
-				generate_random_bytes(someone->name, PERSON_NAME_SIZE);
-				someone->age = (int)(rand() % 120 + 18);
-				someone->num_cars = (int)(rand() % 10);
+      for (int i = 0; i < NUM_PEOPLE; i++) {
+        /* generate data */
+        generate_random_bytes(someone->name, PERSON_NAME_SIZE);
+        someone->age = (int)(rand() % 120 + 18);
+        someone->num_cars = (int)(rand() % 10);
 
-				/* write to file */
-				file_write(file, FTELL(file->handle), file->buffer.size, true);
-			}
+        /* write to file */
+        file_write(file, FTELL(file->handle), file->buffer.size, true);
+      }
 
-			/* no need to free the buffer, it'll be reallocated later (or freed when calling file_close) */
-		}
+      /* no need to free the buffer, it'll be reallocated later (or freed when calling file_close) */
+    }
 
-		/* read and print data */
-		FSEEK(file->handle, 0, SEEK_SET);
+    /* read and print data */
+    FSEEK(file->handle, 0, SEEK_SET);
 
-		while (file_read(file, FTELL(file->handle), sizeof(person_t), true)) {
-			if (file->buffer.size != sizeof(person_t))
-				break;
+    while (file_read(file, FTELL(file->handle), sizeof(person_t), true)) {
+      if (file->buffer.size != sizeof(person_t))
+        break;
 
-			person_t* temp_ptr = (person_t*)file->buffer.address;
+      person_t* temp_ptr = (person_t*)file->buffer.address;
 
-			printf("Name: %s\nAge: %i\nCars: %i\n", temp_ptr->name, temp_ptr->age, temp_ptr->num_cars);
-		}
+      printf("Name: %s\nAge: %i\nCars: %i\n", temp_ptr->name, temp_ptr->age, temp_ptr->num_cars);
+    }
 
-		file_close(file);
-	}
+    file_close(file);
+  }
 
-	exit(EXIT_SUCCESS);
+  exit(EXIT_SUCCESS);
 }

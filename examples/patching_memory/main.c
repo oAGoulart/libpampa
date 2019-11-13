@@ -23,69 +23,69 @@
 
 /* platform specific stuff */
 #ifdef __WINDOWS__
-	/* NOTE: link Ws2_32.lib on windows */
-	#include <winsock2.h>
+  /* NOTE: link Ws2_32.lib on windows */
+  #include <winsock2.h>
 #else /* assume POSIX */
-	#include <unistd.h>
-	#include <sys/select.h>
+  #include <unistd.h>
+  #include <sys/select.h>
 #endif
 
 static void set_return(void* address, const bool vp)
 {
-	if (address != NULL) {
-		int opcode = 0xC3;
+  if (address != NULL) {
+    int opcode = 0xC3;
 
-		/* write opcode */
-		memory_set_raw(address, &opcode, 1, true);
-	}
+    /* write opcode */
+    memory_set_raw(address, &opcode, 1, true);
+  }
 }
 
 /* set jump into address */
 static void set_jump(void* address, const void* dest, const bool vp)
 {
-	if (address != NULL && dest != NULL) {
-		int opcode = 0xE9;
+  if (address != NULL && dest != NULL) {
+    int opcode = 0xE9;
 
-		/* find destination offset */
-		ulong_t offset = (ubyte_t*)dest - ((ubyte_t*)address + 1 + sizeof(ulong_t*));
-		
-		/* write opcode */
-		memory_set_raw(address, &opcode, 1, true);
+    /* find destination offset */
+    ulong_t offset = (ubyte_t*)dest - ((ubyte_t*)address + 1 + sizeof(ulong_t*));
+    
+    /* write opcode */
+    memory_set_raw(address, &opcode, 1, true);
 
-		/* write destination offset */
-		memory_set_raw((ubyte_t*)address + 1, &offset, sizeof(ulong_t), true);
-	}
+    /* write destination offset */
+    memory_set_raw((ubyte_t*)address + 1, &offset, sizeof(ulong_t), true);
+  }
 }
 
 /* get char from stdin without blocking */
 int get_char()
 {
-	char result = EOF;
+  char result = EOF;
 
-	/* define select() values */
-	fd_set readfds;
-	FD_ZERO(&readfds);
-	FD_SET(0, &readfds);
+  /* define select() values */
+  fd_set readfds;
+  FD_ZERO(&readfds);
+  FD_SET(0, &readfds);
 
-	struct timeval timeout = { 0, 0 };
+  struct timeval timeout = { 0, 0 };
 
-	/* verify stdin is not empty */
-	if (select(1, &readfds, NULL, NULL, &timeout))
-		result = getc(stdin);
+  /* verify stdin is not empty */
+  if (select(1, &readfds, NULL, NULL, &timeout))
+    result = getc(stdin);
 
-	return result;
+  return result;
 }
 
 int main()
 {
-	/* make jump into diffent function */
-	set_jump(getchar, get_char, true);
+  /* make jump into diffent function */
+  set_jump(getchar, get_char, true);
 
-	/* make return from function */
-	set_return(get_char, true);
+  /* make return from function */
+  set_return(get_char, true);
 
-	while (getchar())
-		printf("Patched getchar() into get_char()\n");
-	
-	exit(EXIT_SUCCESS);
+  while (getchar())
+    printf("Patched getchar() into get_char()\n");
+  
+  exit(EXIT_SUCCESS);
 }
