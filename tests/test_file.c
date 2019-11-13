@@ -1,18 +1,14 @@
-#include "cutest/CuTest.h"
+#include "acutest.h"
 #include "file.h"
 
-void test_file_create(CuTest* tc)
+void test_file_create()
 {
-  CuAssertTrue(tc, file_create("test.log"));
-  CuAssertTrue(tc, !file_create("test/test.log"));
-  CuAssertTrue(tc, file_create("../test.log"));
+  TEST_CHECK(file_create("test.log") == true);
+  TEST_CHECK(file_create("test/test.log") == false);
+  TEST_CHECK(file_create("../test.log") == true);
 }
 
-CuSuite* CuGetSuite()
-{
-  CuSuite* suite = CuSuiteNew();
-
-  SUITE_ADD_TEST(suite, test_file_create);
-
-  return suite;
-}
+TEST_LIST = {
+    { "file_create", test_file_create },
+    { NULL, NULL }
+};

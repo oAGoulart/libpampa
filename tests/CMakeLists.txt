@@ -1,3 +1,3 @@
-file(GLOB TEST_SRC *.c)
+include_directories("acutest/include")
 
-add_executable(tests test_all.c cutest/CuTest.c ${TEST_SRC})
+add_executable(test_file test_file.c)
