@@ -21,7 +21,7 @@
 #include "memory.h"
 
 typedef struct node_s {
-  data_t data;         /* data stored by the node */
+  data_t         data; /* data stored by the node */
   struct node_s* prev; /* previous node on the list */
   struct node_s* next; /* next node on the list */
 } node_t;

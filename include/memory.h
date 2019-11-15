@@ -44,7 +44,7 @@
 
 typedef struct data_s
 {
-  size_t size;      /* buffer size */
+  size_t   size;    /* buffer size */
   ubyte_t* address; /* data location */
 } data_t;
 
