@@ -54,12 +54,13 @@
     #define STAT  _stat32
   #endif
 
-  #define MODE  _S_IREAD | _S_IWRITE
-  #define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
-  #define OFLAG _O_RDWR | _O_CREAT | _O_EXCL
-  #define CLOSE _close
-  #define FOPEN fopen_s
+  #define MODE   _S_IREAD | _S_IWRITE
+  #define OFLAG  _O_RDWR | _O_CREAT | _O_EXCL
+  #define CLOSE  _close
+  #define FOPEN  fopen_s
   #define FSCANF fscanf_s
+
+  #define OPEN(handle, filename, flag, mode) (_sopen_s(handle, filename, flag, _SH_DENYNO, mode))
 #else /* assume POSIX */
   #include <unistd.h>
 
@@ -68,13 +69,14 @@
     #define FSEEK fseeko
   #endif
 
-  #define STAT  stat /* always stat64 on Linux kernel 2.4+ */
-  #define MODE  0777
-  #define OPEN(handle, filename, flag, mode) (((*handle = open(filename, flag, mode)) == -1) ? errno : false)
-  #define OFLAG O_RDWR | O_CREAT | O_EXCL
-  #define CLOSE close
-  #define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
+  #define STAT   stat /* always stat64 on Linux kernel 2.4+ */
+  #define MODE   0777
+  #define OFLAG  O_RDWR | O_CREAT | O_EXCL
+  #define CLOSE  close
   #define FSCANF fscanf
+
+  #define OPEN(handle, filename, flag, mode) (((*handle = open(filename, flag, mode)) == -1) ? errno : false)
+  #define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
 #endif
 
 typedef struct file_s
