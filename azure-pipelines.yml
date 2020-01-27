@@ -4,7 +4,7 @@ trigger:
 jobs:
 - job: Linux
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
 
   steps:
   - script: sudo apt-get install ninja-build
@@ -17,7 +17,7 @@ jobs:
 
 - job: macOS
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'macOS-latest'
 
   steps:
   - script: brew install ninja
@@ -30,7 +30,7 @@ jobs:
 
 - job: Windows_x64
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   steps:
   - task: CMake@1
