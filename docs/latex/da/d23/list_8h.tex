@@ -1,0 +1,332 @@
+\hypertarget{list_8h}{}\doxysection{include/list.h File Reference}
+\label{list_8h}\index{include/list.h@{include/list.h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}memory.\+h\char`\"{}}\newline
+Include dependency graph for list.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/deb/list_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structnode__s}{node\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structnode__s}{node\+\_\+s}} \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{list_8h_a02922f4f5f19f6313552915080efb83c}{node\+\_\+free}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Free node allocated memory. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{list_8h_ad9983aade1e36c30c4782b44546e2270}{node\+\_\+alloc}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$node)
+\begin{DoxyCompactList}\small\item\em Allocate memory for the node. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{list_8h_a7a6b0ae19943b9dbb5d49bc1cedfe1f8}{node\+\_\+copy}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$source, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$destination)
+\begin{DoxyCompactList}\small\item\em Copy one node to another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$ \mbox{\hyperlink{list_8h_a763a9be1c6152472f60aa15ebf1843e5}{list\+\_\+get\+\_\+tail}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$head)
+\begin{DoxyCompactList}\small\item\em Get tail from list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{list_8h_a0a8f4882d72b4d8cfb7cc1bf1be41db8}{list\+\_\+append}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Append node to list. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$ \mbox{\hyperlink{list_8h_a4e2cfbe0bd4425aea3dad55ee691d47c}{list\+\_\+find\+\_\+data}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$head, const \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Find if given data is on this list. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{list_8h_a118a4635956eef424dfc6c931873c786}{list\+\_\+push}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$src\+\_\+node, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$dest\+\_\+tail)
+\begin{DoxyCompactList}\small\item\em Create new tail on destination from source node. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$ \mbox{\hyperlink{list_8h_ad9f868d4c4c17194226e74566481f204}{list\+\_\+single\+\_\+copy}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$src\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$cmp\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$dest\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$dest\+\_\+tail)
+\begin{DoxyCompactList}\small\item\em Make a copy of each element of source list into destination list without repeating the elements of comparison list. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$ \mbox{\hyperlink{list_8h_ab6023b7c812f0417cfa0be6e36a543ca}{list\+\_\+repeat\+\_\+copy}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$src\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$cmp\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$dest\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$dest\+\_\+tail)
+\begin{DoxyCompactList}\small\item\em Make a copy of each element of source list into destination list, but only if the element is also on comparison list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{list_8h_a80659186fcbede6ba32b8aea4ab21d24}{list\+\_\+union}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$first\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$second\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$out\+\_\+head)
+\begin{DoxyCompactList}\small\item\em Make union between two lists. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{list_8h_adf30a688b533c583bc36c2d007683d3d}{list\+\_\+intersection}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$first\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$second\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$out\+\_\+head)
+\begin{DoxyCompactList}\small\item\em Make intersection between two lists. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{list_8h_a00df9eb5ee0cd89ca686e743e4d603a6}{list\+\_\+difference}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$first\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$second\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$out\+\_\+head)
+\begin{DoxyCompactList}\small\item\em Make symmetric difference between two lists. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{list_8h_a13beddb1050f1849b4118a8059ccb99c}{list\+\_\+subset}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$first\+\_\+head, \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$second\+\_\+head)
+\begin{DoxyCompactList}\small\item\em Verify if second list is subset of first list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{list_8h_aac033e2d72c2d370c54e130741e63f86}{list\+\_\+free}} (\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$head)
+\begin{DoxyCompactList}\small\item\em Free all nodes on list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{list_8h_ade8921e42609f610cd71a72af43ade2c}\label{list_8h_ade8921e42609f610cd71a72af43ade2c}} 
+\index{list.h@{list.h}!node\_t@{node\_t}}
+\index{node\_t@{node\_t}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{node\_t}{node\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structnode__s}{node\+\_\+s}}  \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{list_8h_a0a8f4882d72b4d8cfb7cc1bf1be41db8}\label{list_8h_a0a8f4882d72b4d8cfb7cc1bf1be41db8}} 
+\index{list.h@{list.h}!list\_append@{list\_append}}
+\index{list\_append@{list\_append}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_append()}{list\_append()}}
+{\footnotesize\ttfamily void list\+\_\+append (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Append node to list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head} & first node on list \\
+\hline
+{\em node} & node to be appended \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{list_8h_a00df9eb5ee0cd89ca686e743e4d603a6}\label{list_8h_a00df9eb5ee0cd89ca686e743e4d603a6}} 
+\index{list.h@{list.h}!list\_difference@{list\_difference}}
+\index{list\_difference@{list\_difference}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_difference()}{list\_difference()}}
+{\footnotesize\ttfamily void list\+\_\+difference (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{first\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{second\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$}]{out\+\_\+head }\end{DoxyParamCaption})}
+
+
+
+Make symmetric difference between two lists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first\+\_\+head} & first list head \\
+\hline
+{\em second\+\_\+head} & second list head \\
+\hline
+{\em out\+\_\+head} & reference to pointer where resulting list head will be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{list_8h_a4e2cfbe0bd4425aea3dad55ee691d47c}\label{list_8h_a4e2cfbe0bd4425aea3dad55ee691d47c}} 
+\index{list.h@{list.h}!list\_find\_data@{list\_find\_data}}
+\index{list\_find\_data@{list\_find\_data}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_find\_data()}{list\_find\_data()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}$\ast$ list\+\_\+find\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{head,  }\item[{const \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Find if given data is on this list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head} & first node on list \\
+\hline
+{\em data} & data to be searched for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node\+\_\+t$\ast$ node reference where the data was found or N\+U\+LL if not found 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_aac033e2d72c2d370c54e130741e63f86}\label{list_8h_aac033e2d72c2d370c54e130741e63f86}} 
+\index{list.h@{list.h}!list\_free@{list\_free}}
+\index{list\_free@{list\_free}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_free()}{list\_free()}}
+{\footnotesize\ttfamily void list\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{head }\end{DoxyParamCaption})}
+
+
+
+Free all nodes on list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head} & first node on list \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{list_8h_a763a9be1c6152472f60aa15ebf1843e5}\label{list_8h_a763a9be1c6152472f60aa15ebf1843e5}} 
+\index{list.h@{list.h}!list\_get\_tail@{list\_get\_tail}}
+\index{list\_get\_tail@{list\_get\_tail}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_get\_tail()}{list\_get\_tail()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}$\ast$ list\+\_\+get\+\_\+tail (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{head }\end{DoxyParamCaption})}
+
+
+
+Get tail from list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head} & fisrt node on the list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node\+\_\+t$\ast$ pointer to tail node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_adf30a688b533c583bc36c2d007683d3d}\label{list_8h_adf30a688b533c583bc36c2d007683d3d}} 
+\index{list.h@{list.h}!list\_intersection@{list\_intersection}}
+\index{list\_intersection@{list\_intersection}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_intersection()}{list\_intersection()}}
+{\footnotesize\ttfamily void list\+\_\+intersection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{first\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{second\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$}]{out\+\_\+head }\end{DoxyParamCaption})}
+
+
+
+Make intersection between two lists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first\+\_\+head} & first list head \\
+\hline
+{\em second\+\_\+head} & second list head \\
+\hline
+{\em out\+\_\+head} & reference to pointer where resulting list head will be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{list_8h_a118a4635956eef424dfc6c931873c786}\label{list_8h_a118a4635956eef424dfc6c931873c786}} 
+\index{list.h@{list.h}!list\_push@{list\_push}}
+\index{list\_push@{list\_push}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_push()}{list\_push()}}
+{\footnotesize\ttfamily bool list\+\_\+push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{src\+\_\+node,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{dest\+\_\+tail }\end{DoxyParamCaption})}
+
+
+
+Create new tail on destination from source node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+node} & node to be copied \\
+\hline
+{\em dest\+\_\+tail} & destination list tail\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether operation was successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_ab6023b7c812f0417cfa0be6e36a543ca}\label{list_8h_ab6023b7c812f0417cfa0be6e36a543ca}} 
+\index{list.h@{list.h}!list\_repeat\_copy@{list\_repeat\_copy}}
+\index{list\_repeat\_copy@{list\_repeat\_copy}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_repeat\_copy()}{list\_repeat\_copy()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}$\ast$ list\+\_\+repeat\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{src\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{cmp\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{dest\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{dest\+\_\+tail }\end{DoxyParamCaption})}
+
+
+
+Make a copy of each element of source list into destination list, but only if the element is also on comparison list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+head} & first node on source list \\
+\hline
+{\em cmp\+\_\+head} & comparison list head \\
+\hline
+{\em dest\+\_\+head} & destination list head \\
+\hline
+{\em dest\+\_\+tail} & destination list tail\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node\+\_\+t$\ast$ new destination list tail 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_ad9f868d4c4c17194226e74566481f204}\label{list_8h_ad9f868d4c4c17194226e74566481f204}} 
+\index{list.h@{list.h}!list\_single\_copy@{list\_single\_copy}}
+\index{list\_single\_copy@{list\_single\_copy}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_single\_copy()}{list\_single\_copy()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}}$\ast$ list\+\_\+single\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{src\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{cmp\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{dest\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{dest\+\_\+tail }\end{DoxyParamCaption})}
+
+
+
+Make a copy of each element of source list into destination list without repeating the elements of comparison list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+head} & first node on source list \\
+\hline
+{\em cmp\+\_\+head} & comparison list head \\
+\hline
+{\em dest\+\_\+head} & destination list head \\
+\hline
+{\em dest\+\_\+tail} & destination list tail\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node\+\_\+t$\ast$ new destination list tail 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_a13beddb1050f1849b4118a8059ccb99c}\label{list_8h_a13beddb1050f1849b4118a8059ccb99c}} 
+\index{list.h@{list.h}!list\_subset@{list\_subset}}
+\index{list\_subset@{list\_subset}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_subset()}{list\_subset()}}
+{\footnotesize\ttfamily bool list\+\_\+subset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{first\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{second\+\_\+head }\end{DoxyParamCaption})}
+
+
+
+Verify if second list is subset of first list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first\+\_\+head} & first list head \\
+\hline
+{\em second\+\_\+head} & second list head\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether second list is or not subset of first list 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_a80659186fcbede6ba32b8aea4ab21d24}\label{list_8h_a80659186fcbede6ba32b8aea4ab21d24}} 
+\index{list.h@{list.h}!list\_union@{list\_union}}
+\index{list\_union@{list\_union}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{list\_union()}{list\_union()}}
+{\footnotesize\ttfamily void list\+\_\+union (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{first\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{second\+\_\+head,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$}]{out\+\_\+head }\end{DoxyParamCaption})}
+
+
+
+Make union between two lists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em first\+\_\+head} & first list head \\
+\hline
+{\em second\+\_\+head} & second list head \\
+\hline
+{\em out\+\_\+head} & reference to pointer where resulting list head will be stored \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{list_8h_ad9983aade1e36c30c4782b44546e2270}\label{list_8h_ad9983aade1e36c30c4782b44546e2270}} 
+\index{list.h@{list.h}!node\_alloc@{node\_alloc}}
+\index{node\_alloc@{node\_alloc}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{node\_alloc()}{node\_alloc()}}
+{\footnotesize\ttfamily bool node\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Allocate memory for the node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & reference to pointer that will receive the node address\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether the allocation was successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_a7a6b0ae19943b9dbb5d49bc1cedfe1f8}\label{list_8h_a7a6b0ae19943b9dbb5d49bc1cedfe1f8}} 
+\index{list.h@{list.h}!node\_copy@{node\_copy}}
+\index{node\_copy@{node\_copy}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{node\_copy()}{node\_copy()}}
+{\footnotesize\ttfamily bool node\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$$\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Copy one node to another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & node to be copied \\
+\hline
+{\em destination} & where the node copy will be placed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether the copy was successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{list_8h_a02922f4f5f19f6313552915080efb83c}\label{list_8h_a02922f4f5f19f6313552915080efb83c}} 
+\index{list.h@{list.h}!node\_free@{node\_free}}
+\index{node\_free@{node\_free}!list.h@{list.h}}
+\doxysubsubsection{\texorpdfstring{node\_free()}{node\_free()}}
+{\footnotesize\ttfamily void node\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_ade8921e42609f610cd71a72af43ade2c}{node\+\_\+t}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Free node allocated memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & reference to node \\
+\hline
+\end{DoxyParams}

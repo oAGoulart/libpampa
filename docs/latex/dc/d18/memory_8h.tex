@@ -1,0 +1,207 @@
+\hypertarget{memory_8h}{}\doxysection{include/memory.h File Reference}
+\label{memory_8h}\index{include/memory.h@{include/memory.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/mman.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+Include dependency graph for memory.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/d9a/memory_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{db/d57/memory_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{memory_8h_afeb92935f8b09d25f95bbd032abe2d46}{M\+E\+M\+\_\+\+U\+N\+P\+R\+OT}}~P\+R\+O\+T\+\_\+\+R\+E\+AD $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+TE $\vert$ P\+R\+O\+T\+\_\+\+E\+X\+EC
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}} \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{memory_8h_a371b0d448690a5c9d33fb509f699ab86}{data\+\_\+free}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Free a block of data. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}{data\+\_\+alloc}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Allocate a block of data. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}{data\+\_\+copy}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Copy a block of data to another. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{memory_8h_a36a5ad7a949565993d94ac1b6d363298}{memory\+\_\+set\+\_\+protection}} (const void $\ast$address, const size\+\_\+t size, const int mode)
+\begin{DoxyCompactList}\small\item\em Set a block of system memory protection. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{memory_8h_aa366d11b661a8c60ec23853f0bcbb312}{memory\+\_\+get\+\_\+protection}} (const void $\ast$address)
+\begin{DoxyCompactList}\small\item\em Get a block of system memory protection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{memory_8h_adf173fc1b14ccfa90ed773172f7c0635}{memory\+\_\+set\+\_\+raw}} (void $\ast$address, const void $\ast$data, const size\+\_\+t size, const bool vp)
+\begin{DoxyCompactList}\small\item\em Write a block of system memory. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_a65862077c6f78c4c2e7343cff341b6f6}{ulong\+\_\+t}} \mbox{\hyperlink{memory_8h_acd7104c54da5579a666d107d52825386}{process\+\_\+get\+\_\+base\+\_\+address}} (const pid\+\_\+t pid)
+\begin{DoxyCompactList}\small\item\em Get the base address of a process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{memory_8h_afeb92935f8b09d25f95bbd032abe2d46}\label{memory_8h_afeb92935f8b09d25f95bbd032abe2d46}} 
+\index{memory.h@{memory.h}!MEM\_UNPROT@{MEM\_UNPROT}}
+\index{MEM\_UNPROT@{MEM\_UNPROT}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{MEM\_UNPROT}{MEM\_UNPROT}}
+{\footnotesize\ttfamily \#define M\+E\+M\+\_\+\+U\+N\+P\+R\+OT~P\+R\+O\+T\+\_\+\+R\+E\+AD $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+TE $\vert$ P\+R\+O\+T\+\_\+\+E\+X\+EC}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}\label{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}} 
+\index{memory.h@{memory.h}!data\_t@{data\_t}}
+\index{data\_t@{data\_t}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{data\_t}{data\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}}  \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}\label{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}} 
+\index{memory.h@{memory.h}!data\_alloc@{data\_alloc}}
+\index{data\_alloc@{data\_alloc}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{data\_alloc()}{data\_alloc()}}
+{\footnotesize\ttfamily bool data\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Allocate a block of data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & data struct reference with information for the allocation\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool wheter or not data was allocated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}\label{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}} 
+\index{memory.h@{memory.h}!data\_copy@{data\_copy}}
+\index{data\_copy@{data\_copy}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{data\_copy()}{data\_copy()}}
+{\footnotesize\ttfamily bool data\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Copy a block of data to another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & data to be copied \\
+\hline
+{\em destination} & where to store data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool wheter or not data was copied 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_a371b0d448690a5c9d33fb509f699ab86}\label{memory_8h_a371b0d448690a5c9d33fb509f699ab86}} 
+\index{memory.h@{memory.h}!data\_free@{data\_free}}
+\index{data\_free@{data\_free}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{data\_free()}{data\_free()}}
+{\footnotesize\ttfamily void data\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Free a block of data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & data struct reference \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{memory_8h_aa366d11b661a8c60ec23853f0bcbb312}\label{memory_8h_aa366d11b661a8c60ec23853f0bcbb312}} 
+\index{memory.h@{memory.h}!memory\_get\_protection@{memory\_get\_protection}}
+\index{memory\_get\_protection@{memory\_get\_protection}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{memory\_get\_protection()}{memory\_get\_protection()}}
+{\footnotesize\ttfamily int memory\+\_\+get\+\_\+protection (\begin{DoxyParamCaption}\item[{const void $\ast$}]{address }\end{DoxyParamCaption})}
+
+
+
+Get a block of system memory protection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & block of memory start address\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int system memory protection mode 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_a36a5ad7a949565993d94ac1b6d363298}\label{memory_8h_a36a5ad7a949565993d94ac1b6d363298}} 
+\index{memory.h@{memory.h}!memory\_set\_protection@{memory\_set\_protection}}
+\index{memory\_set\_protection@{memory\_set\_protection}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{memory\_set\_protection()}{memory\_set\_protection()}}
+{\footnotesize\ttfamily void memory\+\_\+set\+\_\+protection (\begin{DoxyParamCaption}\item[{const void $\ast$}]{address,  }\item[{const size\+\_\+t}]{size,  }\item[{const int}]{mode }\end{DoxyParamCaption})}
+
+
+
+Set a block of system memory protection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & block of memory start address \\
+\hline
+{\em size} & size of the block of memory \\
+\hline
+{\em mode} & protection mode to be set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{memory_8h_adf173fc1b14ccfa90ed773172f7c0635}\label{memory_8h_adf173fc1b14ccfa90ed773172f7c0635}} 
+\index{memory.h@{memory.h}!memory\_set\_raw@{memory\_set\_raw}}
+\index{memory\_set\_raw@{memory\_set\_raw}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{memory\_set\_raw()}{memory\_set\_raw()}}
+{\footnotesize\ttfamily void memory\+\_\+set\+\_\+raw (\begin{DoxyParamCaption}\item[{void $\ast$}]{address,  }\item[{const void $\ast$}]{data,  }\item[{const size\+\_\+t}]{size,  }\item[{const bool}]{vp }\end{DoxyParamCaption})}
+
+
+
+Write a block of system memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & block of memory start address \\
+\hline
+{\em data} & data to be written \\
+\hline
+{\em size} & size of the data \\
+\hline
+{\em vp} & is virtual protection enabled? \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{memory_8h_acd7104c54da5579a666d107d52825386}\label{memory_8h_acd7104c54da5579a666d107d52825386}} 
+\index{memory.h@{memory.h}!process\_get\_base\_address@{process\_get\_base\_address}}
+\index{process\_get\_base\_address@{process\_get\_base\_address}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{process\_get\_base\_address()}{process\_get\_base\_address()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a65862077c6f78c4c2e7343cff341b6f6}{ulong\+\_\+t}} process\+\_\+get\+\_\+base\+\_\+address (\begin{DoxyParamCaption}\item[{const pid\+\_\+t}]{pid }\end{DoxyParamCaption})}
+
+
+
+Get the base address of a process. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pid} & process id\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ulong\+\_\+t base address 
+\end{DoxyReturn}
