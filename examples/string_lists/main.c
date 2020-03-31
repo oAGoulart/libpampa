@@ -50,8 +50,8 @@ bool string_split(const char* str, const size_t size, const char divider, node_t
           current->data.size = substr_size + sizeof(char);
 
           if (data_alloc(&current->data)) {
-              memcpy(current->data.address, &str[last_div + 1], substr_size);
-              *(char*)(current->data.address + substr_size) = '\0';
+            memcpy(current->data.address, &str[last_div + 1], substr_size);
+            *(char*)(current->data.address + substr_size) = '\0';
           }
 
           if (node_alloc(&current->next))
@@ -65,8 +65,8 @@ bool string_split(const char* str, const size_t size, const char divider, node_t
           current->data.size = substr_size + sizeof(char);
 
           if (data_alloc(&current->data)) {
-              memcpy(current->data.address, &str[last_div + 1], substr_size);
-              *(char*)(current->data.address + substr_size) = '\0';
+            memcpy(current->data.address, &str[last_div + 1], substr_size);
+            *(char*)(current->data.address + substr_size) = '\0';
           }
         }
 

@@ -6,14 +6,23 @@
 
 A library with some algorithms I implemented during my CS @ unipampa.
 
+## Usage
+
+**DOCUMENTATION IS IN PROGRESS**
+
+After some time without support I'll add a few features to this library.
+
 ### Building
 
 To build, just use CMake!
 
-``
+```sh
 mkdir build && cmake ../
-``
+```
 
-### Contributions
+---
 
-Everything is *welcome!*
+## Contributions
+
+Feel free to leave your contribution here, I would really appreciate it!
+Also, if you have any doubts or troubles using this library just contact me or leave an issue.

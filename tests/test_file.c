@@ -9,6 +9,6 @@ void test_file_create()
 }
 
 TEST_LIST = {
-    { "file_create", test_file_create },
-    { NULL, NULL }
+  { "file_create", test_file_create },
+  { NULL, NULL }
 };
