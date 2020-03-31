@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019-2020 José Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,13 +79,21 @@
   #define FOPEN(file, filename, mode) (((*file = fopen(filename, mode)) == NULL) ? errno : false)
 #endif
 
+/**
+ * Data used to work with files.
+ */
 typedef struct file_s
 {
-  char*  path;   /* file path */
-  FILE*  handle; /* stdio file handle */
-  OFF_T  offset; /* where buffer data starts */
-  size_t size;   /* size of the file in disk */
-  data_t buffer; /* buffer to load file data */
+  /** file path */
+  char*  path;
+  /** stdio file handle */
+  FILE*  handle;
+  /** where buffer data starts */
+  OFF_T  offset;
+  /** size of the file in disk */
+  size_t size;
+  /** buffer to load file data */
+  data_t buffer;
 } file_t;
 
 #ifdef __cplusplus
@@ -95,11 +103,9 @@ extern "C" {
 /**********************************************************
  * Find the system storage size of a file
  *
- * Args:
- *   file => reference to file struct
+ * @param file reference to file struct
  *
- * Return:
- *   OFF_T => file size
+ * @return OFF_T file size
  **********************************************************/
 OFF_T file_find_size(const file_t* file)
 {
@@ -117,15 +123,13 @@ OFF_T file_find_size(const file_t* file)
  * Read a block of data from system storage and store it into
  * the file buffer.
  *
- * Args:
- *   file => reference to file struct
- *   offset => position from start of file
- *   count => amount of bytes to be read
- *   change_indicator => should file cursor stay changed
- *                       after reading from file?
+ * @param file reference to file struct
+ * @param offset position from start of file
+ * @param count amount of bytes to be read
+ * @param change_indicator should file cursor stay changed
+ *                         after reading from file?
  *
- * Return:
- *   bool => true if successful, false if failed
+ * @return bool true if successful, false if failed
  **********************************************************/
 bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
@@ -161,13 +165,11 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
 /**********************************************************
  * Read a line from file.
  *
- * Args:
- *   file => reference to file struct
- *   change_indicator => should file cursor stay changed
- *                       after reading from file?
+ * @param file reference to file struct
+ * @param change_indicator should file cursor stay changed
+ *                         after reading from file?
  *
- * Return:
- *   bool => true if successful, false if failed
+ * @return bool true if successful, false if failed
  **********************************************************/
 bool file_read_line(file_t* file, const bool change_indicator)
 {
@@ -194,15 +196,13 @@ bool file_read_line(file_t* file, const bool change_indicator)
 /**********************************************************
  * Flush block of data from file buffer into system storage.
  *
- * Args:
- *   file => reference to file struct
- *   offset => position from start of file
- *   count => amount of bytes to be write
- *   change_indicator => should file cursor stay changed
- *                       after writing to file?
+ * @param file reference to file struct
+ * @param offset position from start of file
+ * @param count amount of bytes to be write
+ * @param change_indicator should file cursor stay changed
+ *                         after writing to file?
  *
- * Return:
- *   bool => true if successful, false if failed
+ * @return bool true if successful, false if failed
  **********************************************************/
 bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
@@ -234,9 +234,8 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
  * Write block of data into file buffer. The file buffer will
  * be replaced.
  *
- * Args:
- *   file => reference to file struct
- *   data => block of data to replace file buffer
+ * @param file reference to file struct
+ * @param data block of data to replace file buffer
  **********************************************************/
 void file_replace_buffer(file_t* file, data_t* data)
 {
@@ -258,8 +257,7 @@ void file_replace_buffer(file_t* file, data_t* data)
 /**********************************************************
  * Close open file and clean up memory.
  *
- * Args:
- *   file => reference to file struct
+ * @param file reference to file struct
  **********************************************************/
 void file_close(file_t* file)
 {
@@ -276,12 +274,10 @@ void file_close(file_t* file)
  * Open a file and initialize struct values. The file should
  * exist.
  *
- * Args:
- *   file => reference to pointer where file struct is located
- *   path => string to file path
+ * @param file reference to pointer where file struct is located
+ * @param path string to file path
  *
- * Return:
- *   bool => true if successful, false if failed
+ * @return bool true if successful, false if failed
  **********************************************************/
 bool file_open(file_t** file, char* path)
 {
@@ -316,14 +312,12 @@ bool file_open(file_t** file, char* path)
 }
 
 /**********************************************************
- * Create a new file. The new file should not exist. 
+ * Create a new file. The new file should not exist.
  * Also, the file should be at an existing directory.
  *
- * Args:
- *   filename => relative or absolute path to the new file
+ * @param filename relative or absolute path to the new file
  *
- * Return:
- *   bool => true if successful, false if failed
+ * @return bool true if successful, false if failed
  **********************************************************/
 bool file_create(const char* filename)
 {

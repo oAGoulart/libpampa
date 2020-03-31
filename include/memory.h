@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019-2020 José Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,10 +42,15 @@
   #define MEM_UNPROT PROT_READ | PROT_WRITE | PROT_EXEC
 #endif
 
+/**
+ * Memory allocation data
+ */
 typedef struct data_s
 {
-  size_t   size;    /* buffer size */
-  ubyte_t* address; /* data location */
+  /** buffer size */
+  size_t   size;
+  /** data location */
+  ubyte_t* address;
 } data_t;
 
 #ifdef __cplusplus
@@ -55,8 +60,7 @@ extern "C" {
 /**********************************************************
  * Free a block of data.
  *
- * Args:
- *   data => data struct reference
+ * @param data data struct reference
  **********************************************************/
 void data_free(data_t* data)
 {
@@ -73,12 +77,10 @@ void data_free(data_t* data)
 /**********************************************************
  * Allocate a block of data.
  *
- * Args:
- *   data => data struct reference with information for the
- *           allocation
+ * @param data data struct reference with information for the
+ *             allocation
  *
- * Return:
- *   bool => wheter or not data was allocated
+ * @return bool whether or not data was allocated
  **********************************************************/
 bool data_alloc(data_t* data)
 {
@@ -96,12 +98,10 @@ bool data_alloc(data_t* data)
 /**********************************************************
  * Copy a block of data to another.
  *
- * Args:
- *   source => data to be copied
- *   destination => where to store data
+ * @param source data to be copied
+ * @param destination where to store data
  *
- * Return:
- *   bool => wheter or not data was copied
+ * @return bool whether or not data was copied
  **********************************************************/
 bool data_copy(data_t* source, data_t* destination)
 {
@@ -110,7 +110,7 @@ bool data_copy(data_t* source, data_t* destination)
 
     if (data_alloc(destination)) {
       memcpy(destination->address, source->address, source->size);
-      
+
       return true;
     }
   }
@@ -121,10 +121,9 @@ bool data_copy(data_t* source, data_t* destination)
 /**********************************************************
  * Set a block of system memory protection.
  *
- * Args:
- *   address => block of memory start address
- *   size => size of the block of memory
- *   mode => protection mode to be set
+ * @param address block of memory start address
+ * @param size size of the block of memory
+ * @param mode protection mode to be set
  **********************************************************/
 void memory_set_protection(const void* address, const size_t size, const int mode)
 {
@@ -146,11 +145,9 @@ void memory_set_protection(const void* address, const size_t size, const int mod
 /**********************************************************
  * Get a block of system memory protection.
  *
- * Args:
- *   address => block of memory start address
+ * @param address block of memory start address
  *
- * Return:
- *   int => system memory protection mode
+ * @return int system memory protection mode
  **********************************************************/
 int memory_get_protection(const void* address)
 {
@@ -195,11 +192,10 @@ int memory_get_protection(const void* address)
 /**********************************************************
  * Write a block of system memory.
  *
- * Args:
- *   address => block of memory start address
- *   data => data to be written
- *   size => size of the data
- *   vp => is virtual protection enabled?
+ * @param address block of memory start address
+ * @param data data to be written
+ * @param size size of the data
+ * @param vp is virtual protection enabled?
  **********************************************************/
 void memory_set_raw(void* address, const void* data, const size_t size, const bool vp)
 {
@@ -222,11 +218,9 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
 /**********************************************************
  * Get the base address of a process.
  *
- * Args:
- *   pid => process id
+ * @param pid process id
  *
- * Return:
- *   ulong_t => base address
+ * @return ulong_t base address
  **********************************************************/
 ulong_t process_get_base_address(const pid_t pid)
 {

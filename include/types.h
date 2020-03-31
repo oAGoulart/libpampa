@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019-2020 José Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,14 @@
   #define __X86_ARCH__ 1
 #endif
 
+/** unsigned byte data type */
 typedef unsigned char ubyte_t;
 
 #ifdef __X86_ARCH__
+  /** unsigned long integer data type */
   typedef uint32_t ulong_t;
 #else
+  /** unsigned long integer data type */
   typedef uint64_t ulong_t;
 #endif
 
