@@ -80,7 +80,7 @@ void data_free(data_t* data)
  * @param data data struct reference with information for the
  *             allocation
  *
- * @return bool wheter or not data was allocated
+ * @return bool whether or not data was allocated
  **********************************************************/
 bool data_alloc(data_t* data)
 {
@@ -101,7 +101,7 @@ bool data_alloc(data_t* data)
  * @param source data to be copied
  * @param destination where to store data
  *
- * @return bool wheter or not data was copied
+ * @return bool whether or not data was copied
  **********************************************************/
 bool data_copy(data_t* source, data_t* destination)
 {

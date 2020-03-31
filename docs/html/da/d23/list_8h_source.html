@@ -93,259 +93,259 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../dc/d18/memory_8h.html">memory.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">   24</a></span>&#160;  <a class="code" href="../../d1/d01/structdata__s.html">data_t</a>         <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>; <span class="comment">/* data stored by the node */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">   25</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a>* <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>; <span class="comment">/* previous node on the list */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">   26</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a>* <a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>; <span class="comment">/* next node on the list */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;} <a class="code" href="../../da/d23/list_8h.html#ade8921e42609f610cd71a72af43ade2c">node_t</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* node)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">if</span> (node != NULL) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="../../dc/d18/memory_8h.html#a371b0d448690a5c9d33fb509f699ab86">data_free</a>(&amp;node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    free(node);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** node)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span> (node != NULL) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span> ((*node = malloc(<span class="keyword">sizeof</span>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>))) != NULL) {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      (*node)-&gt;data.size = 0;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      (*node)-&gt;data.address = NULL;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      (*node)-&gt;prev = NULL;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      (*node)-&gt;next = NULL;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8">node_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* source, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** destination)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">if</span> (source != NULL &amp;&amp; destination != NULL) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(destination)) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      (*destination)-&gt;prev = source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      (*destination)-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> = source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;(*destination)-&gt;data);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = NULL;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordflow">if</span> (head != NULL) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">while</span> (current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> != NULL)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html">   26</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a> {</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">   28</a></span>&#160;  <a class="code" href="../../d1/d01/structdata__s.html">data_t</a>         <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">   30</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a>* <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">   32</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="../../db/d9b/structnode__s.html">node_s</a>* <a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;} <a class="code" href="../../da/d23/list_8h.html#ade8921e42609f610cd71a72af43ade2c">node_t</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* node)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">if</span> (node != NULL) {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="../../dc/d18/memory_8h.html#a371b0d448690a5c9d33fb509f699ab86">data_free</a>(&amp;node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    free(node);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** node)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">if</span> (node != NULL) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span> ((*node = malloc(<span class="keyword">sizeof</span>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>))) != NULL) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      (*node)-&gt;data.size = 0;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      (*node)-&gt;data.address = NULL;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      (*node)-&gt;prev = NULL;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      (*node)-&gt;next = NULL;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8">node_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* source, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** destination)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">if</span> (source != NULL &amp;&amp; destination != NULL) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(destination)) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      (*destination)-&gt;prev = source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      (*destination)-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> = source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;source-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;(*destination)-&gt;data);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = NULL;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    tail = current;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordflow">if</span> (head != NULL) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span> tail;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">while</span> (current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> != NULL)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a0a8f4882d72b4d8cfb7cc1bf1be41db8">list_append</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* node)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keywordflow">if</span> (head != NULL &amp;&amp; node != NULL) {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a>(head);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (tail != NULL) {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> = node;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = tail;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head, <span class="keyword">const</span> <a class="code" href="../../d1/d01/structdata__s.html">data_t</a>* <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;{</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordflow">if</span> (head != NULL &amp;&amp; <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a> != NULL) {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="comment">/* iterate through list to find data */</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <span class="keywordflow">if</span> (current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>.<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a> == <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a>) {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">if</span> (!memcmp(current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>.<a class="code" href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">address</a>, <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">address</a>, <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a>))</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;          <span class="keywordflow">return</span> current;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    } <span class="keywordflow">while</span> (current != NULL);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_node, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail) {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(&amp;dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>)) {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;src_node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = dest_tail;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    tail = current;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordflow">return</span> tail;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a0a8f4882d72b4d8cfb7cc1bf1be41db8">list_append</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* node)</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;{</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordflow">if</span> (head != NULL &amp;&amp; node != NULL) {</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a>(head);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">if</span> (tail != NULL) {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> = node;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = tail;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head, <span class="keyword">const</span> <a class="code" href="../../d1/d01/structdata__s.html">data_t</a>* <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keywordflow">if</span> (head != NULL &amp;&amp; <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a> != NULL) {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="comment">/* iterate through list to find data */</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordflow">if</span> (current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>.<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a> == <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a>) {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordflow">if</span> (!memcmp(current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>.<a class="code" href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">address</a>, <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">address</a>, <a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>-&gt;<a class="code" href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">size</a>))</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;          <span class="keywordflow">return</span> current;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    } <span class="keywordflow">while</span> (current != NULL);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_node, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail) {</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(&amp;dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>)) {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;src_node-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = dest_tail;</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* cmp_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail)</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;{</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordflow">if</span> (dest_tail != NULL &amp;&amp; cmp_head != NULL) {</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">while</span> (src_head != NULL) {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(cmp_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL &amp;&amp;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;          <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(dest_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL) {</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(src_head, dest_tail))</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;          dest_tail = dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      }</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      src_head = src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    }</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordflow">return</span> dest_tail;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* cmp_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail)</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;{</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordflow">if</span> (dest_tail != NULL &amp;&amp; cmp_head != NULL) {</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">while</span> (src_head != NULL) {</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(cmp_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) != NULL &amp;&amp;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;          <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(dest_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL) {</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(src_head, dest_tail))</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;          dest_tail = dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      }</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      src_head = src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    }</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  }</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  <span class="keywordflow">return</span> dest_tail;</div>
-<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">  235</a></span>&#160;}</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">list_union</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;{</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head)) {</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="comment">/* initialize result list */</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;first_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;(*out_head)-&gt;data);</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(first_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>, *out_head, *out_head, *out_head);</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(second_head, *out_head, *out_head, tail);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    }</div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">  256</a></span>&#160;  }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;}</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* cmp_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail)</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;{</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordflow">if</span> (dest_tail != NULL &amp;&amp; cmp_head != NULL) {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordflow">while</span> (src_head != NULL) {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(cmp_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL &amp;&amp;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;          <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(dest_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL) {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(src_head, dest_tail))</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;          dest_tail = dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      src_head = src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  }</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="keywordflow">return</span> dest_tail;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* src_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* cmp_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* dest_tail)</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;{</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keywordflow">if</span> (dest_tail != NULL &amp;&amp; cmp_head != NULL) {</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">while</span> (src_head != NULL) {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(cmp_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) != NULL &amp;&amp;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;          <a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(dest_head, &amp;src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL) {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a>(src_head, dest_tail))</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;          dest_tail = dest_tail-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      }</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      src_head = src_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    }</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <span class="keywordflow">return</span> dest_tail;</div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">  241</a></span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">list_union</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head)) {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      <span class="comment">/* initialize result list */</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <a class="code" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a>(&amp;first_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>, &amp;(*out_head)-&gt;data);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(first_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>, *out_head, *out_head, *out_head);</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">list_intersection</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;{</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head))</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">  271</a></span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a>(first_head, second_head, *out_head, *out_head);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  }</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">list_difference</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;{</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head)) {</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(first_head, second_head, *out_head, *out_head);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(second_head, first_head, *out_head, tail);</div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">  290</a></span>&#160;    }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;}</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(second_head, *out_head, *out_head, tail);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    }</div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">  262</a></span>&#160;  }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;}</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">list_intersection</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;{</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head))</div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">  277</a></span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a>(first_head, second_head, *out_head, *out_head);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">list_difference</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>** out_head)</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;{</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL &amp;&amp; out_head != NULL) {</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a>(out_head)) {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* tail = <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(first_head, second_head, *out_head, *out_head);</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">list_subset</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head)</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;{</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL) {</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keywordflow">while</span> (second_head != NULL) {</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(first_head, &amp;second_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL)</div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">  308</a></span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      second_head = second_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  }</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">list_free</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head)</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;{</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <span class="keywordflow">if</span> (head != NULL) {</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keywordflow">if</span> (head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> == NULL)</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(head);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = head;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <span class="keywordflow">while</span> (current != NULL) {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = current;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;}</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;}</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _list_h_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a>(second_head, first_head, *out_head, tail);</div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">  296</a></span>&#160;    }</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;}</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">list_subset</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* first_head, <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* second_head)</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;{</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordflow">if</span> (first_head != NULL &amp;&amp; second_head != NULL) {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordflow">while</span> (second_head != NULL) {</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a>(first_head, &amp;second_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">data</a>) == NULL)</div>
+<div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">  314</a></span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      second_head = second_head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">list_free</a>(<a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* head)</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;{</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordflow">if</span> (head != NULL) {</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">if</span> (head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a> == NULL)</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(head);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* current = head-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <a class="code" href="../../db/d9b/structnode__s.html">node_t</a>* <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = head;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">while</span> (current != NULL) {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        <a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a> = current;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        current = current-&gt;<a class="code" href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">next</a>;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      <a class="code" href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a>(<a class="code" href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">prev</a>);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    }</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  }</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;}</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;}</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* _list_h_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="amemory_8h_html_ac60b5a5e2e8bc333d45243a5e845bb8b"><div class="ttname"><a href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a></div><div class="ttdeci">bool data_copy(data_t *source, data_t *destination)</div><div class="ttdoc">Copy a block of data to another.</div><div class="ttdef"><b>Definition:</b> memory.h:98</div></div>
-<div class="ttc" id="astructnode__s_html_a54a59fb31e75eddffc692ba0bc5e5dc9"><div class="ttname"><a href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">node_s::next</a></div><div class="ttdeci">struct node_s * next</div><div class="ttdef"><b>Definition:</b> list.h:26</div></div>
-<div class="ttc" id="astructnode__s_html_ab7d82954072593d1172c02f90dc847be"><div class="ttname"><a href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">node_s::prev</a></div><div class="ttdeci">struct node_s * prev</div><div class="ttdef"><b>Definition:</b> list.h:25</div></div>
-<div class="ttc" id="alist_8h_html_ad9f868d4c4c17194226e74566481f204"><div class="ttname"><a href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a></div><div class="ttdeci">node_t * list_single_copy(node_t *src_head, node_t *cmp_head, node_t *dest_head, node_t *dest_tail)</div><div class="ttdoc">Make a copy of each element of source list into destination list without repeating the elements of co...</div><div class="ttdef"><b>Definition:</b> list.h:184</div></div>
-<div class="ttc" id="astructnode__s_html"><div class="ttname"><a href="../../db/d9b/structnode__s.html">node_s</a></div><div class="ttdef"><b>Definition:</b> list.h:23</div></div>
-<div class="ttc" id="astructnode__s_html_ac9b566fb3abe47dfcf1ff0b9877fb30f"><div class="ttname"><a href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">node_s::data</a></div><div class="ttdeci">data_t data</div><div class="ttdef"><b>Definition:</b> list.h:24</div></div>
-<div class="ttc" id="alist_8h_html_a80659186fcbede6ba32b8aea4ab21d24"><div class="ttname"><a href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">list_union</a></div><div class="ttdeci">void list_union(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make union between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:235</div></div>
-<div class="ttc" id="alist_8h_html_a13beddb1050f1849b4118a8059ccb99c"><div class="ttname"><a href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">list_subset</a></div><div class="ttdeci">bool list_subset(node_t *first_head, node_t *second_head)</div><div class="ttdoc">Verify if second list is subset of first list.</div><div class="ttdef"><b>Definition:</b> list.h:290</div></div>
-<div class="ttc" id="alist_8h_html_a763a9be1c6152472f60aa15ebf1843e5"><div class="ttname"><a href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a></div><div class="ttdeci">node_t * list_get_tail(node_t *head)</div><div class="ttdoc">Get tail from list.</div><div class="ttdef"><b>Definition:</b> list.h:96</div></div>
-<div class="ttc" id="alist_8h_html_adf30a688b533c583bc36c2d007683d3d"><div class="ttname"><a href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">list_intersection</a></div><div class="ttdeci">void list_intersection(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make intersection between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:256</div></div>
-<div class="ttc" id="alist_8h_html_aac033e2d72c2d370c54e130741e63f86"><div class="ttname"><a href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">list_free</a></div><div class="ttdeci">void list_free(node_t *head)</div><div class="ttdoc">Free all nodes on list.</div><div class="ttdef"><b>Definition:</b> list.h:308</div></div>
-<div class="ttc" id="astructdata__s_html"><div class="ttname"><a href="../../d1/d01/structdata__s.html">data_s</a></div><div class="ttdef"><b>Definition:</b> memory.h:45</div></div>
-<div class="ttc" id="alist_8h_html_a0a8f4882d72b4d8cfb7cc1bf1be41db8"><div class="ttname"><a href="../../da/d23/list_8h.html#a0a8f4882d72b4d8cfb7cc1bf1be41db8">list_append</a></div><div class="ttdeci">void list_append(node_t *head, node_t *node)</div><div class="ttdoc">Append node to list.</div><div class="ttdef"><b>Definition:</b> list.h:117</div></div>
-<div class="ttc" id="alist_8h_html_ad9983aade1e36c30c4782b44546e2270"><div class="ttname"><a href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a></div><div class="ttdeci">bool node_alloc(node_t **node)</div><div class="ttdoc">Allocate memory for the node.</div><div class="ttdef"><b>Definition:</b> list.h:53</div></div>
-<div class="ttc" id="alist_8h_html_a4e2cfbe0bd4425aea3dad55ee691d47c"><div class="ttname"><a href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a></div><div class="ttdeci">node_t * list_find_data(node_t *head, const data_t *data)</div><div class="ttdoc">Find if given data is on this list.</div><div class="ttdef"><b>Definition:</b> list.h:137</div></div>
-<div class="ttc" id="alist_8h_html_a02922f4f5f19f6313552915080efb83c"><div class="ttname"><a href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a></div><div class="ttdeci">void node_free(node_t *node)</div><div class="ttdoc">Free node allocated memory.</div><div class="ttdef"><b>Definition:</b> list.h:37</div></div>
-<div class="ttc" id="astructdata__s_html_a38789a4aadbcec5cd2e264886ce10f58"><div class="ttname"><a href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">data_s::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition:</b> memory.h:47</div></div>
-<div class="ttc" id="alist_8h_html_a00df9eb5ee0cd89ca686e743e4d603a6"><div class="ttname"><a href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">list_difference</a></div><div class="ttdeci">void list_difference(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make symmetric difference between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:271</div></div>
-<div class="ttc" id="alist_8h_html_a118a4635956eef424dfc6c931873c786"><div class="ttname"><a href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a></div><div class="ttdeci">bool list_push(node_t *src_node, node_t *dest_tail)</div><div class="ttdoc">Create new tail on destination from source node.</div><div class="ttdef"><b>Definition:</b> list.h:163</div></div>
-<div class="ttc" id="astructdata__s_html_a97d73a228db5832ba4d31fc1fd440d45"><div class="ttname"><a href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">data_s::address</a></div><div class="ttdeci">ubyte_t * address</div><div class="ttdef"><b>Definition:</b> memory.h:48</div></div>
-<div class="ttc" id="alist_8h_html_ade8921e42609f610cd71a72af43ade2c"><div class="ttname"><a href="../../da/d23/list_8h.html#ade8921e42609f610cd71a72af43ade2c">node_t</a></div><div class="ttdeci">struct node_s node_t</div></div>
-<div class="ttc" id="alist_8h_html_a7a6b0ae19943b9dbb5d49bc1cedfe1f8"><div class="ttname"><a href="../../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8">node_copy</a></div><div class="ttdeci">bool node_copy(node_t *source, node_t **destination)</div><div class="ttdoc">Copy one node to another.</div><div class="ttdef"><b>Definition:</b> list.h:76</div></div>
-<div class="ttc" id="amemory_8h_html_a371b0d448690a5c9d33fb509f699ab86"><div class="ttname"><a href="../../dc/d18/memory_8h.html#a371b0d448690a5c9d33fb509f699ab86">data_free</a></div><div class="ttdeci">void data_free(data_t *data)</div><div class="ttdoc">Free a block of data.</div><div class="ttdef"><b>Definition:</b> memory.h:59</div></div>
-<div class="ttc" id="alist_8h_html_ab6023b7c812f0417cfa0be6e36a543ca"><div class="ttname"><a href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a></div><div class="ttdeci">node_t * list_repeat_copy(node_t *src_head, node_t *cmp_head, node_t *dest_head, node_t *dest_tail)</div><div class="ttdoc">Make a copy of each element of source list into destination list, but only if the element is also on ...</div><div class="ttdef"><b>Definition:</b> list.h:211</div></div>
+<div class="ttc" id="amemory_8h_html_ac60b5a5e2e8bc333d45243a5e845bb8b"><div class="ttname"><a href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a></div><div class="ttdeci">bool data_copy(data_t *source, data_t *destination)</div><div class="ttdoc">Copy a block of data to another.</div><div class="ttdef"><b>Definition:</b> memory.h:103</div></div>
+<div class="ttc" id="astructnode__s_html_a54a59fb31e75eddffc692ba0bc5e5dc9"><div class="ttname"><a href="../../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9">node_s::next</a></div><div class="ttdeci">struct node_s * next</div><div class="ttdoc">next node on the list</div><div class="ttdef"><b>Definition:</b> list.h:32</div></div>
+<div class="ttc" id="astructnode__s_html_ab7d82954072593d1172c02f90dc847be"><div class="ttname"><a href="../../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be">node_s::prev</a></div><div class="ttdeci">struct node_s * prev</div><div class="ttdoc">previous node on the list</div><div class="ttdef"><b>Definition:</b> list.h:30</div></div>
+<div class="ttc" id="alist_8h_html_ad9f868d4c4c17194226e74566481f204"><div class="ttname"><a href="../../da/d23/list_8h.html#ad9f868d4c4c17194226e74566481f204">list_single_copy</a></div><div class="ttdeci">node_t * list_single_copy(node_t *src_head, node_t *cmp_head, node_t *dest_head, node_t *dest_tail)</div><div class="ttdoc">Make a copy of each element of source list into destination list without repeating the elements of co...</div><div class="ttdef"><b>Definition:</b> list.h:190</div></div>
+<div class="ttc" id="astructnode__s_html"><div class="ttname"><a href="../../db/d9b/structnode__s.html">node_s</a></div><div class="ttdoc">Double linked list node.</div><div class="ttdef"><b>Definition:</b> list.h:26</div></div>
+<div class="ttc" id="astructnode__s_html_ac9b566fb3abe47dfcf1ff0b9877fb30f"><div class="ttname"><a href="../../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f">node_s::data</a></div><div class="ttdeci">data_t data</div><div class="ttdoc">data stored by the node</div><div class="ttdef"><b>Definition:</b> list.h:28</div></div>
+<div class="ttc" id="alist_8h_html_a80659186fcbede6ba32b8aea4ab21d24"><div class="ttname"><a href="../../da/d23/list_8h.html#a80659186fcbede6ba32b8aea4ab21d24">list_union</a></div><div class="ttdeci">void list_union(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make union between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:241</div></div>
+<div class="ttc" id="alist_8h_html_a13beddb1050f1849b4118a8059ccb99c"><div class="ttname"><a href="../../da/d23/list_8h.html#a13beddb1050f1849b4118a8059ccb99c">list_subset</a></div><div class="ttdeci">bool list_subset(node_t *first_head, node_t *second_head)</div><div class="ttdoc">Verify if second list is subset of first list.</div><div class="ttdef"><b>Definition:</b> list.h:296</div></div>
+<div class="ttc" id="alist_8h_html_a763a9be1c6152472f60aa15ebf1843e5"><div class="ttname"><a href="../../da/d23/list_8h.html#a763a9be1c6152472f60aa15ebf1843e5">list_get_tail</a></div><div class="ttdeci">node_t * list_get_tail(node_t *head)</div><div class="ttdoc">Get tail from list.</div><div class="ttdef"><b>Definition:</b> list.h:102</div></div>
+<div class="ttc" id="alist_8h_html_adf30a688b533c583bc36c2d007683d3d"><div class="ttname"><a href="../../da/d23/list_8h.html#adf30a688b533c583bc36c2d007683d3d">list_intersection</a></div><div class="ttdeci">void list_intersection(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make intersection between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:262</div></div>
+<div class="ttc" id="alist_8h_html_aac033e2d72c2d370c54e130741e63f86"><div class="ttname"><a href="../../da/d23/list_8h.html#aac033e2d72c2d370c54e130741e63f86">list_free</a></div><div class="ttdeci">void list_free(node_t *head)</div><div class="ttdoc">Free all nodes on list.</div><div class="ttdef"><b>Definition:</b> list.h:314</div></div>
+<div class="ttc" id="astructdata__s_html"><div class="ttname"><a href="../../d1/d01/structdata__s.html">data_s</a></div><div class="ttdoc">Memory allocation data.</div><div class="ttdef"><b>Definition:</b> memory.h:48</div></div>
+<div class="ttc" id="alist_8h_html_a0a8f4882d72b4d8cfb7cc1bf1be41db8"><div class="ttname"><a href="../../da/d23/list_8h.html#a0a8f4882d72b4d8cfb7cc1bf1be41db8">list_append</a></div><div class="ttdeci">void list_append(node_t *head, node_t *node)</div><div class="ttdoc">Append node to list.</div><div class="ttdef"><b>Definition:</b> list.h:123</div></div>
+<div class="ttc" id="alist_8h_html_ad9983aade1e36c30c4782b44546e2270"><div class="ttname"><a href="../../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270">node_alloc</a></div><div class="ttdeci">bool node_alloc(node_t **node)</div><div class="ttdoc">Allocate memory for the node.</div><div class="ttdef"><b>Definition:</b> list.h:59</div></div>
+<div class="ttc" id="alist_8h_html_a4e2cfbe0bd4425aea3dad55ee691d47c"><div class="ttname"><a href="../../da/d23/list_8h.html#a4e2cfbe0bd4425aea3dad55ee691d47c">list_find_data</a></div><div class="ttdeci">node_t * list_find_data(node_t *head, const data_t *data)</div><div class="ttdoc">Find if given data is on this list.</div><div class="ttdef"><b>Definition:</b> list.h:143</div></div>
+<div class="ttc" id="alist_8h_html_a02922f4f5f19f6313552915080efb83c"><div class="ttname"><a href="../../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c">node_free</a></div><div class="ttdeci">void node_free(node_t *node)</div><div class="ttdoc">Free node allocated memory.</div><div class="ttdef"><b>Definition:</b> list.h:43</div></div>
+<div class="ttc" id="astructdata__s_html_a38789a4aadbcec5cd2e264886ce10f58"><div class="ttname"><a href="../../d1/d01/structdata__s.html#a38789a4aadbcec5cd2e264886ce10f58">data_s::size</a></div><div class="ttdeci">size_t size</div><div class="ttdoc">buffer size</div><div class="ttdef"><b>Definition:</b> memory.h:51</div></div>
+<div class="ttc" id="alist_8h_html_a00df9eb5ee0cd89ca686e743e4d603a6"><div class="ttname"><a href="../../da/d23/list_8h.html#a00df9eb5ee0cd89ca686e743e4d603a6">list_difference</a></div><div class="ttdeci">void list_difference(node_t *first_head, node_t *second_head, node_t **out_head)</div><div class="ttdoc">Make symmetric difference between two lists.</div><div class="ttdef"><b>Definition:</b> list.h:277</div></div>
+<div class="ttc" id="alist_8h_html_a118a4635956eef424dfc6c931873c786"><div class="ttname"><a href="../../da/d23/list_8h.html#a118a4635956eef424dfc6c931873c786">list_push</a></div><div class="ttdeci">bool list_push(node_t *src_node, node_t *dest_tail)</div><div class="ttdoc">Create new tail on destination from source node.</div><div class="ttdef"><b>Definition:</b> list.h:169</div></div>
+<div class="ttc" id="astructdata__s_html_a97d73a228db5832ba4d31fc1fd440d45"><div class="ttname"><a href="../../d1/d01/structdata__s.html#a97d73a228db5832ba4d31fc1fd440d45">data_s::address</a></div><div class="ttdeci">ubyte_t * address</div><div class="ttdoc">data location</div><div class="ttdef"><b>Definition:</b> memory.h:53</div></div>
+<div class="ttc" id="alist_8h_html_ade8921e42609f610cd71a72af43ade2c"><div class="ttname"><a href="../../da/d23/list_8h.html#ade8921e42609f610cd71a72af43ade2c">node_t</a></div><div class="ttdeci">struct node_s node_t</div><div class="ttdoc">Double linked list node.</div></div>
+<div class="ttc" id="alist_8h_html_a7a6b0ae19943b9dbb5d49bc1cedfe1f8"><div class="ttname"><a href="../../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8">node_copy</a></div><div class="ttdeci">bool node_copy(node_t *source, node_t **destination)</div><div class="ttdoc">Copy one node to another.</div><div class="ttdef"><b>Definition:</b> list.h:82</div></div>
+<div class="ttc" id="amemory_8h_html_a371b0d448690a5c9d33fb509f699ab86"><div class="ttname"><a href="../../dc/d18/memory_8h.html#a371b0d448690a5c9d33fb509f699ab86">data_free</a></div><div class="ttdeci">void data_free(data_t *data)</div><div class="ttdoc">Free a block of data.</div><div class="ttdef"><b>Definition:</b> memory.h:64</div></div>
+<div class="ttc" id="alist_8h_html_ab6023b7c812f0417cfa0be6e36a543ca"><div class="ttname"><a href="../../da/d23/list_8h.html#ab6023b7c812f0417cfa0be6e36a543ca">list_repeat_copy</a></div><div class="ttdeci">node_t * list_repeat_copy(node_t *src_head, node_t *cmp_head, node_t *dest_head, node_t *dest_tail)</div><div class="ttdoc">Make a copy of each element of source list into destination list, but only if the element is also on ...</div><div class="ttdef"><b>Definition:</b> list.h:217</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="../../dc/d18/memory_8h.html">memory.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
