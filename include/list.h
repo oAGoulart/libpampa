@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019-2020 José Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,16 @@
 #include <stdlib.h>
 #include "memory.h"
 
+/**
+ * Double linked list node
+ */
 typedef struct node_s {
-  data_t         data; /* data stored by the node */
-  struct node_s* prev; /* previous node on the list */
-  struct node_s* next; /* next node on the list */
+  /** data stored by the node */
+  data_t         data;
+  /** previous node on the list */
+  struct node_s* prev;
+  /** next node on the list */
+  struct node_s* next;
 } node_t;
 
 #ifdef __cplusplus
@@ -33,8 +39,7 @@ extern "C" {
 /**********************************************************
  * Free node allocated memory.
  *
- * Args:
- *   node => reference to node
+ * @param node reference to node
  **********************************************************/
 void node_free(node_t* node)
 {
@@ -48,12 +53,10 @@ void node_free(node_t* node)
 /**********************************************************
  * Allocate memory for the node.
  *
- * Args:
- *   node => reference to pointer that will receive the
- *           node address
+ * @param node reference to pointer that will receive the
+ *             node address
  *
- * Return:
- *   bool => wether the allocation was successful
+ * @return bool whether the allocation was successful
  **********************************************************/
 bool node_alloc(node_t** node)
 {
@@ -74,12 +77,10 @@ bool node_alloc(node_t** node)
 /**********************************************************
  * Copy one node to another.
  *
- * Args:
- *   source => node to be copied
- *   destination => where the node copy will be placed
+ * @param source node to be copied
+ * @param destination where the node copy will be placed
  *
- * Return:
- *   bool => wether the copy was successful
+ * @return bool whether the copy was successful
  **********************************************************/
 bool node_copy(node_t* source, node_t** destination)
 {
@@ -98,11 +99,9 @@ bool node_copy(node_t* source, node_t** destination)
 /**********************************************************
  * Get tail from list.
  *
- * Args:
- *   head => fisrt node on the list
+ * @param head fisrt node on the list
  *
- * Return:
- *   node_t* => pointer to tail node
+ * @return node_t* pointer to tail node
  **********************************************************/
 node_t* list_get_tail(node_t* head)
 {
@@ -123,9 +122,8 @@ node_t* list_get_tail(node_t* head)
 /**********************************************************
  * Append node to list.
  *
- * Args:
- *   head => first node on list
- *   node => node to be appended
+ * @param head first node on list
+ * @param node node to be appended
  **********************************************************/
 void list_append(node_t* head, node_t* node)
 {
@@ -142,13 +140,11 @@ void list_append(node_t* head, node_t* node)
 /**********************************************************
  * Find if given data is on this list.
  *
- * Args:
- *   head => first node on list
- *   data => data to be searched for
+ * @param head first node on list
+ * @param data data to be searched for
  *
- * Return:
- *   node_t* => node reference where the data was found or
- *              NULL if not found
+ * @return node_t* node reference where the data was found or
+ *                 NULL if not found
  **********************************************************/
 node_t* list_find_data(node_t* head, const data_t* data)
 {
@@ -170,16 +166,34 @@ node_t* list_find_data(node_t* head, const data_t* data)
 }
 
 /**********************************************************
+ * Create new tail on destination from source node
+ *
+ * @param src_node node to be copied
+ * @param dest_tail destination list tail
+ *
+ * @return bool whether operation was successful
+ **********************************************************/
+bool list_push(node_t* src_node, node_t* dest_tail) {
+  if (node_alloc(&dest_tail->next)) {
+    data_copy(&src_node->data, &dest_tail->next->data);
+    dest_tail->next->prev = dest_tail;
+
+    return true;
+  }
+
+  return false;
+}
+
+/**********************************************************
  * Make a copy of each element of source list into destination
  * list without repeating the elements of comparison list.
  *
- * Args:
- *   src_head => first node on source list
- *   cmp_head => comparison list head
- *   dest_tail => destination list tail
+ * @param src_head first node on source list
+ * @param cmp_head comparison list head
+ * @param dest_head destination list head
+ * @param dest_tail destination list tail
  *
- * Return:
- *   node_t* => new destination list tail
+ * @return node_t* new destination list tail
  **********************************************************/
 node_t* list_single_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, node_t* dest_tail)
 {
@@ -187,11 +201,8 @@ node_t* list_single_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
     while (src_head != NULL) {
       if (list_find_data(cmp_head, &src_head->data) == NULL &&
           list_find_data(dest_head, &src_head->data) == NULL) {
-        if (node_alloc(&dest_tail->next)) {
-          data_copy(&src_head->data, &dest_tail->next->data);
-          dest_tail->next->prev = dest_tail;
+        if (list_push(src_head, dest_tail))
           dest_tail = dest_tail->next;
-        }
       }
 
       src_head = src_head->next;
@@ -205,14 +216,12 @@ node_t* list_single_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
  * Make a copy of each element of source list into destination
  * list, but only if the element is also on comparison list.
  *
- * Args:
- *   src_head => first node on source list
- *   cmp_head => comparison list head
- *   dest_head => destination list head
- *   dest_tail => destination list tail
+ * @param src_head first node on source list
+ * @param cmp_head comparison list head
+ * @param dest_head destination list head
+ * @param dest_tail destination list tail
  *
- * Return:
- *   node_t* => new destination list tail
+ * @return node_t* new destination list tail
  **********************************************************/
 node_t* list_repeat_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, node_t* dest_tail)
 {
@@ -220,11 +229,8 @@ node_t* list_repeat_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
     while (src_head != NULL) {
       if (list_find_data(cmp_head, &src_head->data) != NULL &&
           list_find_data(dest_head, &src_head->data) == NULL) {
-        if (node_alloc(&dest_tail->next)) {
-          data_copy(&src_head->data, &dest_tail->next->data);
-          dest_tail->next->prev = dest_tail;
+        if (list_push(src_head, dest_tail))
           dest_tail = dest_tail->next;
-        }
       }
 
       src_head = src_head->next;
@@ -237,11 +243,10 @@ node_t* list_repeat_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
 /**********************************************************
  * Make union between two lists.
  *
- * Args:
- *   first_head => first list head
- *   second_head => second list head
- *   out_head => reference to pointer where resulting
- *               list head will be stored
+ * @param first_head first list head
+ * @param second_head second list head
+ * @param out_head reference to pointer where resulting
+ *                 list head will be stored
  **********************************************************/
 void list_union(node_t* first_head, node_t* second_head, node_t** out_head)
 {
@@ -249,7 +254,7 @@ void list_union(node_t* first_head, node_t* second_head, node_t** out_head)
     if (node_alloc(out_head)) {
       /* initialize result list */
       data_copy(&first_head->data, &(*out_head)->data);
-      
+
       node_t* tail = list_single_copy(first_head->next, *out_head, *out_head, *out_head);
 
       list_single_copy(second_head, *out_head, *out_head, tail);
@@ -260,11 +265,10 @@ void list_union(node_t* first_head, node_t* second_head, node_t** out_head)
 /**********************************************************
  * Make intersection between two lists.
  *
- * Args:
- *   first_head => first list head
- *   second_head => second list head
- *   out_head => reference to pointer where resulting
- *               list head will be stored
+ * @param first_head first list head
+ * @param second_head second list head
+ * @param out_head reference to pointer where resulting
+ *                 list head will be stored
  **********************************************************/
 void list_intersection(node_t* first_head, node_t* second_head, node_t** out_head)
 {
@@ -277,11 +281,10 @@ void list_intersection(node_t* first_head, node_t* second_head, node_t** out_hea
 /**********************************************************
  * Make symmetric difference between two lists.
  *
- * Args:
- *   first_head => first list head
- *   second_head => second list head
- *   out_head => reference to pointer where resulting
- *               list head will be stored
+ * @param first_head first list head
+ * @param second_head second list head
+ * @param out_head reference to pointer where resulting
+ *                 list head will be stored
  **********************************************************/
 void list_difference(node_t* first_head, node_t* second_head, node_t** out_head)
 {
@@ -297,13 +300,11 @@ void list_difference(node_t* first_head, node_t* second_head, node_t** out_head)
 /**********************************************************
  * Verify if second list is subset of first list.
  *
- * Args:
- *   first_head => first list head
- *   second_head => second list head
+ * @param first_head first list head
+ * @param second_head second list head
  *
- * Return:
- *   bool => wether second list is or not subset of first
- *           list
+ * @return bool whether second list is or not subset of first
+ *              list
  **********************************************************/
 bool list_subset(node_t* first_head, node_t* second_head)
 {
@@ -322,8 +323,7 @@ bool list_subset(node_t* first_head, node_t* second_head)
 /**********************************************************
  * Free all nodes on list.
  *
- * Args:
- *   head => first node on list
+ * @param head first node on list
  **********************************************************/
 void list_free(node_t* head)
 {
