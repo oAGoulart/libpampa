@@ -53,11 +53,9 @@ dkms.conf
 
 # CMake files
 /build/
-/out/
 
 # Editor files
 .vscode/
-.vs/
 
 # other
 *.js
