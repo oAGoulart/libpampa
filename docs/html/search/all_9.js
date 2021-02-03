@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['off_5ft_49',['OFF_T',['../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd',1,'file.h']]],
-  ['offset_50',['offset',['../d5/dac/structfile__s.html#ac033c929cf819739bc0b5ed822a116f6',1,'file_s']]],
-  ['oflag_51',['OFLAG',['../d2/d4d/file_8h.html#ae3a9312382ed2b2727e6135d2c92c6c9',1,'file.h']]],
-  ['open_52',['OPEN',['../d2/d4d/file_8h.html#a709bde914e2b045cf1e1a00589b7291f',1,'file.h']]]
+  ['next_48',['next',['../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9',1,'node_s']]],
+  ['node_5falloc_49',['node_alloc',['../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270',1,'list.h']]],
+  ['node_5fcopy_50',['node_copy',['../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8',1,'list.h']]],
+  ['node_5ffree_51',['node_free',['../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c',1,'list.h']]],
+  ['node_5fs_52',['node_s',['../db/d9b/structnode__s.html',1,'']]],
+  ['node_5ft_53',['node_t',['../da/d23/list_8h.html#a33b99e5345d46cf63926673aa2b9ff83',1,'list.h']]]
 ];

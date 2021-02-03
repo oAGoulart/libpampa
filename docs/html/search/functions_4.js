@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['node_5falloc_93',['node_alloc',['../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270',1,'list.h']]],
-  ['node_5fcopy_94',['node_copy',['../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8',1,'list.h']]],
-  ['node_5ffree_95',['node_free',['../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c',1,'list.h']]]
+  ['memory_5fget_5fprotection_100',['memory_get_protection',['../dc/d18/memory_8h.html#aa366d11b661a8c60ec23853f0bcbb312',1,'memory.h']]],
+  ['memory_5fset_5fprotection_101',['memory_set_protection',['../dc/d18/memory_8h.html#a36a5ad7a949565993d94ac1b6d363298',1,'memory.h']]],
+  ['memory_5fset_5fraw_102',['memory_set_raw',['../dc/d18/memory_8h.html#adf173fc1b14ccfa90ed773172f7c0635',1,'memory.h']]]
 ];

@@ -1,0 +1,52 @@
+\hypertarget{log_8h}{}\doxysection{include/log.h File Reference}
+\label{log_8h}\index{include/log.h@{include/log.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for log.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}{log\+\_\+error}} (const int err, const char $\ast$str=NULL)
+\begin{DoxyCompactList}\small\item\em Outputs error to {\ttfamily stderr}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{log_8h_a213f67178a650cb30ea5fead88fc41ae}{log\+\_\+fatal}} (const int err, const char $\ast$str=NULL)
+\begin{DoxyCompactList}\small\item\em Outputs error to {\ttfamily stderr} then calls exit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}\label{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}} 
+\index{log.h@{log.h}!log\_error@{log\_error}}
+\index{log\_error@{log\_error}!log.h@{log.h}}
+\doxysubsubsection{\texorpdfstring{log\_error()}{log\_error()}}
+{\footnotesize\ttfamily void log\+\_\+error (\begin{DoxyParamCaption}\item[{const int}]{err,  }\item[{const char $\ast$}]{str = {\ttfamily NULL} }\end{DoxyParamCaption})}
+
+
+
+Outputs error to {\ttfamily stderr}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & error number \\
+\hline
+{\em str} & string to be shown with the error, defaults to NULL \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{log_8h_a213f67178a650cb30ea5fead88fc41ae}\label{log_8h_a213f67178a650cb30ea5fead88fc41ae}} 
+\index{log.h@{log.h}!log\_fatal@{log\_fatal}}
+\index{log\_fatal@{log\_fatal}!log.h@{log.h}}
+\doxysubsubsection{\texorpdfstring{log\_fatal()}{log\_fatal()}}
+{\footnotesize\ttfamily void log\+\_\+fatal (\begin{DoxyParamCaption}\item[{const int}]{err,  }\item[{const char $\ast$}]{str = {\ttfamily NULL} }\end{DoxyParamCaption})}
+
+
+
+Outputs error to {\ttfamily stderr} then calls exit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & error number \\
+\hline
+{\em str} & string to be shown with the error \\
+\hline
+\end{DoxyParams}

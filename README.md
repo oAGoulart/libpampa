@@ -43,13 +43,11 @@ Then you should be able to run the executables!
 
 You can use the documentation on `docs/` as reference.
 
-To generate documentation again, use Doxygen (`docs/` were generated on Debian x86-64):
+To generate documentation again, use Doxygen (`docs/` were generated on Windows x64):
 
 ```sh
 doxygen Doxyfile
 ```
-
----
 
 ## Contributions
 

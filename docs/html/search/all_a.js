@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['path_53',['path',['../d5/dac/structfile__s.html#ae8b544a5f48f46bc3ab1c01fac99972b',1,'file_s']]],
-  ['prev_54',['prev',['../db/d9b/structnode__s.html#ab7d82954072593d1172c02f90dc847be',1,'node_s']]],
-  ['process_5fget_5fbase_5faddress_55',['process_get_base_address',['../dc/d18/memory_8h.html#acd7104c54da5579a666d107d52825386',1,'memory.h']]]
+  ['off_5ft_54',['OFF_T',['../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd',1,'file.h']]],
+  ['offset_55',['offset',['../d5/dac/structfile__s.html#ac033c929cf819739bc0b5ed822a116f6',1,'file_s']]],
+  ['oflag_56',['OFLAG',['../d2/d4d/file_8h.html#ae3a9312382ed2b2727e6135d2c92c6c9',1,'file.h']]],
+  ['open_57',['OPEN',['../d2/d4d/file_8h.html#a709bde914e2b045cf1e1a00589b7291f',1,'file.h']]]
 ];

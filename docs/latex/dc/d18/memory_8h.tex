@@ -16,13 +16,8 @@ Include dependency graph for memory.\+h\+:\nopagebreak
 \includegraphics[width=350pt]{df/d9a/memory_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=240pt]{db/d57/memory_8h__dep__incl}
-\end{center}
-\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -31,21 +26,21 @@ struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{memory_8h_afeb92935f8b09d25f95bbd032abe2d46}{M\+E\+M\+\_\+\+U\+N\+P\+R\+OT}}~P\+R\+O\+T\+\_\+\+R\+E\+AD $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+TE $\vert$ P\+R\+O\+T\+\_\+\+E\+X\+EC
+\#define \mbox{\hyperlink{memory_8h_afeb92935f8b09d25f95bbd032abe2d46}{MEM\+\_\+\+UNPROT}}~PROT\+\_\+\+READ $\vert$ PROT\+\_\+\+WRITE $\vert$ PROT\+\_\+\+EXEC
 \end{DoxyCompactItemize}
 \doxysubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}} \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}}
+typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}} \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Memory allocation data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{memory_8h_a371b0d448690a5c9d33fb509f699ab86}{data\+\_\+free}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$data)
+void \mbox{\hyperlink{memory_8h_a371b0d448690a5c9d33fb509f699ab86}{data\+\_\+free}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$data)
 \begin{DoxyCompactList}\small\item\em Free a block of data. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}{data\+\_\+alloc}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$data)
+bool \mbox{\hyperlink{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}{data\+\_\+alloc}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$data)
 \begin{DoxyCompactList}\small\item\em Allocate a block of data. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}{data\+\_\+copy}} (\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$destination)
+bool \mbox{\hyperlink{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}{data\+\_\+copy}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Copy a block of data to another. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{memory_8h_a36a5ad7a949565993d94ac1b6d363298}{memory\+\_\+set\+\_\+protection}} (const void $\ast$address, const size\+\_\+t size, const int mode)
 \begin{DoxyCompactList}\small\item\em Set a block of system memory protection. \end{DoxyCompactList}\item 
@@ -62,16 +57,16 @@ void \mbox{\hyperlink{memory_8h_adf173fc1b14ccfa90ed773172f7c0635}{memory\+\_\+s
 \index{memory.h@{memory.h}!MEM\_UNPROT@{MEM\_UNPROT}}
 \index{MEM\_UNPROT@{MEM\_UNPROT}!memory.h@{memory.h}}
 \doxysubsubsection{\texorpdfstring{MEM\_UNPROT}{MEM\_UNPROT}}
-{\footnotesize\ttfamily \#define M\+E\+M\+\_\+\+U\+N\+P\+R\+OT~P\+R\+O\+T\+\_\+\+R\+E\+AD $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+TE $\vert$ P\+R\+O\+T\+\_\+\+E\+X\+EC}
+{\footnotesize\ttfamily \#define MEM\+\_\+\+UNPROT~PROT\+\_\+\+READ $\vert$ PROT\+\_\+\+WRITE $\vert$ PROT\+\_\+\+EXEC}
 
 
 
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}\label{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}} 
+\mbox{\Hypertarget{memory_8h_abc127153841754ee8b7845321721d7e7}\label{memory_8h_abc127153841754ee8b7845321721d7e7}} 
 \index{memory.h@{memory.h}!data\_t@{data\_t}}
 \index{data\_t@{data\_t}!memory.h@{memory.h}}
 \doxysubsubsection{\texorpdfstring{data\_t}{data\_t}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}}  \mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structdata__s}{data\+\_\+s}} \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}}}
 
 
 
@@ -84,7 +79,7 @@ Memory allocation data.
 \index{memory.h@{memory.h}!data\_alloc@{data\_alloc}}
 \index{data\_alloc@{data\_alloc}!memory.h@{memory.h}}
 \doxysubsubsection{\texorpdfstring{data\_alloc()}{data\_alloc()}}
-{\footnotesize\ttfamily bool data\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool data\+\_\+alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
 
 
 
@@ -102,7 +97,7 @@ bool whether or not data was allocated
 \index{memory.h@{memory.h}!data\_copy@{data\_copy}}
 \index{data\_copy@{data\_copy}!memory.h@{memory.h}}
 \doxysubsubsection{\texorpdfstring{data\_copy()}{data\_copy()}}
-{\footnotesize\ttfamily bool data\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool data\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
 
 
 
@@ -122,7 +117,7 @@ bool whether or not data was copied
 \index{memory.h@{memory.h}!data\_free@{data\_free}}
 \index{data\_free@{data\_free}!memory.h@{memory.h}}
 \doxysubsubsection{\texorpdfstring{data\_free()}{data\_free()}}
-{\footnotesize\ttfamily void data\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_a92a0a4edea422da0a8b5e6aa3556f1a6}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void data\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
 
 
 

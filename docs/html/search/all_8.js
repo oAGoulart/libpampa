@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['next_43',['next',['../db/d9b/structnode__s.html#a54a59fb31e75eddffc692ba0bc5e5dc9',1,'node_s']]],
-  ['node_5falloc_44',['node_alloc',['../da/d23/list_8h.html#ad9983aade1e36c30c4782b44546e2270',1,'list.h']]],
-  ['node_5fcopy_45',['node_copy',['../da/d23/list_8h.html#a7a6b0ae19943b9dbb5d49bc1cedfe1f8',1,'list.h']]],
-  ['node_5ffree_46',['node_free',['../da/d23/list_8h.html#a02922f4f5f19f6313552915080efb83c',1,'list.h']]],
-  ['node_5fs_47',['node_s',['../db/d9b/structnode__s.html',1,'']]],
-  ['node_5ft_48',['node_t',['../da/d23/list_8h.html#ade8921e42609f610cd71a72af43ade2c',1,'list.h']]]
+  ['mem_5funprot_42',['MEM_UNPROT',['../dc/d18/memory_8h.html#afeb92935f8b09d25f95bbd032abe2d46',1,'memory.h']]],
+  ['memory_2eh_43',['memory.h',['../dc/d18/memory_8h.html',1,'']]],
+  ['memory_5fget_5fprotection_44',['memory_get_protection',['../dc/d18/memory_8h.html#aa366d11b661a8c60ec23853f0bcbb312',1,'memory.h']]],
+  ['memory_5fset_5fprotection_45',['memory_set_protection',['../dc/d18/memory_8h.html#a36a5ad7a949565993d94ac1b6d363298',1,'memory.h']]],
+  ['memory_5fset_5fraw_46',['memory_set_raw',['../dc/d18/memory_8h.html#adf173fc1b14ccfa90ed773172f7c0635',1,'memory.h']]],
+  ['mode_47',['MODE',['../d2/d4d/file_8h.html#ab8c52c1b4c021ed3e6b6b677bd2ac019',1,'file.h']]]
 ];

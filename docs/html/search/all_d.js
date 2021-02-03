@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ubyte_5ft_59',['ubyte_t',['../d9/d49/types_8h.html#ad40767aaeb0833664755ddfb1628be6c',1,'types.h']]],
-  ['ulong_5ft_60',['ulong_t',['../d9/d49/types_8h.html#a65862077c6f78c4c2e7343cff341b6f6',1,'types.h']]]
+  ['types_2eh_63',['types.h',['../d9/d49/types_8h.html',1,'']]]
 ];
