@@ -32,8 +32,10 @@ extern "C" {
  **********************************************************/
 bool is_png(file_t* file)
 {
-  if (file_read(file, 0, 8, false))
-    return !memcmp("\211PNG\r\n\032\n", file->buffer.address, 8);
+  if (file != NULL) {
+    if (file_read(file, 0, 8, false))
+      return !memcmp("\211PNG\r\n\032\n", file->buffer.address, 8);
+  }
 
   return false;
 }
