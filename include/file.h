@@ -149,8 +149,6 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
           else
             data_free(&file->buffer);
         }
-        else
-          data_free(&file->buffer);
       }
 
       /* reset file position indicator */
