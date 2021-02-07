@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "types.h"
+#include "miniz.c"
 
 /* define platform specific stuff */
 #ifdef __WINDOWS__
@@ -84,10 +85,10 @@ void data_free(data_t* data)
  **********************************************************/
 bool data_alloc(data_t* data)
 {
-  ubyte_t* temp_ptr = NULL;
+  void* temp_ptr = NULL;
 
   if ((temp_ptr = realloc(data->address, data->size)) != NULL) {
-    data->address = temp_ptr;
+    data->address = (ubyte_t*)temp_ptr;
 
     return true;
   }
@@ -119,6 +120,56 @@ bool data_copy(data_t* source, data_t* destination)
 }
 
 /**********************************************************
+ * Compress source data into destination.
+ *
+ * @param source data to be compressed
+ * @param destination where to store output
+ *
+ * @return bool whether or not operation was successful
+ **********************************************************/
+bool zlib_deflate(data_t* source, data_t* destination)
+{
+  z_stream stream;
+  memset(&stream, 0, sizeof(stream));
+  stream.next_in = source->address;
+  stream.avail_in = source->size;
+  stream.next_out = destination->address;
+  stream.avail_out = destination->size;
+
+  if (deflateInit(&stream, Z_BEST_COMPRESSION) != Z_OK)
+    return false;
+  if (deflate(&stream, Z_FINISH) != Z_OK)
+    return false;
+
+  return (deflateEnd(&stream) != Z_OK);
+}
+
+/**********************************************************
+ * Decompress source data into destination.
+ *
+ * @param source data to be decompressed
+ * @param destination where to store output
+ *
+ * @return bool whether or not operation was successful
+ **********************************************************/
+bool zlib_inflate(data_t* source, data_t* destination)
+{
+  z_stream stream;
+  memset(&stream, 0, sizeof(stream));
+  stream.next_in = source->address;
+  stream.avail_in = source->size;
+  stream.next_out = destination->address;
+  stream.avail_out = destination->size;
+
+  if (inflateInit(&stream) != Z_OK)
+    return false;
+  if (inflate(&stream, Z_FINISH) != Z_OK)
+    return false;
+
+  return (inflateEnd(&stream) != Z_OK);
+}
+
+/**********************************************************
  * Set a block of system memory protection.
  *
  * @param address block of memory start address
@@ -129,7 +180,7 @@ void memory_set_protection(const void* address, const size_t size, const int mod
 {
   if (address != NULL && size > 0) {
 #ifdef __WINDOWS__
-    int old_mode;
+    DWORD old_mode;
 
     VirtualProtect((LPVOID)address, size, mode, &old_mode);
 #else
