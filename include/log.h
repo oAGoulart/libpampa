@@ -50,7 +50,7 @@ void log_error(const int err, const char* str = NULL)
 void log_fatal(const int err, const char* str = NULL)
 {
   log_error(err, str);
-  exit(1);
+  exit(EXIT_FAILURE);
 }
 
 #ifdef __cplusplus
