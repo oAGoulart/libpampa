@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- type conversion issues
+
 ### Changed
 
 - Documentation generated on win-x64
@@ -12,6 +16,7 @@ All notable changes to this project will be documented in this file.
 
 - log module
 - image module
+- zlib functions to memory module
 
 ## [0.1.0] - 2019-03-28
 
