@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "types.h"
-#include "miniz.c"
+#include "miniz/miniz.c"
 
 /* define platform specific stuff */
 #ifdef __WINDOWS__
