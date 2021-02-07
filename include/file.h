@@ -242,7 +242,7 @@ void file_replace_buffer(file_t* file, data_t* data)
       void* temp_ptr = NULL;
 
       if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
-        file->buffer.address = temp_ptr;
+        file->buffer.address = (ubyte_t*)temp_ptr;
 
         memcpy(file->buffer.address, data->address, data->size);
 
@@ -280,7 +280,7 @@ void file_close(file_t* file)
 bool file_open(file_t** file, char* path)
 {
   if (file != NULL) {
-    *file = calloc(sizeof(file_t), 1);
+    *file = (file_t*)calloc(sizeof(file_t), 1);
 
     /* asign values to struct */
     if (*file != NULL) {
@@ -292,7 +292,7 @@ bool file_open(file_t** file, char* path)
 
         /* initialize the data buffer */
         (*file)->buffer.size = 1;
-        (*file)->buffer.address = malloc(1);
+        (*file)->buffer.address = (ubyte_t*)malloc(1);
 
         if ((*file)->buffer.address != NULL) {
           *(*file)->buffer.address = '\0';
