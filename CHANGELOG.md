@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - log module
 - image module
 - zlib functions to memory module
+- Function to change file indicator
 
 ## [0.1.0] - 2019-03-28
 

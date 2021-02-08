@@ -279,33 +279,29 @@ void file_close(file_t* file)
  **********************************************************/
 bool file_open(file_t** file, char* path)
 {
-  if (file != NULL) {
-    *file = (file_t*)calloc(sizeof(file_t), 1);
+  if (file == NULL || path == NULL)
+    return false;
 
-    /* asign values to struct */
-    if (*file != NULL) {
-      (*file)->path = path;
+  *file = (file_t*)calloc(sizeof(file_t), 1);
+  if (*file != NULL) {
+    (*file)->path = path;
 
-      if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
-        (*file)->offset = 0;
-        (*file)->size = (size_t)file_find_size(*file);
+    if (!FOPEN(&(*file)->handle, (*file)->path, "rb+")) {
+      (*file)->offset = 0;
+      (*file)->size = (size_t)file_find_size(*file);
 
-        /* initialize the data buffer */
-        (*file)->buffer.size = 1;
-        (*file)->buffer.address = (ubyte_t*)malloc(1);
+      /* initialize the data buffer */
+      (*file)->buffer.size = 1;
+      (*file)->buffer.address = (ubyte_t*)malloc(1);
 
-        if ((*file)->buffer.address != NULL) {
-          *(*file)->buffer.address = '\0';
-          return true;
-        }
-        else
-          file_close(*file);
+      if ((*file)->buffer.address != NULL) {
+        *(*file)->buffer.address = '\0';
+        return true;
       }
-      else
-        file_close(*file);
     }
   }
 
+  file_close(*file);
   return false;
 }
 
@@ -323,6 +319,28 @@ bool file_create(const char* filename)
 
   /* free handle before return */
   return (OPEN(&file, filename, OFLAG, MODE)) ? false : (!(CLOSE(file)));
+}
+
+/**********************************************************
+ * Move file indicator.
+ *
+ * @param file reference to file struct
+ * @param offset position from start of file
+ *
+ * @return bool true if successful, false if failed
+ **********************************************************/
+bool file_seek(file_t* file, const OFF_T offset)
+{
+  if (file != NULL) {
+    if (file->handle != NULL && (size_t)offset < file->size) {
+      if (!FSEEK(file->handle, offset, SEEK_SET)) {
+        file->offset = offset;
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 #ifdef __cplusplus
