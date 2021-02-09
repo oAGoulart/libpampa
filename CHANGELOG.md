@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - type conversion issues
+- file_read and file_write not undoing indicator change
 
 ### Changed
 
@@ -18,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - image module
 - zlib functions to memory module
 - Function to change file indicator
+- Log messages to file, memory, list modules
 
 ## [0.1.0] - 2019-03-28
 
