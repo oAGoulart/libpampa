@@ -22,39 +22,23 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef NDEBUG
+/**********************************************************
+ * Outputs error to stderr.
+ *
+ * @param str string to be shown
+ **********************************************************/
+#define LOG(str) \
+  fprintf(stderr, "%s:%i %s\n", __FILE__, __LINE__, str)
 
 /**********************************************************
- * Outputs error to `stderr`.
+ * Logs then calls exit.
  *
- * @param err error number
- * @param str string to be shown with the error,
- *            defaults to NULL
+ * @param str string to be shown
  **********************************************************/
-void log_error(const int err, const char* str = NULL)
-{
-  if (str == NULL)
-    fprintf(stderr, "%s\n", strerror(err));
-  else
-    fprintf(stderr, "%s %s\n", str, strerror(err));
-}
-
-/**********************************************************
- * Outputs error to `stderr` then calls exit.
- *
- * @param err error number
- * @param str string to be shown with the error
- **********************************************************/
-void log_fatal(const int err, const char* str = NULL)
-{
-  log_error(err, str);
-  exit(EXIT_FAILURE);
-}
-
-#ifdef __cplusplus
-}
+#define FATAL(str) \
+  LOG(str) \
+  exit(EXIT_FAILURE)
 #endif
 
 #endif /* _log_h_ */

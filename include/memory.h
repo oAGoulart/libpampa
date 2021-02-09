@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "types.h"
+#include "log.h"
 #include "miniz/miniz.c"
 
 /* define platform specific stuff */
@@ -86,13 +87,12 @@ void data_free(data_t* data)
 bool data_alloc(data_t* data)
 {
   void* temp_ptr = NULL;
-
   if ((temp_ptr = realloc(data->address, data->size)) != NULL) {
     data->address = (ubyte_t*)temp_ptr;
-
     return true;
   }
 
+  LOG("Warning: Could not reallocate memory for data.");
   return false;
 }
 
@@ -111,11 +111,11 @@ bool data_copy(data_t* source, data_t* destination)
 
     if (data_alloc(destination)) {
       memcpy(destination->address, source->address, source->size);
-
       return true;
     }
   }
 
+  LOG("Warning: Could not copy source into destination.");
   return false;
 }
 
@@ -136,10 +136,14 @@ bool zlib_deflate(data_t* source, data_t* destination)
   stream.next_out = destination->address;
   stream.avail_out = destination->size;
 
-  if (deflateInit(&stream, Z_BEST_COMPRESSION) != Z_OK)
+  if (deflateInit(&stream, Z_BEST_COMPRESSION) != Z_OK) {
+    LOG("Warning: Could not init zlib deflation.");
     return false;
-  if (deflate(&stream, Z_FINISH) != Z_OK)
+  }
+  if (deflate(&stream, Z_FINISH) != Z_OK) {
+    LOG("Warning: Could not deflate zlib stream.");
     return false;
+  }
 
   return (deflateEnd(&stream) != Z_OK);
 }
@@ -161,10 +165,14 @@ bool zlib_inflate(data_t* source, data_t* destination)
   stream.next_out = destination->address;
   stream.avail_out = destination->size;
 
-  if (inflateInit(&stream) != Z_OK)
+  if (inflateInit(&stream) != Z_OK) {
+    LOG("Warning: Could not init zlib inflation.");
     return false;
-  if (inflate(&stream, Z_FINISH) != Z_OK)
+  }
+  if (inflate(&stream, Z_FINISH) != Z_OK) {
+    LOG("Warning: Could not inflate zlib stream.");
     return false;
+  }
 
   return (inflateEnd(&stream) != Z_OK);
 }

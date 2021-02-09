@@ -45,7 +45,6 @@ void node_free(node_t* node)
 {
   if (node != NULL) {
     data_free(&node->data);
-
     free(node);
   }
 }
@@ -69,6 +68,7 @@ bool node_alloc(node_t** node)
 
       return true;
     }
+    LOG("Warning: Could not allocate memory for node.");
   }
 
   return false;
@@ -93,6 +93,7 @@ bool node_copy(node_t* source, node_t** destination)
     }
   }
 
+  LOG("Warning: Could not copy source into node.");
   return false;
 }
 

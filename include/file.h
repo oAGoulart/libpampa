@@ -25,6 +25,7 @@
 #include <errno.h>
 #include "types.h"
 #include "memory.h"
+#include "log.h"
 
 /* add 64 bit file support */
 #ifdef X64_FILES
@@ -114,6 +115,7 @@ OFF_T file_find_size(const file_t* file)
 
     if (!STAT(file->path, &file_status))
       return file_status.st_size;
+    LOG("Warning: Could not find file size.");
   }
 
   return 0;
@@ -133,6 +135,8 @@ OFF_T file_find_size(const file_t* file)
  **********************************************************/
 bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
+  bool successful = false;
+
   if (file != NULL) {
     if (file->handle != NULL && (size_t)offset < file->size) {
       OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
@@ -145,9 +149,11 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
 
         if (data_alloc(&file->buffer)) {
           if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
-            return true;
-          else
+            successful = true;
+          else {
             data_free(&file->buffer);
+            LOG("Warning: Could not read file data.");
+          }
         }
       }
 
@@ -157,7 +163,7 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
     }
   }
 
-  return false;
+  return successful;
 }
 
 /**********************************************************
@@ -180,12 +186,7 @@ bool file_read_line(file_t* file, const bool change_indicator)
     /* count number of bytes */
     OFF_T count = FTELL(file->handle) - position;
 
-    file_read(file, position, count, change_indicator);
-
-    if (!change_indicator)
-      FSEEK(file->handle, position, SEEK_SET);
-
-    return true;
+    return file_read(file, position, count, change_indicator);;
   }
 
   return false;
@@ -204,6 +205,8 @@ bool file_read_line(file_t* file, const bool change_indicator)
  **********************************************************/
 bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool change_indicator)
 {
+  bool successful = false;
+
   if (file != NULL) {
     if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
       OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
@@ -214,9 +217,10 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
 
         if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
           file->size = (size_t)file_find_size(file);
-
-          return true;
+          successful = true;
         }
+        else
+          LOG("Warning: Could not write data to file.");
       }
 
       /* reset file position indicator */
@@ -225,7 +229,7 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
     }
   }
 
-  return false;
+  return successful;
 }
 
 /**********************************************************
@@ -235,7 +239,7 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
  * @param file reference to file struct
  * @param data block of data to replace file buffer
  **********************************************************/
-void file_replace_buffer(file_t* file, data_t* data)
+bool file_replace_buffer(file_t* file, data_t* data)
 {
   if (file != NULL && data != NULL) {
     if (data->address != NULL) {
@@ -247,9 +251,13 @@ void file_replace_buffer(file_t* file, data_t* data)
         memcpy(file->buffer.address, data->address, data->size);
 
         file->buffer.size = data->size;
+        return true;
       }
+      LOG("Warning: Could not reallocate memory for buffer.");
     }
   }
+
+  return false;
 }
 
 /**********************************************************
@@ -299,9 +307,10 @@ bool file_open(file_t** file, char* path)
         return true;
       }
     }
+    file_close(*file);
+    LOG("Warning: Could not open file.");
   }
 
-  file_close(*file);
   return false;
 }
 
@@ -337,6 +346,7 @@ bool file_seek(file_t* file, const OFF_T offset)
         file->offset = offset;
         return true;
       }
+      LOG("Warning: Could not seek file.");
     }
   }
 
