@@ -120,6 +120,30 @@ bool data_copy(data_t* source, data_t* destination)
 }
 
 /**********************************************************
+ * Copy a block of data to another.
+ *
+ * @param source data to be copied
+ * @param destination where to store data
+ *
+ * @return bool whether or not data was copied
+ **********************************************************/
+bool data_append(data_t* source, data_t* destination)
+{
+  if (source != NULL && destination != NULL) {
+    size_t size = destination->size;
+    destination->size += source->size;
+
+    if (data_alloc(destination)) {
+      memcpy(destination->address + size, source->address, source->size);
+      return true;
+    }
+  }
+
+  LOG("Warning: Could not append source into destination.");
+  return false;
+}
+
+/**********************************************************
  * Compress source data into destination.
  *
  * @param source data to be compressed

@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 - zlib functions to memory module
 - Function to change file indicator
 - Log messages to file, memory, list modules
+- Image load/unload functions
+- Data append function
 
 ## [0.1.0] - 2019-03-28
 
