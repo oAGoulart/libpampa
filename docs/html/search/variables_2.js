@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['data_109',['data',['../db/d9b/structnode__s.html#ac9b566fb3abe47dfcf1ff0b9877fb30f',1,'node_s']]]
+  ['color_129',['color',['../da/d7b/structimage__s.html#a86fab0963db6721d08091615bd025526',1,'image_s']]],
+  ['compression_130',['compression',['../da/d7b/structimage__s.html#a9f04764a28c04a3acbbe9f4c2e9338bf',1,'image_s']]]
 ];

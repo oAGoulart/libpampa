@@ -1,0 +1,125 @@
+\hypertarget{structimage__s}{}\doxysection{image\+\_\+s Struct Reference}
+\label{structimage__s}\index{image\_s@{image\_s}}
+
+
+Data used to work with images.  
+
+
+
+
+{\ttfamily \#include $<$image.\+h$>$}
+
+
+
+Collaboration diagram for image\+\_\+s\+:
+% FIG 0
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{structimage__s_a2ccfcccccd07a9a5291d28a595d52cd9}{width}}
+\begin{DoxyCompactList}\small\item\em image width \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structimage__s_abe95f6b7d60576ed8b15bd6005bfa4a6}{height}}
+\begin{DoxyCompactList}\small\item\em image height \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} \mbox{\hyperlink{structimage__s_afdf31d9938a316d719566215b0106a28}{depth}}
+\begin{DoxyCompactList}\small\item\em depth of each pixel \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} \mbox{\hyperlink{structimage__s_a86fab0963db6721d08091615bd025526}{color}}
+\begin{DoxyCompactList}\small\item\em type of color used represent sums of the following values\+: 1 (palette used) 2 (color used) 4 (alpha channel used) valid values are 0, 2, 3, 4, and 6 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} \mbox{\hyperlink{structimage__s_a9f04764a28c04a3acbbe9f4c2e9338bf}{compression}}
+\begin{DoxyCompactList}\small\item\em compression method must be 0 (zlib deflate/inflate) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} \mbox{\hyperlink{structimage__s_a25b43a27861397310a2500187b4c1088}{filter}}
+\begin{DoxyCompactList}\small\item\em image filter must be 0 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} \mbox{\hyperlink{structimage__s_a3596bc407a287facbc557e19a6626d43}{interlace}}
+\begin{DoxyCompactList}\small\item\em transmission order of data must be either\+: 0 (no interlace) 1 (Adam7 interlace) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} \mbox{\hyperlink{structimage__s_a7cd591c6edd6b0b298a8e1b633f2c38a}{buffer}}
+\begin{DoxyCompactList}\small\item\em pixel buffer \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data used to work with images. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structimage__s_a7cd591c6edd6b0b298a8e1b633f2c38a}\label{structimage__s_a7cd591c6edd6b0b298a8e1b633f2c38a}} 
+\index{image\_s@{image\_s}!buffer@{buffer}}
+\index{buffer@{buffer}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} image\+\_\+s\+::buffer}
+
+
+
+pixel buffer 
+
+\mbox{\Hypertarget{structimage__s_a86fab0963db6721d08091615bd025526}\label{structimage__s_a86fab0963db6721d08091615bd025526}} 
+\index{image\_s@{image\_s}!color@{color}}
+\index{color@{color}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} image\+\_\+s\+::color}
+
+
+
+type of color used represent sums of the following values\+: 1 (palette used) 2 (color used) 4 (alpha channel used) valid values are 0, 2, 3, 4, and 6 
+
+\mbox{\Hypertarget{structimage__s_a9f04764a28c04a3acbbe9f4c2e9338bf}\label{structimage__s_a9f04764a28c04a3acbbe9f4c2e9338bf}} 
+\index{image\_s@{image\_s}!compression@{compression}}
+\index{compression@{compression}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{compression}{compression}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} image\+\_\+s\+::compression}
+
+
+
+compression method must be 0 (zlib deflate/inflate) 
+
+\mbox{\Hypertarget{structimage__s_afdf31d9938a316d719566215b0106a28}\label{structimage__s_afdf31d9938a316d719566215b0106a28}} 
+\index{image\_s@{image\_s}!depth@{depth}}
+\index{depth@{depth}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{depth}{depth}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} image\+\_\+s\+::depth}
+
+
+
+depth of each pixel 
+
+\mbox{\Hypertarget{structimage__s_a25b43a27861397310a2500187b4c1088}\label{structimage__s_a25b43a27861397310a2500187b4c1088}} 
+\index{image\_s@{image\_s}!filter@{filter}}
+\index{filter@{filter}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{filter}{filter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} image\+\_\+s\+::filter}
+
+
+
+image filter must be 0 
+
+\mbox{\Hypertarget{structimage__s_abe95f6b7d60576ed8b15bd6005bfa4a6}\label{structimage__s_abe95f6b7d60576ed8b15bd6005bfa4a6}} 
+\index{image\_s@{image\_s}!height@{height}}
+\index{height@{height}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily size\+\_\+t image\+\_\+s\+::height}
+
+
+
+image height 
+
+\mbox{\Hypertarget{structimage__s_a3596bc407a287facbc557e19a6626d43}\label{structimage__s_a3596bc407a287facbc557e19a6626d43}} 
+\index{image\_s@{image\_s}!interlace@{interlace}}
+\index{interlace@{interlace}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{interlace}{interlace}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_ad40767aaeb0833664755ddfb1628be6c}{ubyte\+\_\+t}} image\+\_\+s\+::interlace}
+
+
+
+transmission order of data must be either\+: 0 (no interlace) 1 (Adam7 interlace) 
+
+\mbox{\Hypertarget{structimage__s_a2ccfcccccd07a9a5291d28a595d52cd9}\label{structimage__s_a2ccfcccccd07a9a5291d28a595d52cd9}} 
+\index{image\_s@{image\_s}!width@{width}}
+\index{width@{width}!image\_s@{image\_s}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily size\+\_\+t image\+\_\+s\+::width}
+
+
+
+image width 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{image_8h}{image.\+h}}\end{DoxyCompactItemize}

@@ -8,15 +8,327 @@
 {\ttfamily \#include $<$errno.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}memory.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}log.\+h\char`\"{}}\newline
 {\ttfamily \#include $<$sys/types.\+h$>$}\newline
 {\ttfamily \#include $<$sys/stat.\+h$>$}\newline
 {\ttfamily \#include $<$fcntl.\+h$>$}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
-Include dependency graph for file.\+h\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{df/dd4/file_8h__incl}
-\end{center}
-\end{figure}
+Include dependency graph for file.\+h\+:
+% FIG 0
 This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfile__s}{file\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em Data used to work with files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}~int32\+\_\+t
+\item 
+\#define \mbox{\hyperlink{file_8h_a13626ef7288234ec5471d94d9f45e06a}{FTELL}}~ftell
+\item 
+\#define \mbox{\hyperlink{file_8h_aea660a9139172ebd945a83b409fb4f67}{FSEEK}}~fseek
+\item 
+\#define \mbox{\hyperlink{file_8h_a47c1b9c9a7b4183ac4fd96dc5ca8e820}{STAT}}~stat /$\ast$ always stat64 on Linux kernel 2.\+4+ $\ast$/
+\item 
+\#define \mbox{\hyperlink{file_8h_ab8c52c1b4c021ed3e6b6b677bd2ac019}{MODE}}~0777
+\item 
+\#define \mbox{\hyperlink{file_8h_ae3a9312382ed2b2727e6135d2c92c6c9}{OFLAG}}~O\+\_\+\+RDWR $\vert$ O\+\_\+\+CREAT $\vert$ O\+\_\+\+EXCL
+\item 
+\#define \mbox{\hyperlink{file_8h_a0e29f488071372aa0530842e60b64511}{CLOSE}}~close
+\item 
+\#define \mbox{\hyperlink{file_8h_a203d7e3133eb1746edc05f808cd7a799}{FSCANF}}~fscanf
+\item 
+\#define \mbox{\hyperlink{file_8h_a709bde914e2b045cf1e1a00589b7291f}{OPEN}}(handle,  filename,  flag,  mode)~((($\ast$handle = open(filename, flag, mode)) == -\/1) ? errno \+: false)
+\item 
+\#define \mbox{\hyperlink{file_8h_a4dca483ca67560304887fab87e099cfd}{FOPEN}}(file,  filename,  mode)~((($\ast$file = fopen(filename, mode)) == NULL) ? errno \+: false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structfile__s}{file\+\_\+s}} \mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Data used to work with files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} \mbox{\hyperlink{file_8h_a6baaa46f530995a7d2a92e6a2f36e31d}{file\+\_\+find\+\_\+size}} (const \mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file)
+\begin{DoxyCompactList}\small\item\em Find the system storage size of a file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a8b2072e6cfda1e851cc276596a92399e}{file\+\_\+read}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file, const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} offset, const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} count, const bool change\+\_\+indicator)
+\begin{DoxyCompactList}\small\item\em Read a block of data from system storage and store it into the file buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a0e1850e9b07b33909cae6abccb62c05e}{file\+\_\+read\+\_\+line}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file, const bool change\+\_\+indicator)
+\begin{DoxyCompactList}\small\item\em Read a line from file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a34f09be9aec6687b498282e9601e8a9f}{file\+\_\+write}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file, const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} offset, const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} count, const bool change\+\_\+indicator)
+\begin{DoxyCompactList}\small\item\em Flush block of data from file buffer into system storage. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a5f01f23e06178ccc83aa1a59bb852ecc}{file\+\_\+replace\+\_\+buffer}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Write block of data into file buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{file_8h_a1d7164f3484f4c26ae3f38952df38323}{file\+\_\+close}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file)
+\begin{DoxyCompactList}\small\item\em Close open file and clean up memory. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a6f1e9af97c018371c0f86d56ca536a8c}{file\+\_\+open}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$$\ast$file, char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Open a file and initialize struct values. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a71880d8146a24033c0b0d3e1daaa6c43}{file\+\_\+create}} (const char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Create a new file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{file_8h_a004a4ca9b8087384b3da132c7546629a}{file\+\_\+seek}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file, const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} offset)
+\begin{DoxyCompactList}\small\item\em Move file indicator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{file_8h_a0e29f488071372aa0530842e60b64511}\label{file_8h_a0e29f488071372aa0530842e60b64511}} 
+\index{file.h@{file.h}!CLOSE@{CLOSE}}
+\index{CLOSE@{CLOSE}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{CLOSE}{CLOSE}}
+{\footnotesize\ttfamily \#define CLOSE~close}
+
+\mbox{\Hypertarget{file_8h_a4dca483ca67560304887fab87e099cfd}\label{file_8h_a4dca483ca67560304887fab87e099cfd}} 
+\index{file.h@{file.h}!FOPEN@{FOPEN}}
+\index{FOPEN@{FOPEN}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{FOPEN}{FOPEN}}
+{\footnotesize\ttfamily \#define FOPEN(\begin{DoxyParamCaption}\item[{}]{file,  }\item[{}]{filename,  }\item[{}]{mode }\end{DoxyParamCaption})~((($\ast$file = fopen(filename, mode)) == NULL) ? errno \+: false)}
+
+\mbox{\Hypertarget{file_8h_a203d7e3133eb1746edc05f808cd7a799}\label{file_8h_a203d7e3133eb1746edc05f808cd7a799}} 
+\index{file.h@{file.h}!FSCANF@{FSCANF}}
+\index{FSCANF@{FSCANF}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{FSCANF}{FSCANF}}
+{\footnotesize\ttfamily \#define FSCANF~fscanf}
+
+\mbox{\Hypertarget{file_8h_aea660a9139172ebd945a83b409fb4f67}\label{file_8h_aea660a9139172ebd945a83b409fb4f67}} 
+\index{file.h@{file.h}!FSEEK@{FSEEK}}
+\index{FSEEK@{FSEEK}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{FSEEK}{FSEEK}}
+{\footnotesize\ttfamily \#define FSEEK~fseek}
+
+\mbox{\Hypertarget{file_8h_a13626ef7288234ec5471d94d9f45e06a}\label{file_8h_a13626ef7288234ec5471d94d9f45e06a}} 
+\index{file.h@{file.h}!FTELL@{FTELL}}
+\index{FTELL@{FTELL}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{FTELL}{FTELL}}
+{\footnotesize\ttfamily \#define FTELL~ftell}
+
+\mbox{\Hypertarget{file_8h_ab8c52c1b4c021ed3e6b6b677bd2ac019}\label{file_8h_ab8c52c1b4c021ed3e6b6b677bd2ac019}} 
+\index{file.h@{file.h}!MODE@{MODE}}
+\index{MODE@{MODE}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{MODE}{MODE}}
+{\footnotesize\ttfamily \#define MODE~0777}
+
+\mbox{\Hypertarget{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}\label{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}} 
+\index{file.h@{file.h}!OFF\_T@{OFF\_T}}
+\index{OFF\_T@{OFF\_T}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{OFF\_T}{OFF\_T}}
+{\footnotesize\ttfamily \#define OFF\+\_\+T~int32\+\_\+t}
+
+\mbox{\Hypertarget{file_8h_ae3a9312382ed2b2727e6135d2c92c6c9}\label{file_8h_ae3a9312382ed2b2727e6135d2c92c6c9}} 
+\index{file.h@{file.h}!OFLAG@{OFLAG}}
+\index{OFLAG@{OFLAG}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{OFLAG}{OFLAG}}
+{\footnotesize\ttfamily \#define OFLAG~O\+\_\+\+RDWR $\vert$ O\+\_\+\+CREAT $\vert$ O\+\_\+\+EXCL}
+
+\mbox{\Hypertarget{file_8h_a709bde914e2b045cf1e1a00589b7291f}\label{file_8h_a709bde914e2b045cf1e1a00589b7291f}} 
+\index{file.h@{file.h}!OPEN@{OPEN}}
+\index{OPEN@{OPEN}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{OPEN}{OPEN}}
+{\footnotesize\ttfamily \#define OPEN(\begin{DoxyParamCaption}\item[{}]{handle,  }\item[{}]{filename,  }\item[{}]{flag,  }\item[{}]{mode }\end{DoxyParamCaption})~((($\ast$handle = open(filename, flag, mode)) == -\/1) ? errno \+: false)}
+
+\mbox{\Hypertarget{file_8h_a47c1b9c9a7b4183ac4fd96dc5ca8e820}\label{file_8h_a47c1b9c9a7b4183ac4fd96dc5ca8e820}} 
+\index{file.h@{file.h}!STAT@{STAT}}
+\index{STAT@{STAT}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{STAT}{STAT}}
+{\footnotesize\ttfamily \#define STAT~stat /$\ast$ always stat64 on Linux kernel 2.\+4+ $\ast$/}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{file_8h_a8cb1afe4310b673375714153c80a0e15}\label{file_8h_a8cb1afe4310b673375714153c80a0e15}} 
+\index{file.h@{file.h}!file\_t@{file\_t}}
+\index{file\_t@{file\_t}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_t}{file\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structfile__s}{file\+\_\+s}} \mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}}}
+
+
+
+Data used to work with files. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{file_8h_a1d7164f3484f4c26ae3f38952df38323}\label{file_8h_a1d7164f3484f4c26ae3f38952df38323}} 
+\index{file.h@{file.h}!file\_close@{file\_close}}
+\index{file\_close@{file\_close}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_close()}{file\_close()}}
+{\footnotesize\ttfamily void file\+\_\+close (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file }\end{DoxyParamCaption})}
+
+
+
+Close open file and clean up memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{file_8h_a71880d8146a24033c0b0d3e1daaa6c43}\label{file_8h_a71880d8146a24033c0b0d3e1daaa6c43}} 
+\index{file.h@{file.h}!file\_create@{file\_create}}
+\index{file\_create@{file\_create}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_create()}{file\_create()}}
+{\footnotesize\ttfamily bool file\+\_\+create (\begin{DoxyParamCaption}\item[{const char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+Create a new file. 
+
+The new file should not exist. Also, the file should be at an existing directory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & relative or absolute path to the new file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a6baaa46f530995a7d2a92e6a2f36e31d}\label{file_8h_a6baaa46f530995a7d2a92e6a2f36e31d}} 
+\index{file.h@{file.h}!file\_find\_size@{file\_find\_size}}
+\index{file\_find\_size@{file\_find\_size}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_find\_size()}{file\_find\_size()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}} file\+\_\+find\+\_\+size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file }\end{DoxyParamCaption})}
+
+
+
+Find the system storage size of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+OFF\+\_\+T file size 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a6f1e9af97c018371c0f86d56ca536a8c}\label{file_8h_a6f1e9af97c018371c0f86d56ca536a8c}} 
+\index{file.h@{file.h}!file\_open@{file\_open}}
+\index{file\_open@{file\_open}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_open()}{file\_open()}}
+{\footnotesize\ttfamily bool file\+\_\+open (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$$\ast$}]{file,  }\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Open a file and initialize struct values. 
+
+The file should exist.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to pointer where file struct is located \\
+\hline
+{\em path} & string to file path\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a8b2072e6cfda1e851cc276596a92399e}\label{file_8h_a8b2072e6cfda1e851cc276596a92399e}} 
+\index{file.h@{file.h}!file\_read@{file\_read}}
+\index{file\_read@{file\_read}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_read()}{file\_read()}}
+{\footnotesize\ttfamily bool file\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file,  }\item[{const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}}]{offset,  }\item[{const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}}]{count,  }\item[{const bool}]{change\+\_\+indicator }\end{DoxyParamCaption})}
+
+
+
+Read a block of data from system storage and store it into the file buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+{\em offset} & position from start of file \\
+\hline
+{\em count} & amount of bytes to be read \\
+\hline
+{\em change\+\_\+indicator} & should file cursor stay changed after reading from file?\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a0e1850e9b07b33909cae6abccb62c05e}\label{file_8h_a0e1850e9b07b33909cae6abccb62c05e}} 
+\index{file.h@{file.h}!file\_read\_line@{file\_read\_line}}
+\index{file\_read\_line@{file\_read\_line}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_read\_line()}{file\_read\_line()}}
+{\footnotesize\ttfamily bool file\+\_\+read\+\_\+line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file,  }\item[{const bool}]{change\+\_\+indicator }\end{DoxyParamCaption})}
+
+
+
+Read a line from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+{\em change\+\_\+indicator} & should file cursor stay changed after reading from file?\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a5f01f23e06178ccc83aa1a59bb852ecc}\label{file_8h_a5f01f23e06178ccc83aa1a59bb852ecc}} 
+\index{file.h@{file.h}!file\_replace\_buffer@{file\_replace\_buffer}}
+\index{file\_replace\_buffer@{file\_replace\_buffer}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_replace\_buffer()}{file\_replace\_buffer()}}
+{\footnotesize\ttfamily bool file\+\_\+replace\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file,  }\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Write block of data into file buffer. 
+
+The file buffer will be replaced.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+{\em data} & block of data to replace file buffer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{file_8h_a004a4ca9b8087384b3da132c7546629a}\label{file_8h_a004a4ca9b8087384b3da132c7546629a}} 
+\index{file.h@{file.h}!file\_seek@{file\_seek}}
+\index{file\_seek@{file\_seek}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_seek()}{file\_seek()}}
+{\footnotesize\ttfamily bool file\+\_\+seek (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file,  }\item[{const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}}]{offset }\end{DoxyParamCaption})}
+
+
+
+Move file indicator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+{\em offset} & position from start of file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{file_8h_a34f09be9aec6687b498282e9601e8a9f}\label{file_8h_a34f09be9aec6687b498282e9601e8a9f}} 
+\index{file.h@{file.h}!file\_write@{file\_write}}
+\index{file\_write@{file\_write}!file.h@{file.h}}
+\doxysubsubsection{\texorpdfstring{file\_write()}{file\_write()}}
+{\footnotesize\ttfamily bool file\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$}]{file,  }\item[{const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}}]{offset,  }\item[{const \mbox{\hyperlink{file_8h_ab8bd63e7a74ee69778f78c27ea229ffd}{OFF\+\_\+T}}}]{count,  }\item[{const bool}]{change\+\_\+indicator }\end{DoxyParamCaption})}
+
+
+
+Flush block of data from file buffer into system storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & reference to file struct \\
+\hline
+{\em offset} & position from start of file \\
+\hline
+{\em count} & amount of bytes to be write \\
+\hline
+{\em change\+\_\+indicator} & should file cursor stay changed after writing to file?\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful, false if failed 
+\end{DoxyReturn}

@@ -84,6 +84,7 @@ $(function() {
 <code>#include &lt;errno.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/d49/types_8h_source.html">types.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../dc/d18/memory_8h_source.html">memory.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d7/d7f/log_8h_source.html">log.h</a>&quot;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
@@ -150,9 +151,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a34f09be9aec6687b498282e9601e8a9f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a34f09be9aec6687b498282e9601e8a9f">file_write</a> (<a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *file, const <a class="el" href="../../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd">OFF_T</a> offset, const <a class="el" href="../../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd">OFF_T</a> count, const bool change_indicator)</td></tr>
 <tr class="memdesc:a34f09be9aec6687b498282e9601e8a9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush block of data from file buffer into system storage.  <a href="../../d2/d4d/file_8h.html#a34f09be9aec6687b498282e9601e8a9f">More...</a><br /></td></tr>
 <tr class="separator:a34f09be9aec6687b498282e9601e8a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a984e2456adb02937dd7ae49fe19e68c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a984e2456adb02937dd7ae49fe19e68c4">file_replace_buffer</a> (<a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *file, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *data)</td></tr>
-<tr class="memdesc:a984e2456adb02937dd7ae49fe19e68c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write block of data into file buffer.  <a href="../../d2/d4d/file_8h.html#a984e2456adb02937dd7ae49fe19e68c4">More...</a><br /></td></tr>
-<tr class="separator:a984e2456adb02937dd7ae49fe19e68c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f01f23e06178ccc83aa1a59bb852ecc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a5f01f23e06178ccc83aa1a59bb852ecc">file_replace_buffer</a> (<a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *file, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *data)</td></tr>
+<tr class="memdesc:a5f01f23e06178ccc83aa1a59bb852ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write block of data into file buffer.  <a href="../../d2/d4d/file_8h.html#a5f01f23e06178ccc83aa1a59bb852ecc">More...</a><br /></td></tr>
+<tr class="separator:a5f01f23e06178ccc83aa1a59bb852ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d7164f3484f4c26ae3f38952df38323"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a1d7164f3484f4c26ae3f38952df38323">file_close</a> (<a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *file)</td></tr>
 <tr class="memdesc:a1d7164f3484f4c26ae3f38952df38323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close open file and clean up memory.  <a href="../../d2/d4d/file_8h.html#a1d7164f3484f4c26ae3f38952df38323">More...</a><br /></td></tr>
 <tr class="separator:a1d7164f3484f4c26ae3f38952df38323"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +163,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a71880d8146a24033c0b0d3e1daaa6c43"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a71880d8146a24033c0b0d3e1daaa6c43">file_create</a> (const char *filename)</td></tr>
 <tr class="memdesc:a71880d8146a24033c0b0d3e1daaa6c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new file.  <a href="../../d2/d4d/file_8h.html#a71880d8146a24033c0b0d3e1daaa6c43">More...</a><br /></td></tr>
 <tr class="separator:a71880d8146a24033c0b0d3e1daaa6c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a004a4ca9b8087384b3da132c7546629a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4d/file_8h.html#a004a4ca9b8087384b3da132c7546629a">file_seek</a> (<a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *file, const <a class="el" href="../../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd">OFF_T</a> offset)</td></tr>
+<tr class="memdesc:a004a4ca9b8087384b3da132c7546629a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move file indicator.  <a href="../../d2/d4d/file_8h.html#a004a4ca9b8087384b3da132c7546629a">More...</a><br /></td></tr>
+<tr class="separator:a004a4ca9b8087384b3da132c7546629a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a0e29f488071372aa0530842e60b64511"></a>
@@ -578,14 +582,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a984e2456adb02937dd7ae49fe19e68c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a984e2456adb02937dd7ae49fe19e68c4">&#9670;&nbsp;</a></span>file_replace_buffer()</h2>
+<a id="a5f01f23e06178ccc83aa1a59bb852ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f01f23e06178ccc83aa1a59bb852ecc">&#9670;&nbsp;</a></span>file_replace_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void file_replace_buffer </td>
+          <td class="memname">bool file_replace_buffer </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *&#160;</td>
           <td class="paramname"><em>file</em>, </td>
@@ -613,6 +617,44 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a004a4ca9b8087384b3da132c7546629a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a004a4ca9b8087384b3da132c7546629a">&#9670;&nbsp;</a></span>file_seek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool file_seek </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d2/d4d/file_8h.html#a8cb1afe4310b673375714153c80a0e15">file_t</a> *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d2/d4d/file_8h.html#ab8bd63e7a74ee69778f78c27ea229ffd">OFF_T</a>&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Move file indicator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>reference to file struct </td></tr>
+    <tr><td class="paramname">offset</td><td>position from start of file</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool true if successful, false if failed </dd></dl>
 
 </div>
 </div>
