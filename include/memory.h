@@ -120,12 +120,12 @@ bool data_copy(data_t* source, data_t* destination)
 }
 
 /**********************************************************
- * Copy a block of data to another.
+ * Append a block of data to another.
  *
- * @param source data to be copied
- * @param destination where to store data
+ * @param source data to be appended
+ * @param destination where to append data
  *
- * @return bool whether or not data was copied
+ * @return bool whether or not data was appended
  **********************************************************/
 bool data_append(data_t* source, data_t* destination)
 {

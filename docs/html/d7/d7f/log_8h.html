@@ -68,7 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">log.h File Reference</div>  </div>
 </div><!--header-->
@@ -82,87 +82,73 @@ Include dependency graph for log.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d0/d87/log_8h__incl.png" border="0" usemap="#ainclude_2log_8h" alt=""/></div>
 </div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d7/dd9/log_8h__dep__incl.png" border="0" usemap="#ainclude_2log_8hdep" alt=""/></div>
+</div>
 </div>
 <p><a href="../../d7/d7f/log_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a1f552ca4c67bb35f7c4995868392b1a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d7f/log_8h.html#a1f552ca4c67bb35f7c4995868392b1a8">log_error</a> (const int err, const char *str=NULL)</td></tr>
-<tr class="memdesc:a1f552ca4c67bb35f7c4995868392b1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs error to <code>stderr</code>.  <a href="../../d7/d7f/log_8h.html#a1f552ca4c67bb35f7c4995868392b1a8">More...</a><br /></td></tr>
-<tr class="separator:a1f552ca4c67bb35f7c4995868392b1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a213f67178a650cb30ea5fead88fc41ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d7f/log_8h.html#a213f67178a650cb30ea5fead88fc41ae">log_fatal</a> (const int err, const char *str=NULL)</td></tr>
-<tr class="memdesc:a213f67178a650cb30ea5fead88fc41ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs error to <code>stderr</code> then calls exit.  <a href="../../d7/d7f/log_8h.html#a213f67178a650cb30ea5fead88fc41ae">More...</a><br /></td></tr>
-<tr class="separator:a213f67178a650cb30ea5fead88fc41ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae650092dd9e6c887c70dd101e1c50ea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d7f/log_8h.html#ae650092dd9e6c887c70dd101e1c50ea4">LOG</a>(str)&#160;&#160;&#160;  fprintf(stderr, &quot;%s:%i %s\n&quot;, __FILE__, __LINE__, str)</td></tr>
+<tr class="memdesc:ae650092dd9e6c887c70dd101e1c50ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs error to stderr.  <a href="../../d7/d7f/log_8h.html#ae650092dd9e6c887c70dd101e1c50ea4">More...</a><br /></td></tr>
+<tr class="separator:ae650092dd9e6c887c70dd101e1c50ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458054e4449f0b1f13a137cf24789b0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d7f/log_8h.html#a458054e4449f0b1f13a137cf24789b0c">FATAL</a>(str)</td></tr>
+<tr class="memdesc:a458054e4449f0b1f13a137cf24789b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs then calls exit.  <a href="../../d7/d7f/log_8h.html#a458054e4449f0b1f13a137cf24789b0c">More...</a><br /></td></tr>
+<tr class="separator:a458054e4449f0b1f13a137cf24789b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a1f552ca4c67bb35f7c4995868392b1a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f552ca4c67bb35f7c4995868392b1a8">&#9670;&nbsp;</a></span>log_error()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a458054e4449f0b1f13a137cf24789b0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a458054e4449f0b1f13a137cf24789b0c">&#9670;&nbsp;</a></span>FATAL</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void log_error </td>
+          <td class="memname">#define FATAL</td>
           <td>(</td>
-          <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>err</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">str</td><td>)</td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>str</em> = <code>NULL</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Outputs error to <code>stderr</code>. </p>
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code" href="../../d7/d7f/log_8h.html#ae650092dd9e6c887c70dd101e1c50ea4">LOG</a>(str) \</div>
+<div class="line">  exit(EXIT_FAILURE)</div>
+<div class="ttc" id="alog_8h_html_ae650092dd9e6c887c70dd101e1c50ea4"><div class="ttname"><a href="../../d7/d7f/log_8h.html#ae650092dd9e6c887c70dd101e1c50ea4">LOG</a></div><div class="ttdeci">#define LOG(str)</div><div class="ttdoc">Outputs error to stderr.</div><div class="ttdef"><b>Definition:</b> log.h:31</div></div>
+</div><!-- fragment -->
+<p>Logs then calls exit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">err</td><td>error number </td></tr>
-    <tr><td class="paramname">str</td><td>string to be shown with the error, defaults to NULL </td></tr>
+    <tr><td class="paramname">str</td><td>string to be shown </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a213f67178a650cb30ea5fead88fc41ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a213f67178a650cb30ea5fead88fc41ae">&#9670;&nbsp;</a></span>log_fatal()</h2>
+<a id="ae650092dd9e6c887c70dd101e1c50ea4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae650092dd9e6c887c70dd101e1c50ea4">&#9670;&nbsp;</a></span>LOG</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void log_fatal </td>
+          <td class="memname">#define LOG</td>
           <td>(</td>
-          <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>err</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>str</em> = <code>NULL</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">str</td><td>)</td>
+          <td>&#160;&#160;&#160;  fprintf(stderr, &quot;%s:%i %s\n&quot;, __FILE__, __LINE__, str)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Outputs error to <code>stderr</code> then calls exit. </p>
+<p>Outputs error to stderr. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">err</td><td>error number </td></tr>
-    <tr><td class="paramname">str</td><td>string to be shown with the error </td></tr>
+    <tr><td class="paramname">str</td><td>string to be shown </td></tr>
   </table>
   </dd>
 </dl>

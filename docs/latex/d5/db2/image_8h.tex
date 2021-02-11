@@ -3,14 +3,74 @@
 {\ttfamily \#include \char`\"{}file.\+h\char`\"{}}\newline
 Include dependency graph for image.\+h\+:
 % FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structimage__s}{image\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em Data used to work with images. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structimage__s}{image\+\_\+s}} \mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Data used to work with images. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 bool \mbox{\hyperlink{image_8h_a038ab58f311b295eb3e651b5315a1365}{is\+\_\+png}} (\mbox{\hyperlink{file_8h_a8cb1afe4310b673375714153c80a0e15}{file\+\_\+t}} $\ast$file)
-\begin{DoxyCompactList}\small\item\em Verify if given file is a PNG image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Verify if given file is a PNG image. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{image_8h_a4c973aa66e62a52ca710243c520aa80a}{image\+\_\+unload}} (\mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}} $\ast$img)
+\begin{DoxyCompactList}\small\item\em Free image from memory. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{image_8h_a7ceba0e0ea487c76acdab31698b8a7a0}{image\+\_\+load}} (\mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}} $\ast$$\ast$image, char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Load image into memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{image_8h_a963c39accd39ba325d31545df31cb748}\label{image_8h_a963c39accd39ba325d31545df31cb748}} 
+\index{image.h@{image.h}!image\_t@{image\_t}}
+\index{image\_t@{image\_t}!image.h@{image.h}}
+\doxysubsubsection{\texorpdfstring{image\_t}{image\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structimage__s}{image\+\_\+s}} \mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}}}
+
+
+
+Data used to work with images. 
+
 
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{image_8h_a7ceba0e0ea487c76acdab31698b8a7a0}\label{image_8h_a7ceba0e0ea487c76acdab31698b8a7a0}} 
+\index{image.h@{image.h}!image\_load@{image\_load}}
+\index{image\_load@{image\_load}!image.h@{image.h}}
+\doxysubsubsection{\texorpdfstring{image\_load()}{image\_load()}}
+{\footnotesize\ttfamily bool image\+\_\+load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}} $\ast$$\ast$}]{image,  }\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Load image into memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & pointer to empty image pointer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether or not file was loaded 
+\end{DoxyReturn}
+\mbox{\Hypertarget{image_8h_a4c973aa66e62a52ca710243c520aa80a}\label{image_8h_a4c973aa66e62a52ca710243c520aa80a}} 
+\index{image.h@{image.h}!image\_unload@{image\_unload}}
+\index{image\_unload@{image\_unload}!image.h@{image.h}}
+\doxysubsubsection{\texorpdfstring{image\_unload()}{image\_unload()}}
+{\footnotesize\ttfamily void image\+\_\+unload (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{image_8h_a963c39accd39ba325d31545df31cb748}{image\+\_\+t}} $\ast$}]{img }\end{DoxyParamCaption})}
+
+
+
+Free image from memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & pointer to loaded image file \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{image_8h_a038ab58f311b295eb3e651b5315a1365}\label{image_8h_a038ab58f311b295eb3e651b5315a1365}} 
 \index{image.h@{image.h}!is\_png@{is\_png}}
 \index{is\_png@{is\_png}!image.h@{image.h}}
@@ -23,7 +83,7 @@ Verify if given file is a PNG image.
 
 
 \begin{DoxyParams}{Parameters}
-{\em file} & pointer loaded image file\\
+{\em file} & pointer to loaded image file\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

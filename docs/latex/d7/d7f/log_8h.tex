@@ -6,47 +6,51 @@
 {\ttfamily \#include $<$stdlib.\+h$>$}\newline
 Include dependency graph for log.\+h\+:
 % FIG 0
-\doxysubsection*{Functions}
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}{log\+\_\+error}} (const int err, const char $\ast$str=NULL)
-\begin{DoxyCompactList}\small\item\em Outputs error to {\ttfamily stderr}. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{log_8h_a213f67178a650cb30ea5fead88fc41ae}{log\+\_\+fatal}} (const int err, const char $\ast$str=NULL)
-\begin{DoxyCompactList}\small\item\em Outputs error to {\ttfamily stderr} then calls exit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\#define \mbox{\hyperlink{log_8h_ae650092dd9e6c887c70dd101e1c50ea4}{LOG}}(str)~  fprintf(stderr, \char`\"{}\%s\+:\%i \%s\textbackslash{}n\char`\"{}, \+\_\+\+\_\+\+FILE\+\_\+\+\_\+, \+\_\+\+\_\+\+LINE\+\_\+\+\_\+, str)
+\begin{DoxyCompactList}\small\item\em Outputs error to stderr. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{log_8h_a458054e4449f0b1f13a137cf24789b0c}{FATAL}}(str)
+\begin{DoxyCompactList}\small\item\em Logs then calls exit. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Function Documentation}
-\mbox{\Hypertarget{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}\label{log_8h_a1f552ca4c67bb35f7c4995868392b1a8}} 
-\index{log.h@{log.h}!log\_error@{log\_error}}
-\index{log\_error@{log\_error}!log.h@{log.h}}
-\doxysubsubsection{\texorpdfstring{log\_error()}{log\_error()}}
-{\footnotesize\ttfamily void log\+\_\+error (\begin{DoxyParamCaption}\item[{const int}]{err,  }\item[{const char $\ast$}]{str = {\ttfamily NULL} }\end{DoxyParamCaption})}
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{log_8h_a458054e4449f0b1f13a137cf24789b0c}\label{log_8h_a458054e4449f0b1f13a137cf24789b0c}} 
+\index{log.h@{log.h}!FATAL@{FATAL}}
+\index{FATAL@{FATAL}!log.h@{log.h}}
+\doxysubsubsection{\texorpdfstring{FATAL}{FATAL}}
+{\footnotesize\ttfamily \#define FATAL(\begin{DoxyParamCaption}\item[{}]{str }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \mbox{\hyperlink{log_8h_ae650092dd9e6c887c70dd101e1c50ea4}{LOG}}(str) \(\backslash\)}
+\DoxyCodeLine{  exit(EXIT\_FAILURE)}
+
+\end{DoxyCode}
 
 
-
-Outputs error to {\ttfamily stderr}. 
+Logs then calls exit. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em err} & error number \\
-\hline
-{\em str} & string to be shown with the error, defaults to NULL \\
+{\em str} & string to be shown \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{log_8h_a213f67178a650cb30ea5fead88fc41ae}\label{log_8h_a213f67178a650cb30ea5fead88fc41ae}} 
-\index{log.h@{log.h}!log\_fatal@{log\_fatal}}
-\index{log\_fatal@{log\_fatal}!log.h@{log.h}}
-\doxysubsubsection{\texorpdfstring{log\_fatal()}{log\_fatal()}}
-{\footnotesize\ttfamily void log\+\_\+fatal (\begin{DoxyParamCaption}\item[{const int}]{err,  }\item[{const char $\ast$}]{str = {\ttfamily NULL} }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{log_8h_ae650092dd9e6c887c70dd101e1c50ea4}\label{log_8h_ae650092dd9e6c887c70dd101e1c50ea4}} 
+\index{log.h@{log.h}!LOG@{LOG}}
+\index{LOG@{LOG}!log.h@{log.h}}
+\doxysubsubsection{\texorpdfstring{LOG}{LOG}}
+{\footnotesize\ttfamily \#define LOG(\begin{DoxyParamCaption}\item[{}]{str }\end{DoxyParamCaption})~  fprintf(stderr, \char`\"{}\%s\+:\%i \%s\textbackslash{}n\char`\"{}, \+\_\+\+\_\+\+FILE\+\_\+\+\_\+, \+\_\+\+\_\+\+LINE\+\_\+\+\_\+, str)}
 
 
 
-Outputs error to {\ttfamily stderr} then calls exit. 
+Outputs error to stderr. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em err} & error number \\
-\hline
-{\em str} & string to be shown with the error \\
+{\em str} & string to be shown \\
 \hline
 \end{DoxyParams}

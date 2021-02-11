@@ -82,6 +82,8 @@ $(function() {
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/d49/types_8h_source.html">types.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d7/d7f/log_8h_source.html">log.h</a>&quot;</code><br />
+<code>#include &quot;miniz/miniz.c&quot;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;sys/mman.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
@@ -126,6 +128,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ac60b5a5e2e8bc333d45243a5e845bb8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">data_copy</a> (<a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *source, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *destination)</td></tr>
 <tr class="memdesc:ac60b5a5e2e8bc333d45243a5e845bb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a block of data to another.  <a href="../../dc/d18/memory_8h.html#ac60b5a5e2e8bc333d45243a5e845bb8b">More...</a><br /></td></tr>
 <tr class="separator:ac60b5a5e2e8bc333d45243a5e845bb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9511b21265c3887905adf235ffda50ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d18/memory_8h.html#a9511b21265c3887905adf235ffda50ec">data_append</a> (<a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *source, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *destination)</td></tr>
+<tr class="memdesc:a9511b21265c3887905adf235ffda50ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a block of data to another.  <a href="../../dc/d18/memory_8h.html#a9511b21265c3887905adf235ffda50ec">More...</a><br /></td></tr>
+<tr class="separator:a9511b21265c3887905adf235ffda50ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6669ac4426c83fa89d6777982c4f8906"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d18/memory_8h.html#a6669ac4426c83fa89d6777982c4f8906">zlib_deflate</a> (<a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *source, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *destination)</td></tr>
+<tr class="memdesc:a6669ac4426c83fa89d6777982c4f8906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress source data into destination.  <a href="../../dc/d18/memory_8h.html#a6669ac4426c83fa89d6777982c4f8906">More...</a><br /></td></tr>
+<tr class="separator:a6669ac4426c83fa89d6777982c4f8906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adafee9f24b0ee958cfdfe6e975708dc9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d18/memory_8h.html#adafee9f24b0ee958cfdfe6e975708dc9">zlib_inflate</a> (<a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *source, <a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *destination)</td></tr>
+<tr class="memdesc:adafee9f24b0ee958cfdfe6e975708dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress source data into destination.  <a href="../../dc/d18/memory_8h.html#adafee9f24b0ee958cfdfe6e975708dc9">More...</a><br /></td></tr>
+<tr class="separator:adafee9f24b0ee958cfdfe6e975708dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36a5ad7a949565993d94ac1b6d363298"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d18/memory_8h.html#a36a5ad7a949565993d94ac1b6d363298">memory_set_protection</a> (const void *address, const size_t size, const int mode)</td></tr>
 <tr class="memdesc:a36a5ad7a949565993d94ac1b6d363298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a block of system memory protection.  <a href="../../dc/d18/memory_8h.html#a36a5ad7a949565993d94ac1b6d363298">More...</a><br /></td></tr>
 <tr class="separator:a36a5ad7a949565993d94ac1b6d363298"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,6 +207,44 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool whether or not data was allocated </dd></dl>
+
+</div>
+</div>
+<a id="a9511b21265c3887905adf235ffda50ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9511b21265c3887905adf235ffda50ec">&#9670;&nbsp;</a></span>data_append()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool data_append </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Append a block of data to another. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>data to be appended </td></tr>
+    <tr><td class="paramname">destination</td><td>where to append data</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether or not data was appended </dd></dl>
 
 </div>
 </div>
@@ -409,6 +458,82 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ulong_t base address </dd></dl>
+
+</div>
+</div>
+<a id="a6669ac4426c83fa89d6777982c4f8906"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6669ac4426c83fa89d6777982c4f8906">&#9670;&nbsp;</a></span>zlib_deflate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool zlib_deflate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compress source data into destination. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>data to be compressed </td></tr>
+    <tr><td class="paramname">destination</td><td>where to store output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether or not operation was successful </dd></dl>
+
+</div>
+</div>
+<a id="adafee9f24b0ee958cfdfe6e975708dc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adafee9f24b0ee958cfdfe6e975708dc9">&#9670;&nbsp;</a></span>zlib_inflate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool zlib_inflate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d18/memory_8h.html#abc127153841754ee8b7845321721d7e7">data_t</a> *&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decompress source data into destination. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>data to be decompressed </td></tr>
+    <tr><td class="paramname">destination</td><td>where to store output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether or not operation was successful </dd></dl>
 
 </div>
 </div>

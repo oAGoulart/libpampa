@@ -6,18 +6,15 @@
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}miniz/miniz.\+c\char`\"{}}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
 {\ttfamily \#include $<$sys/mman.\+h$>$}\newline
 {\ttfamily \#include $<$sys/types.\+h$>$}\newline
-Include dependency graph for memory.\+h\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{df/d9a/memory_8h__incl}
-\end{center}
-\end{figure}
-This graph shows which files directly or indirectly include this file\+:
+Include dependency graph for memory.\+h\+:
 % FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -42,6 +39,12 @@ bool \mbox{\hyperlink{memory_8h_a8c661e5e837dd10fbd4fcea2a2d42066}{data\+\_\+all
 \begin{DoxyCompactList}\small\item\em Allocate a block of data. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}{data\+\_\+copy}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Copy a block of data to another. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{memory_8h_a9511b21265c3887905adf235ffda50ec}{data\+\_\+append}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Append a block of data to another. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{memory_8h_a6669ac4426c83fa89d6777982c4f8906}{zlib\+\_\+deflate}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Compress source data into destination. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{memory_8h_adafee9f24b0ee958cfdfe6e975708dc9}{zlib\+\_\+inflate}} (\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$source, \mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Decompress source data into destination. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{memory_8h_a36a5ad7a949565993d94ac1b6d363298}{memory\+\_\+set\+\_\+protection}} (const void $\ast$address, const size\+\_\+t size, const int mode)
 \begin{DoxyCompactList}\small\item\em Set a block of system memory protection. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{memory_8h_aa366d11b661a8c60ec23853f0bcbb312}{memory\+\_\+get\+\_\+protection}} (const void $\ast$address)
@@ -92,6 +95,26 @@ Allocate a block of data.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 bool whether or not data was allocated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_a9511b21265c3887905adf235ffda50ec}\label{memory_8h_a9511b21265c3887905adf235ffda50ec}} 
+\index{memory.h@{memory.h}!data\_append@{data\_append}}
+\index{data\_append@{data\_append}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{data\_append()}{data\_append()}}
+{\footnotesize\ttfamily bool data\+\_\+append (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Append a block of data to another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & data to be appended \\
+\hline
+{\em destination} & where to append data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether or not data was appended 
 \end{DoxyReturn}
 \mbox{\Hypertarget{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}\label{memory_8h_ac60b5a5e2e8bc333d45243a5e845bb8b}} 
 \index{memory.h@{memory.h}!data\_copy@{data\_copy}}
@@ -203,4 +226,44 @@ Get the base address of a process.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 ulong\+\_\+t base address 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_a6669ac4426c83fa89d6777982c4f8906}\label{memory_8h_a6669ac4426c83fa89d6777982c4f8906}} 
+\index{memory.h@{memory.h}!zlib\_deflate@{zlib\_deflate}}
+\index{zlib\_deflate@{zlib\_deflate}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{zlib\_deflate()}{zlib\_deflate()}}
+{\footnotesize\ttfamily bool zlib\+\_\+deflate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Compress source data into destination. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & data to be compressed \\
+\hline
+{\em destination} & where to store output\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether or not operation was successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8h_adafee9f24b0ee958cfdfe6e975708dc9}\label{memory_8h_adafee9f24b0ee958cfdfe6e975708dc9}} 
+\index{memory.h@{memory.h}!zlib\_inflate@{zlib\_inflate}}
+\index{zlib\_inflate@{zlib\_inflate}!memory.h@{memory.h}}
+\doxysubsubsection{\texorpdfstring{zlib\_inflate()}{zlib\_inflate()}}
+{\footnotesize\ttfamily bool zlib\+\_\+inflate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{memory_8h_abc127153841754ee8b7845321721d7e7}{data\+\_\+t}} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Decompress source data into destination. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & data to be decompressed \\
+\hline
+{\em destination} & where to store output\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool whether or not operation was successful 
 \end{DoxyReturn}

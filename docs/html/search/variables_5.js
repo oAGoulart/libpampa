@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['offset_112',['offset',['../d5/dac/structfile__s.html#ac033c929cf819739bc0b5ed822a116f6',1,'file_s']]]
+  ['handle_134',['handle',['../d5/dac/structfile__s.html#abea2922b8aaa0a0e8d6a702d89d709cf',1,'file_s']]],
+  ['height_135',['height',['../da/d7b/structimage__s.html#abe95f6b7d60576ed8b15bd6005bfa4a6',1,'image_s']]]
 ];
