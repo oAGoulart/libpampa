@@ -87,7 +87,7 @@ void image_unload(image_t* img)
 }
 
 /**********************************************************
- * Load image into memory.
+ * Load image into memory as it is (filtered/interlaced).
  *
  * @param file pointer to empty image pointer
  *
@@ -104,21 +104,18 @@ bool image_load(image_t** image, char* path)
 
     *image = (image_t*)calloc(sizeof(image_t), 1);
     if (*image == NULL) {
+      /* TODO: Add other types of raster images */
       if (is_png(img)) {
         if (file_seek(img, 8)) {
           size_t chunks = 0;
-          bool valid = true;
-
           while (file_read(img, 0, 8, true)) {
             chunks++;
             uint32_t length = *(uint32_t*)img->buffer.address;
             ubyte_t* type = img->buffer.address + 4;
 
             if (!memcmp("IHDR", type, 4)) {
-              if (chunks != 1 || length != 13 || !file_read(img, 0, length, true)) {
-                valid = false;
+              if (chunks != 1 || length != 13 || !file_read(img, 0, length, true))
                 break;
-              }
 
               (*image)->width = (size_t)*(int32_t*)img->buffer.address;
               (*image)->height = (size_t)*(int32_t*)img->buffer.address + 4;
@@ -133,28 +130,37 @@ bool image_load(image_t** image, char* path)
             }
 
             if (!memcmp("IDAT", type, 4)) {
-              if (chunks == 1 || !file_read(img, 0, length, true)) {
-                valid = false;
+              if (chunks == 1 || !file_read(img, 0, length, true))
                 break;
-              }
 
               if (!data_append(&img->buffer, &(*image)->buffer))
                 LOG("Warning: Could not properly load image, output may be corrupted.");
             }
 
             if (!memcmp("IEND", type, 4)) {
-              if (chunks == 1)
-                valid = false;
+              if (chunks != 1)
+                successful = true;
               break;
             }
 
             (void)file_seek(img, img->offset + 4);
           }
-          successful = valid;
+
+          /* deflate image */
+          if (successful) {
+            ~successful;
+            data_t deflated = { (*image)->buffer.size, NULL };
+            if (data_alloc(&deflated)) {
+              if (zlib_deflate(&(*image)->buffer, &deflated)){
+                if (data_copy(&deflated, &(*image)->buffer))
+                 ~successful;
+              }
+            }
+            data_free(&deflated);
+          }
         }
       }
     }
-
     file_close(img);
   }
 

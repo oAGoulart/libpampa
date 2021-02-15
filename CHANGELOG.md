@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - type conversion issues
 - file_read and file_write not undoing indicator change
+- zlib deflate/inflate returning wrong value
 
 ### Changed
 
