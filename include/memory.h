@@ -160,7 +160,7 @@ bool zlib_deflate(data_t* source, data_t* destination)
   stream.next_out = destination->address;
   stream.avail_out = destination->size;
 
-  if (deflateInit(&stream, Z_BEST_COMPRESSION) != Z_OK) {
+  if (deflateInit(&stream, Z_DEFLATED) != Z_OK) {
     LOG("Warning: Could not init zlib deflation.");
     return false;
   }
@@ -169,7 +169,7 @@ bool zlib_deflate(data_t* source, data_t* destination)
     return false;
   }
 
-  return (deflateEnd(&stream) != Z_OK);
+  return (deflateEnd(&stream) == Z_OK);
 }
 
 /**********************************************************
@@ -198,7 +198,7 @@ bool zlib_inflate(data_t* source, data_t* destination)
     return false;
   }
 
-  return (inflateEnd(&stream) != Z_OK);
+  return (inflateEnd(&stream) == Z_OK);
 }
 
 /**********************************************************
