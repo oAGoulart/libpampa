@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.11] - 2021-02-16
+
 ### Fixed
 
 - type conversion issues
@@ -32,5 +34,6 @@ All notable changes to this project will be documented in this file.
 
 
 
-[unreleased]: https://github.com/oAGoulart/libpampa/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/oAGoulart/libpampa/compare/v0.1.11...HEAD
+[0.1.11]: https://github.com/oAGoulart/libpampa/releases/tag/v0.1.11
 [0.1.0]: https://github.com/oAGoulart/libpampa/releases/tag/v0.1.0
