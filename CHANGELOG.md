@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Image use example
+
 ## [0.1.11] - 2021-02-16
 
 ### Fixed
