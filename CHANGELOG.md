@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Image use example
 
+### Fixed
+
+- Compiling error when debug was disabled
+
 ## [0.1.11] - 2021-02-16
 
 ### Fixed
