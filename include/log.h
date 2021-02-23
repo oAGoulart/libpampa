@@ -39,6 +39,9 @@
 #define FATAL(str) \
   LOG(str) \
   exit(EXIT_FAILURE)
+#else
+#define LOG(str)
+#define FATAL(str)
 #endif
 
 #endif /* _log_h_ */
