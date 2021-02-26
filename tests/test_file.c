@@ -4,6 +4,7 @@
 void test_file_create()
 {
   TEST_CHECK(file_create("test.log") == true);
+  TEST_CHECK(file_create("test.log") == false);
   TEST_CHECK(file_create("test/test.log") == false);
   TEST_CHECK(file_create("../test.log") == true);
 }
