@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019 Jose Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ static void set_jump(void* address, const void* dest, const bool vp)
 
     /* find destination offset */
     ulong_t offset = (ubyte_t*)dest - ((ubyte_t*)address + 1 + sizeof(ulong_t*));
-    
+
     /* write opcode */
     memory_set_raw(address, &opcode, 1, true);
 
@@ -86,6 +86,6 @@ int main()
 
   while (getchar())
     printf("Patched getchar() into get_char()\n");
-  
+
   exit(EXIT_SUCCESS);
 }
