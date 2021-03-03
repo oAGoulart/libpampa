@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 José Augusto dos Santos Goulart
+ * Copyright 2019 Jose Augusto dos Santos Goulart
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
                   memcpy(current->data.address, &array[i] + half_size, half_size);
 
                 break;
-                
+
               default:
                 break;
             }
@@ -146,7 +146,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
               }
 
               break;
-                
+
             default:
               break;
           }
