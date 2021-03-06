@@ -156,9 +156,9 @@ bool zlib_deflate(data_t* source, data_t* destination)
   z_stream stream;
   memset(&stream, 0, sizeof(stream));
   stream.next_in = source->address;
-  stream.avail_in = source->size;
+  stream.avail_in = (unsigned int)source->size;
   stream.next_out = destination->address;
-  stream.avail_out = destination->size;
+  stream.avail_out = (unsigned int)destination->size;
 
   if (deflateInit(&stream, Z_DEFLATED) != Z_OK) {
     LOG("Warning: Could not init zlib deflation.");
@@ -185,9 +185,9 @@ bool zlib_inflate(data_t* source, data_t* destination)
   z_stream stream;
   memset(&stream, 0, sizeof(stream));
   stream.next_in = source->address;
-  stream.avail_in = source->size;
+  stream.avail_in = (unsigned int)source->size;
   stream.next_out = destination->address;
-  stream.avail_out = destination->size;
+  stream.avail_out = (unsigned int)destination->size;
 
   if (inflateInit(&stream) != Z_OK) {
     LOG("Warning: Could not init zlib inflation.");
