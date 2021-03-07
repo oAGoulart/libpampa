@@ -6,7 +6,7 @@ void test_memory_append()
   data_t src = { 64, NULL};
   data_t dst = { 64, NULL};
 
-  TEST_ASSERT(data_alloc(&src) && data_alloc(&dst));
+  TEST_CHECK(data_alloc(&src) && data_alloc(&dst));
   (void)memset(src.address, 20, src.size);
   (void)memset(dst.address, 40, dst.size);
 
