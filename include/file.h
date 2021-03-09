@@ -138,7 +138,7 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
   bool successful = false;
 
   if (file != NULL) {
-    if (file->handle != NULL && (size_t)offset < file->size) {
+    if (file->handle != NULL && (size_t)offset < file->size + 1) {
       OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
       if (!FSEEK(file->handle, offset, SEEK_SET)) {
@@ -197,7 +197,7 @@ bool file_read_line(file_t* file, const bool change_indicator)
  *
  * @param file reference to file struct
  * @param offset position from start of file
- * @param count amount of bytes to be write
+ * @param count amount of bytes to be written
  * @param change_indicator should file cursor stay changed
  *                         after writing to file?
  *
@@ -208,7 +208,7 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
   bool successful = false;
 
   if (file != NULL) {
-    if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size) {
+    if (file->handle != NULL && file->buffer.address != NULL && (size_t)offset < file->size + 1) {
       OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
       if (!FSEEK(file->handle, offset, SEEK_SET)) {
