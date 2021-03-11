@@ -4,16 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Compiling error when debug was disabled
+- File read/write offset check
+- File offset not being updated
+
+### Changed
+
+- Updated acutest
+
 ### Added
 
 - Image use example
 - Memory functions tests
 - File functions tests
-
-### Fixed
-
-- Compiling error when debug was disabled
-- File read/write offset check
 
 ## [0.1.11] - 2021-02-16
 
