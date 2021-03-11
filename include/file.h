@@ -142,10 +142,9 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
       OFF_T old_pos = (!change_indicator) ? FTELL(file->handle) : 0;
 
       if (!FSEEK(file->handle, offset, SEEK_SET)) {
-        file->offset = offset;
-
         /* maximum or given buffer size without end of line char */
         file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
+        file->offset = (!change_indicator) ? old_pos : offset + file->buffer.size;
 
         if (data_alloc(&file->buffer)) {
           if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
@@ -215,12 +214,12 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
         /* prevents reading data outside buffer */
         size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
 
-        if (fwrite(file->buffer.address, 1, size, file->handle) == size) {
-          file->size = (size_t)file_find_size(file);
+        if (fwrite(file->buffer.address, 1, size, file->handle) == size)
           successful = true;
-        }
         else
           LOG("Warning: Could not write data to file.");
+
+        file->size += size;
       }
 
       /* reset file position indicator */
