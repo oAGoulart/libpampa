@@ -74,7 +74,7 @@ void test_file_read_line()
   file_t* file = NULL;
   TEST_ASSERT(file_open(&file, "filethatexist.log") == true);
 
-  file->buffer.size == 1;
+  file->buffer.size = 1;
   TEST_ASSERT(data_alloc(&file->buffer) == true);
   memset(file->buffer.address, 10, 1);
   TEST_CHECK(file_write(file, 4, 1, false) == true);
