@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Compiling error when debug was disabled
 - File read/write offset check
 - File offset not being updated
+- Typo on code
 
 ### Changed
 
