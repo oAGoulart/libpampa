@@ -185,7 +185,7 @@ bool file_read_line(file_t* file, const bool change_indicator)
     /* count number of bytes */
     OFF_T count = FTELL(file->handle) - position;
 
-    return file_read(file, position, count, change_indicator);;
+    return file_read(file, position, count, change_indicator);
   }
 
   return false;
