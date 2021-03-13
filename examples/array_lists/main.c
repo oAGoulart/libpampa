@@ -63,9 +63,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
 
       if (size % 2 == 0) {
         do {
-          current->data.size = half_size * half_size;
-
-          if (data_alloc(&current->data)) {
+          if (data_alloc(&current->data, half_size * half_size)) {
             switch (count) {
               case 1:
                 for (size_t i = 0; i < half_array; i++)
@@ -108,9 +106,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
         do {
           switch (count) {
             case 1:
-              current->data.size = (line_size - half_size) * (line_size - half_size);
-
-              if (data_alloc(&current->data)) {
+              if (data_alloc(&current->data, (line_size - half_size) * (line_size - half_size))) {
                 for (size_t i = 0; i < (size - half_array); i++)
                   memcpy(current->data.address, &array[i], (line_size - half_size));
               }
@@ -118,9 +114,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
               break;
 
             case 2:
-              current->data.size = (line_size - half_size) * half_size;
-
-              if (data_alloc(&current->data)) {
+              if (data_alloc(&current->data, (line_size - half_size) * half_size)) {
                 for (size_t i = 0; i < (size - half_array); i++)
                   memcpy(current->data.address, &array[i] + (line_size - half_size), half_size);
               }
@@ -128,9 +122,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
               break;
 
             case 3:
-              current->data.size = half_size * (line_size - half_size);
-
-              if (data_alloc(&current->data)) {
+              if (data_alloc(&current->data, half_size * (line_size - half_size))) {
                 for (size_t i = 0; i < half_array; i++)
                   memcpy(current->data.address, &array[i], (line_size - half_size));
               }
@@ -138,9 +130,7 @@ bool partition_square_array(ulong_t** array, size_t size, node_t** out_head)
               break;
 
             case 4:
-              current->data.size = half_size * half_size;
-
-              if (data_alloc(&current->data)) {
+              if (data_alloc(&current->data, half_size * half_size)) {
                 for (size_t i = 0; i < half_array; i++)
                   memcpy(current->data.address, &array[i] + (line_size - half_size), half_size);
               }

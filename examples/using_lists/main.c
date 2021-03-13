@@ -34,9 +34,7 @@ void print_list(node_t* head)
 void generate_node_number(node_t* node)
 {
   if (node != NULL) {
-    node->data.size = 1;
-
-    if (data_alloc(&node->data)) {
+    if (data_alloc(&node->data, 1)) {
       ubyte_t value = rand();
 
       memcpy(node->data.address, &value, node->data.size);
