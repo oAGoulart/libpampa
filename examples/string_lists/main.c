@@ -46,10 +46,7 @@ bool string_split(const char* str, const size_t size, const char divider, node_t
       do {
         if (str[count] == divider) {
           size_t substr_size = (size_t)((int)count - last_div) - 1;
-
-          current->data.size = substr_size + sizeof(char);
-
-          if (data_alloc(&current->data)) {
+          if (data_alloc(&current->data, substr_size + sizeof(char))) {
             memcpy(current->data.address, &str[last_div + 1], substr_size);
             *(char*)(current->data.address + substr_size) = '\0';
           }
@@ -57,14 +54,11 @@ bool string_split(const char* str, const size_t size, const char divider, node_t
           if (node_alloc(&current->next))
             current = current->next;
 
-          last_div = count;
+          last_div = (int)count;
         }
         else if (count == (size - 1)) {
           size_t substr_size = (size_t)((int)count - last_div);
-
-          current->data.size = substr_size + sizeof(char);
-
-          if (data_alloc(&current->data)) {
+          if (data_alloc(&current->data, substr_size + sizeof(char))) {
             memcpy(current->data.address, &str[last_div + 1], substr_size);
             *(char*)(current->data.address + substr_size) = '\0';
           }

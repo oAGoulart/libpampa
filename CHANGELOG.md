@@ -14,12 +14,17 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Updated acutest
+- Function `data_alloc` now takes `size` param
 
 ### Added
 
 - Image use example
 - Memory functions tests
 - File functions tests
+
+### Removed
+
+- Function `file_replace_buffer` is redundant
 
 ## [0.1.11] - 2021-02-16
 

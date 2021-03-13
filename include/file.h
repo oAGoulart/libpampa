@@ -143,11 +143,11 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
 
       if (!FSEEK(file->handle, offset, SEEK_SET)) {
         /* maximum or given buffer size without end of line char */
-        file->buffer.size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
-        file->offset = (!change_indicator) ? old_pos : offset + file->buffer.size;
+        size_t size = ((size_t)(offset + count) > file->size) ? file->size - (size_t)offset : (size_t)count;
+        file->offset = (int32_t)((!change_indicator) ? old_pos : offset + size);
 
-        if (data_alloc(&file->buffer)) {
-          if (fread(file->buffer.address, 1, file->buffer.size, file->handle) == file->buffer.size)
+        if (data_alloc(&file->buffer, size)) {
+          if (fread(file->buffer.address, 1, size, file->handle) == size)
             successful = true;
           else {
             data_free(&file->buffer);
@@ -229,34 +229,6 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
   }
 
   return successful;
-}
-
-/**********************************************************
- * Write block of data into file buffer. The file buffer will
- * be replaced.
- *
- * @param file reference to file struct
- * @param data block of data to replace file buffer
- **********************************************************/
-bool file_replace_buffer(file_t* file, data_t* data)
-{
-  if (file != NULL && data != NULL) {
-    if (data->address != NULL) {
-      void* temp_ptr = NULL;
-
-      if ((temp_ptr = realloc(file->buffer.address, data->size)) != NULL) {
-        file->buffer.address = (ubyte_t*)temp_ptr;
-
-        memcpy(file->buffer.address, data->address, data->size);
-
-        file->buffer.size = data->size;
-        return true;
-      }
-      LOG("Warning: Could not reallocate memory for buffer.");
-    }
-  }
-
-  return false;
 }
 
 /**********************************************************

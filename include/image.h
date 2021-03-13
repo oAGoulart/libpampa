@@ -149,9 +149,9 @@ bool image_load(image_t** image, char* path)
           /* deflate image */
           if (successful) {
             successful = false;
-            data_t deflated = { (*image)->buffer.size, NULL };
-            if (data_alloc(&deflated)) {
-              if (zlib_deflate(&(*image)->buffer, &deflated)){
+            data_t deflated;
+            if (data_alloc(&deflated, (*image)->buffer.size)) {
+              if (zlib_deflate(&(*image)->buffer, &deflated)) {
                 if (data_copy(&deflated, &(*image)->buffer))
                  successful = true;
               }
