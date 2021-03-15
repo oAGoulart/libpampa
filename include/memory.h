@@ -85,12 +85,12 @@ void data_free(data_t* data)
  *
  * @return bool whether or not data was allocated
  **********************************************************/
-bool data_alloc(data_t* data, const size_t size)
+bool data_alloc(data_t* data, const size_t count)
 {
   void* temp_ptr = NULL;
-  if ((temp_ptr = realloc(data->address, size)) != NULL) {
+  if ((temp_ptr = realloc(data->address, count)) != NULL) {
     data->address = (ubyte_t*)temp_ptr;
-    data->size = size;
+    data->size = count;
     return true;
   }
 
@@ -130,9 +130,9 @@ bool data_copy(data_t* source, data_t* destination)
 bool data_append(data_t* source, data_t* destination)
 {
   if (source != NULL && destination != NULL) {
-    size_t size = destination->size;
-    if (data_alloc(destination, size + source->size)) {
-      memcpy(destination->address + size, source->address, source->size);
+    size_t count = destination->size;
+    if (data_alloc(destination, count + source->size)) {
+      memcpy(destination->address + count, source->address, source->size);
       return true;
     }
   }
@@ -152,7 +152,7 @@ bool data_append_byte(data_t* destination, const ubyte_t byte)
 {
   if (destination != NULL) {
     if (data_alloc(destination, destination->size + 1)) {
-      *(destination->address + destination->size) = byte;
+      *(destination->address + destination->size - 1) = byte;
       return true;
     }
   }
