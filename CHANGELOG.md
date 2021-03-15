@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - File read/write offset check
 - File offset not being updated
 - Typo on code
+- Data function memory leak
 
 ### Changed
 
