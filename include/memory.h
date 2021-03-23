@@ -231,13 +231,10 @@ void memory_set_protection(const void* address, const size_t size, const int mod
   if (address != NULL && size > 0) {
 #ifdef __WINDOWS__
     DWORD old_mode;
-
     VirtualProtect((LPVOID)address, size, mode, &old_mode);
 #else
     long page_sz = sysconf(_SC_PAGESIZE);
-
     void* page_ptr = (long*)((long)address & ~(page_sz - 1));
-
     mprotect(page_ptr, size, mode);
 #endif
   }
@@ -257,12 +254,10 @@ int memory_get_protection(const void* address)
   if (address != NULL) {
 #ifdef __WINDOWS__
     MEMORY_BASIC_INFORMATION page_info;
-
     if (VirtualQuery(address, &page_info, sizeof(MEMORY_BASIC_INFORMATION)) == sizeof(MEMORY_BASIC_INFORMATION))
       result = page_info.Protect;
 #else
     FILE* maps = fopen("/proc/self/maps", "r");
-
     if (maps != NULL) {
       ulong_t block[2] = { 0, 0 }; /* block of memory addresses */
       char perms[5];               /* set of permissions */
@@ -281,7 +276,6 @@ int memory_get_protection(const void* address)
           break;
         }
       }
-
       fclose(maps);
     }
 #endif
@@ -305,9 +299,7 @@ void memory_set_raw(void* address, const void* data, const size_t size, const bo
       int old_mode = memory_get_protection(address);
 
       memory_set_protection(address, size, MEM_UNPROT);
-
       memcpy(address, data, size);
-
       memory_set_protection(address, size, old_mode);
     }
     else
