@@ -147,9 +147,8 @@ bool file_read(file_t* file, const OFF_T offset, const OFF_T count, const bool c
         file->offset = (int32_t)((!change_indicator) ? old_pos : offset + size);
 
         if (data_alloc(&file->buffer, size)) {
-          if (fread(file->buffer.address, 1, size, file->handle) == size)
-            successful = true;
-          else {
+          successful = (fread(file->buffer.address, 1, size, file->handle) == size);
+          if (!successful) {
             data_free(&file->buffer);
             LOG("Warning: Could not read file data.");
           }
@@ -214,9 +213,8 @@ bool file_write(file_t* file, const OFF_T offset, const OFF_T count, const bool 
         /* prevents reading data outside buffer */
         size_t size = ((size_t)count > file->buffer.size) ? file->buffer.size : (size_t)count;
 
-        if (fwrite(file->buffer.address, 1, size, file->handle) == size)
-          successful = true;
-        else
+        successful = (fwrite(file->buffer.address, 1, size, file->handle) == size);
+        if (!successful)
           LOG("Warning: Could not write data to file.");
 
         file->size += size;

@@ -104,7 +104,6 @@ bool image_load(image_t** image, char* path)
 
     *image = (image_t*)calloc(sizeof(image_t), 1);
     if (*image == NULL) {
-      /* TODO: Add other types of raster images */
       if (is_png(img)) {
         if (file_seek(img, 8)) {
           size_t chunks = 0;
@@ -138,8 +137,7 @@ bool image_load(image_t** image, char* path)
             }
 
             if (!memcmp("IEND", type, 4)) {
-              if (chunks != 1)
-                successful = true;
+              successful = (chunks != 1);
               break;
             }
 
@@ -151,10 +149,8 @@ bool image_load(image_t** image, char* path)
             successful = false;
             data_t deflated;
             if (data_alloc(&deflated, (*image)->buffer.size)) {
-              if (zlib_deflate(&(*image)->buffer, &deflated)) {
-                if (data_copy(&deflated, &(*image)->buffer))
-                 successful = true;
-              }
+              if (zlib_deflate(&(*image)->buffer, &deflated))
+                successful = data_copy(&deflated, &(*image)->buffer);
             }
             data_free(&deflated);
           }

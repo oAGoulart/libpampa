@@ -65,7 +65,6 @@ bool node_alloc(node_t** node)
       (*node)->data.address = NULL;
       (*node)->prev = NULL;
       (*node)->next = NULL;
-
       return true;
     }
     LOG("Warning: Could not allocate memory for node.");
@@ -88,7 +87,6 @@ bool node_copy(node_t* source, node_t** destination)
     if (node_alloc(destination)) {
       (*destination)->prev = source->prev;
       (*destination)->next = source->next;
-
       return data_copy(&source->data, &(*destination)->data);
     }
   }
@@ -130,7 +128,6 @@ void list_append(node_t* head, node_t* node)
 {
   if (head != NULL && node != NULL) {
     node_t* tail = list_get_tail(head);
-
     if (tail != NULL) {
       tail->next = node;
       node->prev = tail;
@@ -158,7 +155,6 @@ node_t* list_find_data(node_t* head, const data_t* data)
         if (!memcmp(current->data.address, data->address, data->size))
           return current;
       }
-
       current = current->next;
     } while (current != NULL);
   }
@@ -178,7 +174,6 @@ bool list_push(node_t* src_node, node_t* dest_tail) {
   if (node_alloc(&dest_tail->next)) {
     data_copy(&src_node->data, &dest_tail->next->data);
     dest_tail->next->prev = dest_tail;
-
     return true;
   }
 
@@ -205,7 +200,6 @@ node_t* list_single_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
         if (list_push(src_head, dest_tail))
           dest_tail = dest_tail->next;
       }
-
       src_head = src_head->next;
     }
   }
@@ -233,7 +227,6 @@ node_t* list_repeat_copy(node_t* src_head, node_t* cmp_head, node_t* dest_head, 
         if (list_push(src_head, dest_tail))
           dest_tail = dest_tail->next;
       }
-
       src_head = src_head->next;
     }
   }
@@ -257,7 +250,6 @@ void list_union(node_t* first_head, node_t* second_head, node_t** out_head)
       data_copy(&first_head->data, &(*out_head)->data);
 
       node_t* tail = list_single_copy(first_head->next, *out_head, *out_head, *out_head);
-
       list_single_copy(second_head, *out_head, *out_head, tail);
     }
   }
@@ -292,7 +284,6 @@ void list_difference(node_t* first_head, node_t* second_head, node_t** out_head)
   if (first_head != NULL && second_head != NULL && out_head != NULL) {
     if (node_alloc(out_head)) {
       node_t* tail = list_single_copy(first_head, second_head, *out_head, *out_head);
-
       list_single_copy(second_head, first_head, *out_head, tail);
     }
   }
@@ -313,7 +304,6 @@ bool list_subset(node_t* first_head, node_t* second_head)
     while (second_head != NULL) {
       if (list_find_data(first_head, &second_head->data) == NULL)
         return false;
-
       second_head = second_head->next;
     }
   }
@@ -337,11 +327,9 @@ void list_free(node_t* head)
 
       while (current != NULL) {
         node_free(current->prev);
-
         prev = current;
         current = current->next;
       }
-
       node_free(prev);
     }
   }
